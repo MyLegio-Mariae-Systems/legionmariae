@@ -581,6 +581,194 @@ export default function fixedDates(year) {
                 },
             ]
         },
+        {
+            month:'April',
+            details:[
+                {
+                    date:`${year}-04-01`,
+                    feast:``,
+                    saint:``,
+                    color:``,
+                },
+                {
+                    date:`${year}-04-02`,
+                    feast:``,
+                    saint:``,
+                    color:``,
+                },
+                {
+                    date:`${year}-04-03`,
+                    feast:``,
+                    saint:``,
+                    color:``,
+                },
+                {
+                    date:`${year}-04-04`,
+                    feast:``,
+                    saint:`St. Isidore - Bishop`,
+                    color:`White`,
+                },
+                {
+                    date:`${year}-04-05`,
+                    feast:``,
+                    saint:``,
+                    color:``,
+                },
+                {
+                    date:`${year}-04-06`,
+                    feast:``,
+                    saint:``,
+                    color:``,
+                },
+                {
+                    date:`${year}-04-07`,
+                    feast:``,
+                    saint:``,
+                    color:``,
+                },
+                {
+                    date:`${year}-04-08`,
+                    feast:``,
+                    saint:``,
+                    color:``,
+                },
+                {
+                    date:`${year}-04-09`,
+                    feast:`Legion Maria/African Pentecost`,
+                    saint:``,
+                    color:`Red`,
+                },
+                {
+                    date:`${year}-04-10`,
+                    feast:``,
+                    saint:``,
+                    color:`Red`,
+                },
+                {
+                    date:`${year}-04-11`,
+                    feast:``,
+                    saint:`St. Leo - Pope`,
+                    color:`White`,
+                },
+                {
+                    date:`${year}-04-12`,
+                    feast:``,
+                    saint:``,
+                    color:``,
+                },
+                {
+                    date:`${year}-04-13`,
+                    feast:``,
+                    saint:`St. Hermenegild - Martyr`,
+                    color:`Red`,
+                },
+                {
+                    date:`${year}-04-14`,
+                    feast:``,
+                    saint:`St. Justin - Martyr`,
+                    color:``,
+                },
+                {
+                    date:`${year}-04-15`,
+                    feast:``,
+                    saint:``,
+                    color:``,
+                },
+                {
+                    date:`${year}-04-16`,
+                    feast:``,
+                    saint:``,
+                    color:``,
+                },
+                {
+                    date:`${year}-04-17`,
+                    feast:``,
+                    saint:`St. Anicetus - Pope & Martyr`,
+                    color:`White`,
+                },
+                {
+                    date:`${year}-04-18`,
+                    feast:``,
+                    saint:``,
+                    color:``,
+                },
+                {
+                    date:`${year}-04-19`,
+                    feast:``,
+                    saint:``,
+                    color:``,
+                },
+                {
+                    date:`${year}-04-20`,
+                    feast:``,
+                    saint:``,
+                    color:``,
+                },
+                {
+                    date:`${year}-04-21`,
+                    feast:``,
+                    saint:``,
+                    color:``,
+                },
+                {
+                    date:`${year}-04-22`,
+                    feast:`St. Soter & Cajus - Popes & Martyrs `,
+                    saint:``,
+                    color:`Red`,
+                },
+                {
+                    date:`${year}-04-23`,
+                    feast:``,
+                    saint:`St. George - Martyr `,
+                    color:`Red`,
+                },
+                {
+                    date:`${year}-04-24`,
+                    feast:``,
+                    saint:`St. Fidelis of Sigmaringen - Martyr`,
+                    color:`Red`,
+                },
+                {
+                    date:`${year}-04-25`,
+                    feast:``,
+                    saint:`St. Mark - Evangelist, The Greater Litanies, Rogation Day. `,
+                    color:`White`,
+                },
+                {
+                    date:`${year}-04-26`,
+                    feast:``,
+                    saint:`St. Cletus & Marcellinus - Popes & 
+                    Martyrs`,
+                    color:`Red`,
+                },
+                {
+                    date:`${year}-04-27`,
+                    feast:``,
+                    saint:`St. Peter Canisius - Confessor`,
+                    color:`White`,
+                },
+                {
+                    date:`${year}-04-28`,
+                    feast:``,
+                    saint:`St. Paul of the Cross, St. 
+                    Vitalis - Martyr`,
+                    color:`Red`,
+                },
+                {
+                    date:`${year}-04-29`,
+                    feast:``,
+                    saint:`St. Peter - Martyr`,
+                    color:`Red`,
+                },
+                {
+                    date:`${year}-04-30`,
+                    feast:``,
+                    saint:`St. Catherine of Siena - Virgin,`,
+                    color:`White`,
+                },
+                
+            ]
+        },
 
     ]
 
