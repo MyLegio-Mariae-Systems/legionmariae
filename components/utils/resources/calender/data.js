@@ -787,6 +787,20 @@ export default function fixedDates(year) {
 
 export function fixedSundayFeasts() {
 
+    const ashWednesdayDates=[
+        '2023-02-22',
+        '2024-02-14',
+        '2025-03-05',
+        '2026-02-18',
+        '2027-02-10',
+        '2028-03-01',
+        '2029-02-14',
+        '2030-03-06',
+        '2031-02-26',
+        '2032-02-11',
+        '2033-03-02',
+    ]
+
     const data1=[
         {
             feast:`1st Sunday after Epiphany.`,
@@ -896,6 +910,6 @@ export function fixedSundayFeasts() {
         
     ]
 
-    return {data1, data2, data3, data4}
+    return {data1, data2, data3, data4, ashWednesdayDates}
 
 }

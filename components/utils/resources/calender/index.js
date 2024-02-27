@@ -7,6 +7,7 @@ import { addDays, eachDayOfInterval, format, getDate, isSunday, startOfWeek, sub
 import fixedDates, { fixedSundayFeasts } from "./data";
 import moment  from 'moment';
 import _ from 'lodash';
+import handleDownload from "../../../../src/app/api/v14/utills/route";
 
  
 export default function LiturgicalCalenderPage() {
@@ -20,7 +21,12 @@ export default function LiturgicalCalenderPage() {
  
     React.useEffect(()=>{
         listYears()
+        downloadeCalender()
+        
     },[])
+
+    
+    
     const renderRows=(details)=>{
 
         const classes = "p-1 border ";
@@ -105,13 +111,24 @@ export default function LiturgicalCalenderPage() {
     }
 
     function listYears() {
+        
+        const {ashWednesdayDates}=fixedSundayFeasts()
+        const lastAshWednesdayDate = _.last(ashWednesdayDates)
+
         const currentYear = new Date().getFullYear();
-        const endYear = 3000;
+        // const endYear = new Date(lastAshWednesdayDate).getFullYear();
+        const endYear = 10099
+
     
         // Generate an array of years from current year to end year
         const years = Array.from({ length: endYear - currentYear + 1 }, (_, index) => currentYear + index);
         setYears(years)
         // return years;
+    }
+
+    async function downloadeCalender() {
+        let a=await handleDownload()
+    console.log(a);
     }
 
     const TABLE_ROWS = AshWenesday(Year)
@@ -404,23 +421,9 @@ function getSundaysBetweenExcluding(startDate,endDate){
 
 function AshWenesday(year) {
 
-    const dates=[
-        '2023-02-22',
-        '2024-02-14',
-        '2025-03-05',
-        '2026-02-18',
-        '2027-02-10',
-        '2028-03-01',
-        '2029-02-14',
-        '2030-03-06',
-        '2031-02-26',
-        '2032-02-11',
-        '2033-03-02',
-    ]
+    const {data4, ashWednesdayDates}=fixedSundayFeasts()
 
-    const {data4}=fixedSundayFeasts()
-
-    const ashWenesdayDate = dates.filter(date => date.startsWith(`${year}-`));
+    const ashWenesdayDate = ashWednesdayDates.filter(date => date.startsWith(`${year}-`));
 
     const ashWednesdayObject={
         date:ashWenesdayDate[0],
@@ -500,7 +503,7 @@ function AshWenesday(year) {
     // const TABLE_ROWS = fixedDates(year)
 
     // console.log(previousSundays,afterSundays,goodFriday,holyWeek,datesBetweenExcluding);
-    console.log(mergedArray);
+    // console.log(mergedArray);
 
     return mergedArray
 }
