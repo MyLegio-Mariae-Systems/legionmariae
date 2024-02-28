@@ -35,7 +35,7 @@ const navListMenuItems = [
     title: "Liturgical Calender",
     description: "Find the perfect solution for your needs.",
     icon: CalendarDaysIcon,
-    ref:'/resources/calender?title=Legion Maria Church Liturgical Calender'
+    ref:'/resources/calendar'
   },
   {
     title: "Prayers",

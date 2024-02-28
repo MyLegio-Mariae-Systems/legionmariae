@@ -8,21 +8,24 @@ import fixedDates, { fixedSundayFeasts } from "./data";
 import moment  from 'moment';
 import _ from 'lodash';
 import handleDownload from "../../../../src/app/api/v14/utills/route";
+import downloadDivContent from "../download/calendar";
+import { usePathname } from "next/navigation";
 
  
-export default function LiturgicalCalenderPage() {
+export default function LiturgicalCalenderPage({pathname}) {
 
     const year=new Date().getFullYear()
+    const pathName = pathname+''+usePathname()
 
     const [Year,setYear]=React.useState(year)
     const [Years,setYears]=React.useState([])
+    const [isVisible,setIsVisible]=React.useState(false)
 
     const TABLE_HEAD = ["NAME", "DAY", "FEAST/EVENT", "COMMEMORATION", "COLOUR"];
+    const TABLE_ROWS = AshWenesday(Year)
  
     React.useEffect(()=>{
         listYears()
-        downloadeCalender()
-        
     },[])
 
     
@@ -32,46 +35,52 @@ export default function LiturgicalCalenderPage() {
         const classes = "p-1 border ";
 
         return (
-            details.map(({ date,feast,saint,color }, index) => {
+            <>
+            {
+                details.map(({ date,feast,saint,color }, index) => {
 
-                const today = new Date(date)
-                const dayName = format(today, 'EEEE')
-                const dateOfMonth = getDate(today)
+                    const today = new Date(date)
+                    const dayName = format(today, 'EEEE')
+                    const dateOfMonth = getDate(today)
 
-                if (feast !=='' || saint !=='') {
-                    return (
-                    <tr key={date}>
-                        <td className={classes}>
-                        <Typography variant="small" color="blue-gray" className="font-normal">
-                            {dayName}
-                        </Typography>
-                        </td>
-                        <td className={classes}>
-                        <Typography variant="small" color="blue-gray" className="font-normal">
-                            {dateOfMonth}
-                        </Typography>
-                        </td>
-                        <td className={`${classes} bg-blue-gray-50/50`}>
-                        <Typography variant="small" color="blue-gray" className="font-normal">
-                            {feast}
-                        </Typography>
-                        </td>
-                        <td className={classes}>
-                        <Typography variant="small" color="blue-gray" className="font-normal">
-                            {saint}
-                        </Typography>
-                        </td>
-    
-                        <td className={`${classes} bg-blue-gray-50/50`}>
-                        <Typography variant="small" color="blue-gray" className="font-medium">
-                            {color}
-                        </Typography>
-                        </td>
-                    </tr>
-                    );
-                }
-                
-            })
+                    if (feast !=='' || saint !=='') {
+                        return (
+                        <tr key={date}>
+                            <td className={classes}>
+                            <Typography variant="small" color="blue-gray" className="font-normal">
+                                {dayName}
+                            </Typography>
+                            </td>
+                            <td className={classes}>
+                            <Typography variant="small" color="blue-gray" className="font-normal">
+                                {dateOfMonth}
+                            </Typography>
+                            </td>
+                            <td className={`${classes} bg-blue-gray-50/50`}>
+                            <Typography variant="small" color="blue-gray" className="font-normal">
+                                {feast}
+                            </Typography>
+                            </td>
+                            <td className={classes}>
+                            <Typography variant="small" color="blue-gray" className="font-normal">
+                                {saint}
+                            </Typography>
+                            </td>
+
+                            <td className={`${classes} bg-blue-gray-50/50`}>
+                            <Typography variant="small" color="blue-gray" className="font-medium">
+                                {color}
+                            </Typography>
+                            </td>
+                        </tr>
+                        );
+                    }
+                    
+                })
+            }
+
+            </>
+            
         )
 
     }
@@ -116,8 +125,8 @@ export default function LiturgicalCalenderPage() {
         const lastAshWednesdayDate = _.last(ashWednesdayDates)
 
         const currentYear = new Date().getFullYear();
-        // const endYear = new Date(lastAshWednesdayDate).getFullYear();
-        const endYear = 10099
+        const endYear = new Date(lastAshWednesdayDate).getFullYear();
+        // const endYear = 10099
 
     
         // Generate an array of years from current year to end year
@@ -126,12 +135,10 @@ export default function LiturgicalCalenderPage() {
         // return years;
     }
 
-    async function downloadeCalender() {
-        let a=await handleDownload()
-    console.log(a);
+    async function downloadCalender() {
+        downloadDivContent(Year, TABLE_HEAD, TABLE_ROWS, 'liturgical_calendar', `${Year}_Liturgical_Calendar.pdf`, pathName);
     }
 
-    const TABLE_ROWS = AshWenesday(Year)
 
   return (
     <>
@@ -139,8 +146,8 @@ export default function LiturgicalCalenderPage() {
     <Card className="h-full w-full overflow-scroll">
 
     <CardHeader floated={false} shadow={false} className="rounded-none">
-        <div className="mb-4 gap-8 md:flex-row md:items-center">
-          <div>
+        <div className="col-md-12 mb-4 gap-8 md:flex-row md:items-center">
+          <div className="col-md-12">
             <Typography variant="h4" color="black ">
               {Year} Liturgical Calender
             </Typography>
@@ -148,12 +155,9 @@ export default function LiturgicalCalenderPage() {
               You can search for liturgical calender of any year.
             </Typography>
           </div>
-          <div className="flex flex-wrap w-full shrink-0 gap-2 md:w-max">
-            <div className="w-full md:w-72">
-            {/* <label
-                    class="before:content[' '] after:content[' '] pointer-events-none absolute left-0 -top-1.5 flex h-full w-full select-none text-[11px] font-normal leading-tight text-blue-gray-400 transition-all before:pointer-events-none before:mt-[6.5px] before:mr-1 before:box-border before:block before:h-1.5 before:w-2.5 before:rounded-tl-md before:border-t before:border-l before:border-blue-gray-200 before:transition-all after:pointer-events-none after:mt-[6.5px] after:ml-1 after:box-border after:block after:h-1.5 after:w-2.5 after:flex-grow after:rounded-tr-md after:border-t after:border-r after:border-blue-gray-200 after:transition-all peer-placeholder-shown:text-sm peer-placeholder-shown:leading-[3.75] peer-placeholder-shown:text-blue-gray-500 peer-placeholder-shown:before:border-transparent peer-placeholder-shown:after:border-transparent peer-focus:text-[11px] peer-focus:leading-tight peer-focus:text-gray-900 peer-focus:before:border-t-2 peer-focus:before:border-l-2 peer-focus:before:border-gray-900 peer-focus:after:border-t-2 peer-focus:after:border-r-2 peer-focus:after:border-gray-900 peer-disabled:text-transparent peer-disabled:before:border-transparent peer-disabled:after:border-transparent peer-disabled:peer-placeholder-shown:text-blue-gray-500">
-                    Select a Year
-                </label> */}
+          <div className="col-md-12 flex w-full shrink-0 gap-2 md:w-max">
+            <div className="col-md-10 w-full md:w-72">
+            
               <select
                     onChange={searchYear}
                     class="peer h-full w-full rounded-[7px] border border-blue-gray-200 border-t-transparent bg-transparent px-3 py-2.5 font-sans text-sm font-normal text-blue-gray-700 outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 empty:!bg-gray-900 focus:border-2 focus:border-gray-900 focus:border-t-transparent focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50">
@@ -170,14 +174,18 @@ export default function LiturgicalCalenderPage() {
                 
               
             </div>
-            
-            <Button className="flex items-center gap-3" size="sm">
+            <div className='col-md-2'>
+            <Button className="flex items-center gap-3" size="sm" onClick={downloadCalender}>
               <ArrowDownTrayIcon strokeWidth={2} className="h-4 w-4" /> Download
             </Button>
+            </div>
+            
+            
           </div>
         </div>
       </CardHeader>
-      <CardBody className="overflow-scroll px-1">
+      <CardBody className="overflow-scroll p-1" id="liturgical_calendar">
+        
         <div className='text-center text-dark'>
             <Typography variant="h3" className="text-danger ">
                 LEGION MARIA OF AFRICAN CHURCH MISSION
@@ -204,22 +212,18 @@ export default function LiturgicalCalenderPage() {
             </thead>
             <tbody>
             {TABLE_ROWS?.map(({ month, details }, index) => {
-                // const isLast = index === TABLE_ROWS1.length - 1;
-                // // const classes = isLast ? "p-4" : "p-4 border-b border-blue-gray-50";
-                // const classes = "p-1 border ";
                 
                 return (
                     <>
                     <tr>
                         <td colSpan={5} className={'p-1 border'}>
-                            <Typography variant="large" color="black" className="font-bold text-center text-xl m-1">
+                            <Typography variant="large" color="black" className="font-bold text-center text-xl m-1 ms-2">
                                 {month}
                             </Typography>
                         </td>
                     </tr>
 
                     {renderRows(details)}
-                    
                     </>
                 )
                 

@@ -11,16 +11,14 @@ export default function fixedDates(year) {
             details:[
                 {
                     date:`${year}-01-01`,
-                    feast:`The Octave-Day of the Nativity of
-                    the Lord. Circumcision of the Lord.`,
+                    feast:`The Octave-Day of the Nativity of the Lord.\nCircumcision of the Lord.`,
                     saint:``,
                     color:`White`,
                 },
                 {
                     date:`${year}-01-02`,
                     feast:`The Most Holy Name of Jesus `,
-                    saint:`St. Basil the Great, Gregory
-                    Nazianzen - Bishop, St. Marcarius`,
+                    saint:`St. Basil the Great, Gregory Nazianzen - Bishop, St. Marcarius`,
                     color:`White`,
                 },
                 {
@@ -49,8 +47,7 @@ export default function fixedDates(year) {
                 },
                 {
                     date:`${year}-01-07`,
-                    feast:`The Holy Family of
-                    Jesus, Mary & Joseph`,
+                    feast:`The Holy Family of Jesus, Mary & Joseph`,
                     saint:`St. Lucian`,
                     color:`White`,
                 },
@@ -68,9 +65,7 @@ export default function fixedDates(year) {
                 },
                 {
                     date:`${year}-01-10`,
-                    feast:`Nyabinga - Anton Ooro's home -
-                    Wealth brought by Baba Messiah,
-                    Baba Messiah the Worker`,
+                    feast:`Nyabinga - Anton Ooro's home - wealth brought by Baba Messiah.\nBaba Messiah the Worker`,
                     saint:`St. Nicanor, St. William`,
                     color:`Purple`,
                 },
@@ -88,8 +83,7 @@ export default function fixedDates(year) {
                 },
                 {
                     date:`${year}-01-13`,
-                    feast:`The Baptism of Our Lord Jesus
-                    Christ`,
+                    feast:`The Baptism of Our Lord Jesus Christ`,
                     saint:`St. Hilary - Bishop`,
                     color:`White`,
                 },
@@ -126,8 +120,7 @@ export default function fixedDates(year) {
                 {
                     date:`${year}-01-19`,
                     feast:``,
-                    saint:`St. Marius, Martha, Audifax, Abachum - Martyrs, St. Canute -
-                    King & Martyr`,
+                    saint:`St. Marius, Martha, Audifax, Abachum - Martyrs, St. Canute - King & Martyr`,
                     color:`Red`,
                 },
                 {
@@ -151,8 +144,7 @@ export default function fixedDates(year) {
                 {
                     date:`${year}-01-23`,
                     feast:``,
-                    saint:`St. Raymond of Pennafort - confessor, St. Emerentiana - Virgin & 
-                    Martyr`,
+                    saint:`St. Raymond of Pennafort - confessor, St. Emerentiana - Virgin & Martyr`,
                     color:`White`,
                 },
                 {
@@ -163,8 +155,7 @@ export default function fixedDates(year) {
                 },
                 {
                     date:`${year}-01-25`,
-                    feast:`Baba Simeo's Accident, Mawego Kobuya
-                    Kendu Bay Diocese, The Conversion of St. Paul, Apostle`,
+                    feast:`Baba Simeo's Accident, Mawego Kobuya Kendu Bay Diocese.\nThe Conversion of St. Paul, Apostle`,
                     saint:`St. Peter - Apostle`,
                     color:`Purple`,
                 },
@@ -217,8 +208,7 @@ export default function fixedDates(year) {
                 },
                 {
                     date:`${year}-02-02`,
-                    feast:`The Purification of the Blessed
-                    Virgin Mary`,
+                    feast:`The Purification of the Blessed Virgin Mary`,
                     saint:``,
                     color:`White`,
                 },
@@ -279,8 +269,7 @@ export default function fixedDates(year) {
                 {
                     date:`${year}-02-12`,
                     feast:``,
-                    saint:`The Seven Holy Founders of the
-                    Servite Order - Confessors`,
+                    saint:`The Seven Holy Founders of the Servite Order - Confessors`,
                     color:`White`,
                 },
                 {
@@ -293,8 +282,7 @@ export default function fixedDates(year) {
                 {
                     date:`${year}-02-14`,
                     feast:``,
-                    saint:`St. Valentine - Priest &
-                    Martyr`,
+                    saint:`St. Valentine - Priest & Martyr`,
                     color:`Red`,
                 },
                 {
@@ -348,8 +336,7 @@ export default function fixedDates(year) {
                 {
                     date:`${year}-02-23`,
                     feast:``,
-                    saint:`St. Peter Damian - Bishop & 
-                    Confessor.`,
+                    saint:`St. Peter Damian - Bishop & Confessor.`,
                     color:`White`,
                 },
                 {
@@ -396,8 +383,7 @@ export default function fixedDates(year) {
                 },
                 {
                     date:`${year}-03-02`,
-                    feast:`Persecution of Legion Maria,
-                    Kirindo/Jerusalem`,
+                    feast:`Persecution of Legion Maria, Kirindo/Jerusalem`,
                     color:`Purple`,
                 },
                 {
@@ -421,8 +407,7 @@ export default function fixedDates(year) {
                 {
                     date:`${year}-03-06`,
                     feast:``,
-                    saint:`St. Perpetua & Felicity,
-                    Martyrs`,
+                    saint:`St. Perpetua & Felicity, Martyrs`,
                     color:`Red`,
                 },
                 {
@@ -494,15 +479,13 @@ export default function fixedDates(year) {
                 {
                     date:`${year}-03-18`,
                     feast:``,
-                    saint:`St. Cyril - Bishop of
-                    Jerusalem`,
+                    saint:`St. Cyril - Bishop of Jerusalem`,
                     color:`White`,
                 },
                 {
                     date:`${year}-03-19`,
                     feast:``,
-                    saint:`St. Joseph - spouse of the Blessed
-                    Virgin Mary & Confessor `,
+                    saint:`St. Joseph - spouse of the Blessed Virgin Mary & Confessor `,
                     color:`White`,
                 },
                 {
@@ -519,8 +502,7 @@ export default function fixedDates(year) {
                 },
                 {
                     date:`${year}-03-22`,
-                    feast:`The Seven Sorrows of the
-                    Blessed Virgin Mary`,
+                    feast:`The Seven Sorrows of the Blessed Virgin Mary`,
                     saint:``,
                     color:`White`,
                 },
@@ -538,8 +520,7 @@ export default function fixedDates(year) {
                 },
                 {
                     date:`${year}-03-25`,
-                    feast:`The Annunciation of the Blessed
-                    Virgin Mary (Acies)`,
+                    feast:`The Annunciation of the Blessed Virgin Mary (Acies)`,
                     saint:``,
                     color:`White`,
                 },
@@ -712,8 +693,8 @@ export default function fixedDates(year) {
                 },
                 {
                     date:`${year}-04-22`,
-                    feast:`St. Soter & Cajus - Popes & Martyrs `,
-                    saint:``,
+                    feast:``,
+                    saint:`St. Soter & Cajus - Popes & Martyrs `,
                     color:`Red`,
                 },
                 {
@@ -737,8 +718,7 @@ export default function fixedDates(year) {
                 {
                     date:`${year}-04-26`,
                     feast:``,
-                    saint:`St. Cletus & Marcellinus - Popes & 
-                    Martyrs`,
+                    saint:`St. Cletus & Marcellinus - Popes & Martyrs`,
                     color:`Red`,
                 },
                 {
@@ -750,8 +730,7 @@ export default function fixedDates(year) {
                 {
                     date:`${year}-04-28`,
                     feast:``,
-                    saint:`St. Paul of the Cross, St. 
-                    Vitalis - Martyr`,
+                    saint:`St. Paul of the Cross, St. Vitalis - Martyr`,
                     color:`Red`,
                 },
                 {

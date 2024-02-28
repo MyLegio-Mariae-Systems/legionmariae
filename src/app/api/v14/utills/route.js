@@ -14,7 +14,7 @@ export default async function handleDownload(){
         await page.goto('http://localhost:3000/resources/calender?title=Legion Maria Church Liturgical Calender');
 
         // Get the HTML content of the page
-        const htmlContent = await page.content();
+        let htmlContent = await page.content();
 
         // Close the browser
         await browser.close();
@@ -23,9 +23,12 @@ export default async function handleDownload(){
         // NextResponse.setHeader('Content-Disposition', 'attachment; filename=page.html');
         // NextResponse.setHeader('Content-Type', 'text/html');
 
-        console.log(htmlContent);
+        htmlContent=JSON.stringify(htmlContent)
+        htmlContent=JSON.parse(htmlContent)
+
+        // console.log(htmlContent);
         // Send the HTML content as the response
-        NextResponse.json(htmlContent);
+        return htmlContent;
     } catch (error) {
       console.error('Error downloading HTML:', error);
     }
