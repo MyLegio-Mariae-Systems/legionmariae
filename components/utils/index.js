@@ -17,9 +17,14 @@ export default function MonthYear() {
   
 }
 
-export const DayTime=()=>{
+export const DayTime=(value=null)=>{
 
-    const currentDate = new Date();
+    let currentDate = new Date();
+
+    if (value !==null) {
+        currentDate = new Date(value);
+    }
+    
     const formattedDate = format(currentDate, 'EEEE, MMMM d, yyyy');
 
     return formattedDate

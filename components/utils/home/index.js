@@ -1,14 +1,19 @@
 "use client"
 
-import { Button } from "@material-tailwind/react";
-import { Typography } from "@material-tailwind/react";
-import { Carousel } from "@material-tailwind/react";
-import { NavbarWithMegaMenu } from "../header";
 import { DayTime } from "..";
-import { format, formatDuration, intervalToDuration } from "date-fns";
+import { addDays, format, formatDuration, intervalToDuration } from "date-fns";
 import { Footer } from "../footer";
+import { AshWenesday } from "../resources/calendar";
+import React from "react";
+import NavbarB4Login from "../header/headerB4Login";
+
  
-export default function HomePage() {
+export default function HomePage({session}) {
+
+  const date=new Date()
+
+  const TABLE_ROWS = AshWenesday(date.getFullYear())
+  const today = new Date().toISOString().split('T')[0];
 
   const yearsAgo=(date)=>{
 
@@ -23,6 +28,7 @@ export default function HomePage() {
     
     
   }
+
   const getDate=(date)=>{
     const currentDate = new Date(date);
     const formattedDate = format(currentDate, 'EEEE, MMMM d, yyyy');
@@ -31,12 +37,61 @@ export default function HomePage() {
 
   }
 
+  const saintToday=()=>{
+
+
+    const todayObject = TABLE_ROWS.flatMap(obj => obj.details).find(detail => detail.date === today);
+
+    return todayObject?.saint
+
+    
+  }
+
+
+  const commingFeast=(value)=>{
+
+    let todayObject = TABLE_ROWS.flatMap(obj => obj.details).find(detail => detail.date === today);
+
+    let nextDate=today
+
+    while (todayObject && (!todayObject.feast || todayObject.feast.trim() === '')) {
+      nextDate = addDays(nextDate,1)
+      const nextDateString = format(nextDate, 'yyyy-MM-dd');
+      
+    //   // Find the next object with the next date
+      let nextObject = TABLE_ROWS.flatMap(obj => obj.details).find(detail => detail.date === nextDateString);
+
+      // console.log(todayObject);
+      
+      todayObject = nextObject;
+      
+      if (!nextObject) {
+        break;
+      }
+      
+    }
+
+    let returnValue
+
+    if (value ===1) {
+      returnValue=todayObject?.feast
+      
+    } else {
+      returnValue=DayTime(todayObject?.date)
+    }
+
+    return returnValue
+
+    
+  }
+
+
   return (
     
     <>
 
       <main>
-        <NavbarWithMegaMenu />
+        <NavbarB4Login session={session}/>
 
       </main>
 
@@ -57,7 +112,7 @@ export default function HomePage() {
                       Saint (s) of the Day
                   </p>
                   <p className="text-light font-small">
-                      Meshack, Shadrack, Abednego
+                    {saintToday()}
                   </p>
                   
                 </div>
@@ -71,16 +126,16 @@ export default function HomePage() {
                     Next Major Feast
                   </p>
                   <p className="text-light font-small">
-                    Good Friday. 
+                    {commingFeast(1)} 
                   </p>
-                  <p className="text-light font-small">
+                  {/* <p className="text-light font-small">
                     St. Joannes Kodero - Kisumu/Kenya.
-                  </p>
+                  </p> */}
                   
                 </div>
                 <button className="px-4 py-1 text-dark bg-light
                 font-bold rounded-full border border-info 
-                ">{DayTime()}</button>
+                ">{commingFeast(2)}</button>
               </div>
             </div>
 
@@ -109,7 +164,6 @@ export default function HomePage() {
 
 
         </section>
-
 
         <section style={{backgroundImage: "url('/images/background.jpg')", backgroundSize: "cover"}} className='pb-2'>
         <main className='col-md-12'>
@@ -232,6 +286,45 @@ export default function HomePage() {
           </div>
         </main>
         </section>
+
+        {/* <section class="ftco-section ftco-no-pt ftco-no-pb ftco-counter img" id="section-counter">
+          <div class="container">
+            <div class="row d-md-flex align-items-center">
+              <div class="col-md d-flex justify-content-center counter-wrap ftco-animate">
+                <div class="block-18">
+                  <div class="text">
+                    <strong class="number" data-number="100">0</strong>
+                    <span>Awards</span>
+                  </div>
+                </div>
+              </div> 
+              <div class="col-md d-flex justify-content-center counter-wrap ftco-animate">
+                <div class="block-18">
+                  <div class="text">
+                    <strong class="number" data-number="4">0</strong>
+                    <span>Complete Projects</span>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md d-flex justify-content-center counter-wrap ftco-animate">
+                <div class="block-18">
+                  <div class="text">
+                    <strong class="number" data-number="4">0</strong>
+                    <span>Happy Customers</span>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md d-flex justify-content-center counter-wrap ftco-animate">
+                <div class="block-18">
+                  <div class="text">
+                    <strong class="number" data-number="2">0</strong>
+                    <span>Cups of coffee</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section> */}
 
         <main style={{backgroundImage: "url('/images/background.jpg')", backgroundSize: "cover"}}>
         <Footer />

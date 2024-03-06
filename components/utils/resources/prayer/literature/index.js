@@ -1,6 +1,5 @@
 'use client'
 
-import { NavbarWithMegaMenu } from "../../../header"
 import React from "react";
 import {
   IconButton,
@@ -37,9 +36,10 @@ import {
   CheckBadgeIcon,
 } from "@heroicons/react/24/outline";
 import { Footer } from "../../../footer";
+import NavbarB4Login from "../../../header/headerB4Login";
  
 
-export default function PrayerPage({title, lang}) {
+export default function PrayerPage({title, lang, session}) {
 
     // const LuoSideBar = () =>{
 
@@ -509,7 +509,7 @@ export default function PrayerPage({title, lang}) {
 
     return(
         <>
-        <NavbarWithMegaMenu />
+        <NavbarB4Login session={session} />
         
         <div class="col-md-12 sticky-top max-w-sm mx-auto bg-white rounded-xl shadow-lg space-y-2 sm:py-4 sm:flex sm:items-center sm:space-y-0 sm:space-x-6">
             <div className='ms-1'>

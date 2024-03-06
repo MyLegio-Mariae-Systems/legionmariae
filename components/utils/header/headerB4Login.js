@@ -11,6 +11,9 @@ import {
   MenuHandler,
   MenuList,
   MenuItem,
+  Card, CardBody, CardFooter, Input, Dialog, Alert,
+  MobileNav,
+  Avatar,
 } from "@material-tailwind/react";
 import {
   ChevronDownIcon,
@@ -28,8 +31,23 @@ import {
   SunIcon,
   TagIcon,
   UserGroupIcon,
+  CubeTransparentIcon,
+  UserCircleIcon,
+  CodeBracketSquareIcon,
+  Square3Stack3DIcon,
+  // ChevronDownIcon,
+  Cog6ToothIcon,
+  InboxArrowDownIcon,
+  LifebuoyIcon,
+  PowerIcon,
+  RocketLaunchIcon,
+  Bars2Icon,
 } from "@heroicons/react/24/solid";
- 
+import { useRouter } from "next/navigation";
+import {signIn, signOut} from 'next-auth/react'
+import toast, { ToastBar, Toaster} from 'react-hot-toast'
+
+
 const navListMenuItems = [
   {
     title: "Liturgical Calender",
@@ -219,8 +237,20 @@ function NavList() {
   );
 }
  
-export function NavbarWithMegaMenu() {
+export default function NavbarB4Login({session}) {
+  const router=useRouter()
   const [openNav, setOpenNav] = React.useState(false);
+
+  let toastId
+
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => setOpen((cur) => !cur);
+
+  const [openAlert, setOpenAlert] = React.useState({
+    message:'',
+    color:'red',
+    open:false,
+  });
  
   React.useEffect(() => {
     window.addEventListener(
@@ -228,9 +258,143 @@ export function NavbarWithMegaMenu() {
       () => window.innerWidth >= 960 && setOpenNav(false),
     );
   }, []);
+
+  const [formData, setFormData] = React.useState();
+  
+  const validate=async()=>{
+
+    if(!formData.username){
+      setOpenAlert({open:true, message:'Username is required',color:'red'})
+      return false
+    }
+
+    if(!formData.password){
+      setOpenAlert({open:true, message:'Password is required',color:'red'})
+      return false
+    }
+
+    return true
+  }
+
+  const handleInputChange = (e) => {
+      // if(e.target.files){
+      //     setState({...state,[e.target.name]:e.target.files[0]})
+
+      // }
+      const { name, value } = e.target;
+      setFormData({ ...formData, [name]: value });
+      setOpenAlert({open:false})
+  };
+
+  const login = async (e) => {
+
+      e.preventDefault()
+
+      const valid=await validate()
+
+      if (valid) {
+          toastId=toast.loading('Loading, please wait...',{
+              id:toastId
+          })
+
+          let info=await signIn('credentials',{
+              username:formData.username,
+              password:formData.password,
+              redirect:false
+          })
+          toast.dismiss(toastId)
+      
+          if ((info && !info.ok)) {
+              toastId=toast.error(info.error,{
+                  id:toastId
+              })
+          }
+          else{
+              router.push('/lmacm/src/oda/dashboard')
+          }
+
+      }
+      
+  };
  
   return (
-    <Navbar className="mx-auto max-w-screen-xl px-4 py-2 sticky-top" color="blue">
+    <>
+    
+      <Navbar className="mx-auto max-w-screen-xl px-4 py-2 sticky-top" color="blue">
+      
+      <Dialog
+        size="xs"
+        open={open}
+        handler={handleOpen}
+        className="bg-transparent shadow-none"
+      >
+        <Toaster 
+        toastOptions={{
+            success:{
+                style:{
+                    background:'green',
+                    color:'white'
+                }
+            },
+            error:{
+                style:{
+                    background:'red',
+                    color:'white'
+                }
+            },
+            
+        }}
+
+        >
+      </Toaster>
+        <Card className="mx-auto w-full max-w-[24rem] overflow-auto">
+          <CardBody className="flex flex-col  gap-4 overflow-auto">
+            <Typography variant="h2" color="blue-gray" className='text-center flex justify-center gap-3'>
+              <img src='/images/logo.jpg'className='w-12 h-12'/>
+              Sign In
+            </Typography>
+            
+            <Typography
+              className="mb-3 font-normal"
+              variant="paragraph"
+              color="gray"
+            >
+              Enter your username and password to Sign In.
+            </Typography>
+            <Alert color={openAlert.color} open={openAlert.open} onClose={() => setOpenAlert({open:false})}>
+              {openAlert.message}
+            </Alert>
+            <Typography className="-mb-2" variant="h6">
+              Your Username
+            </Typography>
+            <Input label="Username" size="lg" name='username' onChange={handleInputChange}/>
+            <Typography className="-mb-2" variant="h6">
+              Your Password
+            </Typography>
+            <Input label="Password" size="lg" type='password' name='password' onChange={handleInputChange}/>
+            {/* <div className="-ml-2.5 -mt-3">
+              <Checkbox label="Remember Me" />
+            </div> */}
+          </CardBody>
+          <CardFooter className="pt-0">
+            <Button variant="gradient" onClick={login} fullWidth>
+              Sign In
+            </Button>
+            <Typography variant="small" className="mt-4 flex justify-center">
+              Register Your Mission 
+              <Typography
+                as="a"
+                href="/lmacm/signup"
+                variant="small"
+                color="blue"
+                className="ml-1 fw-bold"
+              >
+                HERE
+              </Typography>
+            </Typography>
+          </CardFooter>
+        </Card>
+      </Dialog>
       <div className="flex items-center justify-between text-blue-gray-900 font-sans hover:font-serif ">
         <Typography
           variant="h6"
@@ -246,7 +410,10 @@ export function NavbarWithMegaMenu() {
           {/* <Button variant="text" size="sm" color="blue-gray">
             Log In
           </Button> */}
-          <Button className='m-1' variant="gradient" size="sm">
+          <Button className='m-1' variant="gradient" size="sm" onClick={(e)=>{
+            // router.push('/lmacm/signin')
+            handleOpen()
+          }}>
             Sign In
           </Button>
         </div>
@@ -266,14 +433,27 @@ export function NavbarWithMegaMenu() {
       <Collapse open={openNav}>
         <NavList />
         <div className="flex w-full flex-nowrap items-center gap-2 lg:hidden bg-white ">
-          {/* <Button variant="outlined" size="sm" color="blue-gray" fullWidth>
-            Log In
-          </Button> */}
-          <Button className='m-1' variant="gradient" size="sm" fullWidth >
-            Sign In
-          </Button>
+
+          {
+            session ? (
+              <Button variant="gradient" size="sm" color="red" fullWidth onClick={signOut}>
+                Sign Out
+              </Button>
+            ):(
+              <Button className='m-1' variant="gradient" size="sm" fullWidth onClick={(e)=>{
+                // router.push('/lmacm/signin')
+                handleOpen()
+              }}>
+                Sign In
+              </Button>
+            )
+          }
+          
         </div>
       </Collapse>
     </Navbar>
+    </>
+    
   );
 }
+

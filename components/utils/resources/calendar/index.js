@@ -1,18 +1,18 @@
 'use client'
 import { Button, Card, CardBody, CardHeader, Input, Typography } from "@material-tailwind/react";
-import { NavbarWithMegaMenu } from "../../header";
 import { ArrowDownTrayIcon, MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 import React from "react";
 import { addDays, eachDayOfInterval, format, getDate, isSunday, startOfWeek, subDays } from "date-fns";
 import fixedDates, { fixedSundayFeasts } from "./data";
 import moment  from 'moment';
 import _ from 'lodash';
-import handleDownload from "../../../../src/app/api/v14/utills/route";
+import handleDownload from "../../../../src/app/api/v14/utills";
 import downloadDivContent from "../download/calendar";
 import { usePathname } from "next/navigation";
+import NavbarB4Login from "../../header/headerB4Login";
 
  
-export default function LiturgicalCalenderPage({pathname}) {
+export default function LiturgicalCalenderPage({pathname, session}) {
 
     const year=new Date().getFullYear()
     const pathName = pathname+''+usePathname()
@@ -44,6 +44,7 @@ export default function LiturgicalCalenderPage({pathname}) {
                     const dateOfMonth = getDate(today)
 
                     if (feast !=='' || saint !=='') {
+                        
                         return (
                         <tr key={date}>
                             <td className={classes}>
@@ -142,7 +143,7 @@ export default function LiturgicalCalenderPage({pathname}) {
 
   return (
     <>
-    <NavbarWithMegaMenu />
+    <NavbarB4Login session={session} />
     <Card className="h-full w-full overflow-scroll">
 
     <CardHeader floated={false} shadow={false} className="rounded-none">
@@ -423,7 +424,7 @@ function getSundaysBetweenExcluding(startDate,endDate){
     return ArrayData
 }
 
-function AshWenesday(year) {
+export function AshWenesday(year) {
 
     const {data4, ashWednesdayDates}=fixedSundayFeasts()
 
