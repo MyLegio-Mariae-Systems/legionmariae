@@ -36,8 +36,11 @@ import {
   ChevronRightIcon,
   Bars3Icon,
   XMarkIcon,
+  ChartPieIcon,
+  PresentationChartLineIcon,
+  ChevronDoubleDownIcon,
 } from "@heroicons/react/24/solid";
-import { PresentationChartBarIcon } from "@heroicons/react/24/outline";
+import { ChartBarIcon, ChevronLeftIcon, LinkIcon } from "@heroicons/react/24/outline";
  
 // profile menu component
 const profileMenuItems = [
@@ -123,129 +126,223 @@ function ProfileMenu() {
     </Menu>
   );
 }
- 
-const Navitems=[
+
+const SideNavitems=[
   {
-      title:'Lemo Motelo',
+      title:'Members',
       child:[
           {
-              title:'Chako Lemo',
-              link:'#Chako_Lemo',
-          },
-          {
-              title:'Lemo Mar Chiew',
-              link:'#Lemo_Mar_Chiew',
-          },
-          {
-              title:'Malaika',
-              link:'#Malaika',
-          },
-          {
-              title:'Lemo Mar Okinyi',
-              link:'#Lemo_Mar_Okinyi',
-          },
-          {
-              title:'Wuonwa Ma I Polo',
-              link:'#Wuonwa_Ma_I_Polo',
-          },
-          {
-              title:'Misawa Maria',
-              link:'#Misawa_Maria',
-          },
-          {
-              title:'Ayie Nyasaye Wuon',
-              link:'#Ayie_Nyasaye_Wuon',
-          },
-          {
-              title:'Lemo Mar Yie',
-              link:'#Lemo_Mar_Yie',
-          },
-          {
-              title:'Lemo Mar Geno',
-              link:'#Lemo_Mar_Geno',
-          },
-          {
-              title:'Lemo Mar Hero',
-              link:'#Lemo_Mar_Hero',
-          },
-          {
-              title:'Lemo Mar Kwero',
-              link:'#Lemo_Mar_Kwero',
-          },
-          {
-              title:'Par Bikira Maria',
-              link:'#Par_Bikira_Maria',
-          },
-          {
-              title:'Lemo Mar Kwayo Ni Jokafiri',
-              link:'#Lemo_Mar_Kwayo_Ni_Jokafiri',
-          },
-          {
-              title:'Lemo Mar Dhi Chiemo',
-              link:'#Lemo_Mar_Dhi_Chiemo',
-          },
-          {
-              title:'Lemo Mar Tieko Chiemo',
-              link:'#Lemo_Mar_Tieko_Chiemo',
-          },
-          {
-              title:'Lemo Mar Odhiambo',
-              link:'#Lemo_Mar_Odhiambo',
-          },
-          {
-              title:'Buche Nyasaye',
-              link:'#Buche_Nyasaye',
-          },
-          {
-              title:'Buche Eklesia',
-              link:'#Buche_Eklesia',
-          },
-          {
-              title:'Duong Obedie',
-              link:'#Duong_Obedie',
-          },
-          {
-              title:'Lemo Mar Dhi Nindo',
-              link:'#Lemo_Mar_Dhi_Nindo',
+              title:'Mission O.D.A',
+              child:[
+                {
+                  title:'Members',
+                  child:[
+                    {
+                      title:'Available Members',
+                      link:'#'
+                    },
+                    {
+                      title:'Registered Members',
+                      link:'#'
+                    },
+                    {
+                      title:'Deacon Members',
+                      link:'#'
+                    },
+                    {
+                      title:'Acolyte Members',
+                      link:'#'
+                    },
+                    {
+                      title:'Official Members',
+                      link:'#'
+                    },
+                  ]
+                  
+                },
+                {
+                  title:'Projects',
+                  child:[
+                    {
+                      title:'Available Projects',
+                      link:'#'
+                    },
+                    {
+                      title:'Ongoing Projects',
+                      link:'#'
+                    },
+                    {
+                      title:'Completed Projects',
+                      link:'#'
+                    },
+                    {
+                      title:'Pending Projects',
+                      link:'#'
+                    },
+                    {
+                      title:'Future Projects',
+                      link:'#'
+                    },
+                  ]
+                  
+                },
+                {
+                  title:'Contributions',
+                  child:[
+                    {
+                      title:'My Contributions',
+                      link:'#'
+                    },
+                    {
+                      title:'Available Contributions',
+                      link:'#'
+                    },
+                    {
+                      title:'Ongoing Contributions',
+                      link:'#'
+                    },
+                    
+                  ]
+                  
+                },
+                {
+                  title:'Files',
+                  child:[
+                    {
+                      title:'Downloaded Files',
+                      link:'#'
+                    },
+                    
+                  ]
+                  
+                },
+              ],
           },
           
       ]
   },
   {
-      title:'Presdium',
-      child:[
-          {
-              title:'Wend Chako Presdium',
-              link:'#Wend_Chako_Presdium',
-          },
-          {
-              title:'Chako Katena',
-              link:'#Chako_Katena',
-          },
-          {
-              title:'Tieko Katena',
-              link:'#Tieko_Katena',
-          },
-      ]
+    title:'O.D.A',
+    child:[
+        {
+            title:'Mission O.D.A',
+            child:[
+              {
+                title:'Members',
+                child:[
+                  {
+                    title:'Available Members',
+                    link:'#'
+                  },
+                  {
+                    title:'Registered Members',
+                    link:'#'
+                  },
+                  {
+                    title:'Deacon Members',
+                    link:'#'
+                  },
+                  {
+                    title:'Acolyte Members',
+                    link:'#'
+                  },
+                  {
+                    title:'Official Members',
+                    link:'#'
+                  },
+                ]
+                
+              },
+              {
+                title:'Projects',
+                child:[
+                  {
+                    title:'Available Projects',
+                    link:'#'
+                  },
+                  {
+                    title:'Ongoing Projects',
+                    link:'#'
+                  },
+                  {
+                    title:'Completed Projects',
+                    link:'#'
+                  },
+                  {
+                    title:'Pending Projects',
+                    link:'#'
+                  },
+                  {
+                    title:'Future Projects',
+                    link:'#'
+                  },
+                ]
+                
+              },
+              {
+                title:'Contributions',
+                child:[
+                  {
+                    title:'My Contributions',
+                    link:'#'
+                  },
+                  {
+                    title:'Available Contributions',
+                    link:'#'
+                  },
+                  {
+                    title:'Ongoing Contributions',
+                    link:'#'
+                  },
+                  
+                ]
+                
+              },
+              {
+                title:'Files',
+                child:[
+                  {
+                    title:'Downloaded Files',
+                    link:'#'
+                  },
+                  
+                ]
+                
+              },
+            ],
+        },
+        
+    ]
   },
-]
  
-export function NavbarAfterLogin({session}) {
+]
 
+export function NavbarAfterLogin({ session }) {
   const [open, setOpen] = React.useState(0);
+  const [open1, setOpen1] = React.useState(0);
+  const [open2, setOpen2] = React.useState(0);
   const [openAlert, setOpenAlert] = React.useState(true);
   const [isDrawerOpen, setIsDrawerOpen] = React.useState(false);
-  
+
   const handleOpen = (value) => {
-      setOpen(open === value ? 0 : value);
+    setOpen(open === value ? 0 : value);
   };
-  
+
+  const handleOpen1 = (value) => {
+    setOpen1(open1 === value ? '' : value);
+  };
+
+  const handleOpen2 = (value) => {
+    setOpen2(open2 === value ? '' : value);
+  };
+
   const openDrawer = () => setIsDrawerOpen(true);
   const closeDrawer = () => setIsDrawerOpen(false);
- 
+
+
   return (
-      <>
-        <Navbar className="mx-auto max-w-screen-xl p-2 lg:rounded-full lg:pl-6">
+    <>
+      <Navbar className="mx-auto max-w-screen-xl p-2 lg:rounded-full lg:pl-6">
         <div className="relative mx-auto flex items-center justify-between text-blue-gray-900">
 
           <div className=''>
@@ -276,137 +373,189 @@ export function NavbarAfterLogin({session}) {
         
       </Navbar>
       <Drawer open={isDrawerOpen} onClose={closeDrawer} className="overflow-auto">
-              <div className='flex justify-end'>
-              {isDrawerOpen && (
-                <IconButton
-                  size="sm"
-                  color="blue-gray"
-                  variant="text"
-                  onClick={closeDrawer}
-                  className="ml-auto mr-2 lg:hidden"
-                >
-                  <XMarkIcon className="h-5 w-5 stroke-2" />
-                </IconButton>
-                ) 
-              }
-              </div>
-            
-            <CardBody
-            color="transparent"
-            shadow={false}
-            className="h-[calc(100vh-2rem)] w-full p-4"
+        <div className='flex justify-end'>
+          {isDrawerOpen && (
+            <IconButton
+              size="sm"
+              color="blue-gray"
+              variant="text"
+              onClick={closeDrawer}
+              className="ml-auto mr-2 lg:hidden"
             >
-            <div className="mb-1 flex items-center gap-4 p-1">
-                <img
-                src="/images/logo.jpg"
-                alt="brand"
-                className="h-12 w-12"
-                />
-                <Typography variant="h4" color="blue-gray">
-                Legion Maria Church
-                </Typography>
-            </div>
-            <div className="p-1 flex justify-center col-md-12">
-                <span className='fw-bold text-xl'>All Common Prayers</span>
-            </div>
-            <div >
-                <List>
+              <XMarkIcon className="h-5 w-5 stroke-2" />
+            </IconButton>
+          )}
+        </div>
 
-                    {
-                        Navitems.map((parent,key)=>{
+        <CardBody
+          color="transparent"
+          shadow={false}
+          className="h-[calc(100vh-2rem)] w-full p-1"
+        >
+          <div className="mb-1 flex gap-4 p-1">
+            <img
+              src="/images/logo.jpg"
+              alt="brand"
+              className="h-12 w-12"
+            />
+            <Typography variant="h3" color="fw-bold blue-gray text-center">
+              Legion Maria Church
+            </Typography>
+          </div>
+          <div className="p-1 flex justify-center col-md-12">
+            <span className='fw-bold text-xl text-primary'>System Administrator</span>
+          </div>
+          <div>
+            <List>
+              {SideNavitems.map((parent, key) => {
+                return (
+                  <>
+                    <Accordion
+                      open={open === key + 1}
+                      icon={
+                        <ChevronDoubleDownIcon
+                          strokeWidth={2}
+                          className={`mx-auto h-4 w-4 transition-transform ${open === key + 1 ? "rotate-180" : ""}`}
+                        />
+                      }
+                      key={key + 1}
+                    >
+                      <ListItem className="p-0" selected={open === key + 1}>
+                        <AccordionHeader onClick={() => handleOpen(key + 1)} className="border-b-0 p-3">
+                          <ListItemPrefix>
+                            <PresentationChartLineIcon className="h-5 w-5" />
+                          </ListItemPrefix>
+                          <Typography color="blue-gray" className="m-auto fw-bold">
+                            {parent.title}
+                          </Typography>
+                        </AccordionHeader>
+                      </ListItem>
+                      <AccordionBody className="py-1">
+                        <List className="p-0">
+                          {parent.child.map((subParent1, key) => {
                             return (
-                                <>
+                              <>
                                 <Accordion
-                                    open={open === key+1}
-                                    icon={
-                                        <ChevronDownIcon
-                                        strokeWidth={2.5}
-                                        className={`mx-auto h-4 w-4 transition-transform ${open === key+1 ? "rotate-180" : ""}`}
-                                        />
-                                    }
-                                    key={key+1}
-                                    >
-                                    <ListItem className="p-0" selected={open === key+1}>
-                                        <AccordionHeader onClick={() => handleOpen(key+1)} className="border-b-0 p-3">
-                                        <ListItemPrefix>
-                                            <PresentationChartBarIcon className="h-5 w-5" />
-                                        </ListItemPrefix>
-                                        <Typography color="blue-gray" className="mr-auto font-normal">
-                                            {parent.title}
-                                        </Typography>
-                                        </AccordionHeader>
-                                    </ListItem>
-                                    <AccordionBody className="py-1">
-                                        <List className="p-0">
-                                            {
-                                                parent.child.map(({title,link},key)=>{
-
-                                                    return (
-                                                    
-                                                        <>
-                                                            <a onClick={()=>{setTitleProp(parent.title); setIsDrawerOpen(false)}} href={`/resources/prayer/literature?lang=Luo&title=Lemo motelo mag Legion Maria Church${link}`} key={key+1} className='text-decoration-none'>
-                                                                <ListItem>
-                                                                <ListItemPrefix>
-                                                                    <ChevronRightIcon  className="h-5 w-5" />
-                                                                </ListItemPrefix>
-                                                                {title}
-                                                                </ListItem>
-                                                            </a>
-                                                        </>
-                                                    )
-                                                })
+                                  open={open1 === 'a' + key + 1}
+                                  icon={
+                                    <ChevronRightIcon
+                                      strokeWidth={2.5}
+                                      className={`mx-auto h-4 w-4 transition-transform ${open1 === 'a' + key + 1 ? "rotate-180" : ""}`}
+                                    />
+                                  }
+                                  key={key + 1}
+                                >
+                                  <ListItem className="p-0" selected={open1 === 'a' + key + 1}>
+                                    <AccordionHeader onClick={() => handleOpen1('a' + key + 1)} className="border-b-0 p-2">
+                                      <ListItemPrefix>
+                                        <ChartBarIcon className="h-5 w-5" />
+                                      </ListItemPrefix>
+                                      <Typography color="red" className="m-auto font-normal">
+                                        {subParent1.title}
+                                      </Typography>
+                                    </AccordionHeader>
+                                  </ListItem>
+                                  <AccordionBody className="py-1">
+                                    <List className="p-0">
+                                    {subParent1.child.map((subParent2, key) => {
+                                      return (
+                                        <>
+                                          <Accordion
+                                            open={open2 === 'b' + key + 1}
+                                            icon={
+                                              <ChevronLeftIcon
+                                                strokeWidth={2.5}
+                                                className={`mx-auto h-4 w-4 transition-transform ${open2 === 'b' + key + 1 ? "rotate-180" : ""}`}
+                                              />
                                             }
+                                            key={key + 1}
+                                          >
+                                            <ListItem className="p-0" selected={open2 === 'b' + key + 1}>
+                                              <AccordionHeader onClick={() => handleOpen2('b' + key + 1)} className="border-b-0 p-1">
+                                                <ListItemPrefix>
+                                                  <ChartPieIcon className="h-5 w-5" />
+                                                </ListItemPrefix>
+                                                <Typography color="green" className="m-auto font-normal">
+                                                  {subParent2.title}
+                                                </Typography>
+                                              </AccordionHeader>
+                                            </ListItem>
+                                            <AccordionBody className="py-1">
+                                              <List className="p-0">
+                                              {
+                                                subParent2.child.map((result,key)=>{
+                                                  return (
+                                                      <>
+                                                        <a onClick={()=>{setIsDrawerOpen(false)}} href={result.link} key={'c'+key+1} className='text-decoration-none'>
+                                                            <ListItem>
+                                                            <ListItemPrefix>
+                                                                <LinkIcon  className="h-5 w-5" />
+                                                            </ListItemPrefix>
+                                                            {result.title}
+                                                            </ListItem>
+                                                        </a>
+                                                      </>
+                                                  )
+                                                })
+                                              }
                                         
-                                        </List>
-                                    </AccordionBody>
+                                              </List>
+                                            </AccordionBody>
+                                          </Accordion>
+                                        </>
+                                      )
+                                    })}
+                                    </List>
+                                  </AccordionBody>
                                 </Accordion>
-                                
-                                </>
+                              </>
                             )
-                            
-                        })
-                    }
-
-                    
-                </List>
-                <Alert
-                    open={openAlert}
-                    className="mt-auto"
-                    onClose={() => setOpenAlert(false)}
+                          })}
+                        </List>
+                      </AccordionBody>
+                    </Accordion>
+                  </>
+                )
+              })}
+            </List>
+            <Alert
+                open={openAlert}
+                className="mt-auto"
+                onClose={() => setOpenAlert(false)}
+            >
+                <CubeTransparentIcon className="mb-4 h-12 w-12" />
+                <Typography variant="h6" className="mb-1">
+                Upgrade to PRO
+                </Typography>
+                <Typography variant="small" className="font-normal opacity-80">
+                Upgrade to Material Tailwind PRO and get even more components,
+                plugins, advanced features and premium.
+                </Typography>
+                <div className="mt-4 flex gap-3">
+                <Typography
+                    as="a"
+                    href="#"
+                    variant="small"
+                    className="font-medium opacity-80"
+                    onClick={() => setOpenAlert(false)}
                 >
-                    <CubeTransparentIcon className="mb-4 h-12 w-12" />
-                    <Typography variant="h6" className="mb-1">
-                    Upgrade to PRO
-                    </Typography>
-                    <Typography variant="small" className="font-normal opacity-80">
-                    Upgrade to Material Tailwind PRO and get even more components,
-                    plugins, advanced features and premium.
-                    </Typography>
-                    <div className="mt-4 flex gap-3">
-                    <Typography
-                        as="a"
-                        href="#"
-                        variant="small"
-                        className="font-medium opacity-80"
-                        onClick={() => setOpenAlert(false)}
-                    >
-                        Dismiss
-                    </Typography>
-                    <Typography
-                        as="a"
-                        href="#"
-                        variant="small"
-                        className="font-medium"
-                    >
-                        Upgrade Now
-                    </Typography>
-                    </div>
-                </Alert>
-            </div>
-            
-            </CardBody>
+                    Dismiss
+                </Typography>
+                <Typography
+                    as="a"
+                    href="#"
+                    variant="small"
+                    className="font-medium"
+                >
+                    Upgrade Now
+                </Typography>
+                </div>
+            </Alert>
+          </div>
+        </CardBody>
       </Drawer>
-      </>
-
+    </>
   );
 }
+
+

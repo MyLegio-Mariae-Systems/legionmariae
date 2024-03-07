@@ -5,26 +5,26 @@ import {
   CardBody,
   CardFooter,
   Typography,
+  Button,
 } from "@material-tailwind/react";
 import PropTypes from "prop-types";
 
 export function StatisticsCard({ color, icon, title, value, footer }) {
   return (
-    <Card className="border border-blue-gray-100 shadow-sm max-w-50">
-      
-      <CardBody className="text-right">
-        <Typography variant="small" className="font-normal text-right  text-blue-gray-600">
-          {title}
+    <Card className="mt-6 w-50">
+      <CardBody>
+        <Typography variant="h5" color="blue-gray" className="mb-2">
+          UI/UX Review Check
         </Typography>
-        <Typography variant="h4" color="blue-gray">
-          {value}
+        <Typography>
+          The place is close to Barceloneta Beach and bus stop just 2 min by
+          walk and near to &quot;Naviglio&quot; where you can enjoy the main
+          night life in Barcelona.
         </Typography>
       </CardBody>
-      {/* {footer && (
-        <CardFooter className="border-t border-blue-gray-50 p-4">
-          {footer}
-        </CardFooter>
-      )} */}
+      <CardFooter className="pt-0">
+        <Button>Read More</Button>
+      </CardFooter>
     </Card>
   );
 }

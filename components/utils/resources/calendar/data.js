@@ -443,7 +443,7 @@ export default function fixedDates(year) {
                     date:`${year}-03-12`,
                     feast:``,
                     saint:`St. Gregory - Pope`,
-                    color:``,
+                    color:`White`,
                 },
                 {
                     date:`${year}-03-13`,

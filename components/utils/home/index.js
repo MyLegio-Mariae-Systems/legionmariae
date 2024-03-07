@@ -42,7 +42,7 @@ export default function HomePage({session}) {
 
     const todayObject = TABLE_ROWS.flatMap(obj => obj.details).find(detail => detail.date === today);
 
-    return todayObject?.saint
+    return todayObject
 
     
   }
@@ -74,7 +74,7 @@ export default function HomePage({session}) {
     let returnValue
 
     if (value ===1) {
-      returnValue=todayObject?.feast
+      returnValue=todayObject
       
     } else {
       returnValue=DayTime(todayObject?.date)
@@ -112,7 +112,10 @@ export default function HomePage({session}) {
                       Saint (s) of the Day
                   </p>
                   <p className="text-light font-small">
-                    {saintToday()}
+                    {saintToday()?.saint}
+                  </p>
+                  <p className="text-light font-small">
+                  {saintToday(1)?.color ? <span><span className='text-warning'>{saintToday(1)?.color}</span> Vestment</span> : ''} 
                   </p>
                   
                 </div>
@@ -126,11 +129,11 @@ export default function HomePage({session}) {
                     Next Major Feast
                   </p>
                   <p className="text-light font-small">
-                    {commingFeast(1)} 
+                    {commingFeast(1)?.feast} 
                   </p>
-                  {/* <p className="text-light font-small">
-                    St. Joannes Kodero - Kisumu/Kenya.
-                  </p> */}
+                  <p className="text-light font-small">
+                    <span className='text-warning'>{commingFeast(1)?.color}</span> Vestment
+                  </p>
                   
                 </div>
                 <button className="px-4 py-1 text-dark bg-light

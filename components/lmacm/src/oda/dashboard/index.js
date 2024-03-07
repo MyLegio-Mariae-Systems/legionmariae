@@ -1,14 +1,14 @@
 'use client'
 
 import { NavbarAfterLogin } from "../../../../utils/header/headerAfterLogin"
-import Home from "./home"
+import ODADashboardHome from "./home"
 
 export default function ODADashboardPage({session}) {
 
     return (
         <>
         <NavbarAfterLogin session={session}/>
-        <Home />
+        <ODADashboardHome />
         </>
     )
 }
