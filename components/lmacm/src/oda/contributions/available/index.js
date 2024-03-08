@@ -2,14 +2,14 @@
 
 import { Footer } from "../../../../../utils/footer"
 import { NavbarAfterLogin } from "../../../../../utils/header/headerAfterLogin"
-import ODANewMemberHome from "./home"
+import ODAAvailableContributionsHome from "./home"
 
-export default function ODANewMemberPage({session}) {
+export default function ODAAvailableContributionsPage({session}) {
 
     return (
         <>
         <NavbarAfterLogin session={session}/>
-        <ODANewMemberHome />
+        <ODAAvailableContributionsHome />
         <Footer />
         </>
     )

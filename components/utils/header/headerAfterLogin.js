@@ -131,6 +131,361 @@ function ProfileMenu() {
 
 const SideNavitems=[
   {
+    title:'Headquaters',
+    child:[
+      {
+          title:'Arch Dioces',
+          child:[
+            {
+              title:'Dashboard',
+              child:[
+
+                {
+                  title:'Home Dashboard',
+                  link:'/lmacm/src/hq/arch-dioces/dashboard/home-dashboard'
+                },
+                
+              ]
+              
+            },
+            {
+              title:'Register',
+              child:[
+                
+                {
+                  title:'New Arch Dioces',
+                  link:'/lmacm/src/hq/arch-dioces/register/new-arch-dioces'
+                },
+                
+              ]
+              
+            },
+            {
+              title:'View',
+              child:[
+                {
+                  title:'View Arch Dioces',
+                  link:'/lmacm/src/hq/arch-dioces/view/arch-dioces'
+                },
+                {
+                  title:'Available Members',
+                  link:'/lmacm/src/arch-dioces/view/available-members'
+                },
+                {
+                  title:'Registered Members',
+                  link:'/lmacm/src/arch-dioces/view/registered-members'
+                },
+                {
+                  title:'Deacon Members',
+                  link:'/lmacm/src/arch-dioces/view/deacon-members'
+                },
+                {
+                  title:'Acolyte Members',
+                  link:'/lmacm/src/arch-dioces/view/acolyte-members'
+                },
+                {
+                  title:'Official Members',
+                  link:'/lmacm/src/arch-dioces/view/official-members'
+                },
+              ]
+              
+            },
+            {
+              title:'Projects',
+              child:[
+                {
+                  title:'Available Projects',
+                  link:'/lmacm/src/arch-dioces/projects/available-projects'
+                },
+                {
+                  title:'Ongoing Projects',
+                  link:'/lmacm/src/arch-dioces/projects/ongoing-projects'
+                },
+                {
+                  title:'Completed Projects',
+                  link:'/lmacm/src/arch-dioces/projects/completed-projects'
+                },
+                {
+                  title:'Pending Projects',
+                  link:'/lmacm/src/arch-dioces/projects/pending-projects'
+                },
+                {
+                  title:'Future Projects',
+                  link:'/lmacm/src/arch-dioces/projects/future-projects'
+                },
+              ]
+              
+            },
+            {
+              title:'Contributions',
+              child:[
+                {
+                  title:'My Contributions',
+                  link:'/lmacm/src/oda/contributions/my-contributions'
+                },
+                {
+                  title:'Available Contributions',
+                  link:'/lmacm/src/arch-dioces/contributions/available-contributions'
+                },
+                {
+                  title:'Ongoing Contributions',
+                  link:'/lmacm/src/arch-dioces/contributions/ongoing-contributions'
+                },
+                
+              ]
+              
+            },
+            {
+              title:'Files',
+              child:[
+                {
+                  title:'Downloaded Files',
+                  link:'/lmacm/src/oda/files/downloaded-files'
+                },
+                
+              ]
+              
+            },
+          ],
+      },
+
+      {
+        title:'Dioces',
+        child:[
+          {
+            title:'Dashboard',
+            child:[
+
+              {
+                title:'Home Dashboard',
+                link:'/lmacm/src/hq/dioces/dashboard/home-dashboard'
+              },
+              
+            ]
+            
+          },
+          {
+            title:'Register',
+            child:[
+              
+              {
+                title:'New Dioces',
+                link:'/lmacm/src/hq/dioces/register/new-dioces'
+              },
+              
+            ]
+            
+          },
+          {
+            title:'View',
+            child:[
+              {
+                title:'View Arch Dioces',
+                link:'/lmacm/src/hq/arch-dioces/view/arch-dioces'
+              },
+              {
+                title:'Available Members',
+                link:'/lmacm/src/arch-dioces/view/available-members'
+              },
+              {
+                title:'Registered Members',
+                link:'/lmacm/src/arch-dioces/view/registered-members'
+              },
+              {
+                title:'Deacon Members',
+                link:'/lmacm/src/arch-dioces/view/deacon-members'
+              },
+              {
+                title:'Acolyte Members',
+                link:'/lmacm/src/arch-dioces/view/acolyte-members'
+              },
+              {
+                title:'Official Members',
+                link:'/lmacm/src/arch-dioces/view/official-members'
+              },
+            ]
+            
+          },
+          {
+            title:'Projects',
+            child:[
+              {
+                title:'Available Projects',
+                link:'/lmacm/src/arch-dioces/projects/available-projects'
+              },
+              {
+                title:'Ongoing Projects',
+                link:'/lmacm/src/arch-dioces/projects/ongoing-projects'
+              },
+              {
+                title:'Completed Projects',
+                link:'/lmacm/src/arch-dioces/projects/completed-projects'
+              },
+              {
+                title:'Pending Projects',
+                link:'/lmacm/src/arch-dioces/projects/pending-projects'
+              },
+              {
+                title:'Future Projects',
+                link:'/lmacm/src/arch-dioces/projects/future-projects'
+              },
+            ]
+            
+          },
+          {
+            title:'Contributions',
+            child:[
+              {
+                title:'My Contributions',
+                link:'/lmacm/src/oda/contributions/my-contributions'
+              },
+              {
+                title:'Available Contributions',
+                link:'/lmacm/src/arch-dioces/contributions/available-contributions'
+              },
+              {
+                title:'Ongoing Contributions',
+                link:'/lmacm/src/arch-dioces/contributions/ongoing-contributions'
+              },
+              
+            ]
+            
+          },
+          {
+            title:'Files',
+            child:[
+              {
+                title:'Downloaded Files',
+                link:'/lmacm/src/oda/files/downloaded-files'
+              },
+              
+            ]
+            
+          },
+        ],
+      },
+
+      {
+        title:'Mission',
+        child:[
+          {
+            title:'Dashboard',
+            child:[
+
+              {
+                title:'Home Dashboard',
+                link:'/lmacm/src/hq/mission/dashboard/home-dashboard'
+              },
+              
+            ]
+            
+          },
+          {
+            title:'Register',
+            child:[
+              
+              {
+                title:'New Mission',
+                link:'/lmacm/src/hq/mission/register/new-mission'
+              },
+              
+            ]
+            
+          },
+          {
+            title:'View',
+            child:[
+              {
+                title:'View Mission',
+                link:'/lmacm/src/hq/mission/view/mission'
+              },
+              {
+                title:'Available Members',
+                link:'/lmacm/src/arch-dioces/view/available-members'
+              },
+              {
+                title:'Registered Members',
+                link:'/lmacm/src/arch-dioces/view/registered-members'
+              },
+              {
+                title:'Deacon Members',
+                link:'/lmacm/src/arch-dioces/view/deacon-members'
+              },
+              {
+                title:'Acolyte Members',
+                link:'/lmacm/src/arch-dioces/view/acolyte-members'
+              },
+              {
+                title:'Official Members',
+                link:'/lmacm/src/arch-dioces/view/official-members'
+              },
+            ]
+            
+          },
+          {
+            title:'Projects',
+            child:[
+              {
+                title:'Available Projects',
+                link:'/lmacm/src/arch-dioces/projects/available-projects'
+              },
+              {
+                title:'Ongoing Projects',
+                link:'/lmacm/src/arch-dioces/projects/ongoing-projects'
+              },
+              {
+                title:'Completed Projects',
+                link:'/lmacm/src/arch-dioces/projects/completed-projects'
+              },
+              {
+                title:'Pending Projects',
+                link:'/lmacm/src/arch-dioces/projects/pending-projects'
+              },
+              {
+                title:'Future Projects',
+                link:'/lmacm/src/arch-dioces/projects/future-projects'
+              },
+            ]
+            
+          },
+          {
+            title:'Contributions',
+            child:[
+              {
+                title:'My Contributions',
+                link:'/lmacm/src/oda/contributions/my-contributions'
+              },
+              {
+                title:'Available Contributions',
+                link:'/lmacm/src/arch-dioces/contributions/available-contributions'
+              },
+              {
+                title:'Ongoing Contributions',
+                link:'/lmacm/src/arch-dioces/contributions/ongoing-contributions'
+              },
+              
+            ]
+            
+          },
+          {
+            title:'Files',
+            child:[
+              {
+                title:'Downloaded Files',
+                link:'/lmacm/src/oda/files/downloaded-files'
+              },
+              
+            ]
+            
+          },
+        ],
+      },
+        
+    ]
+  },
+  
+
+  {
     title:'O.D.A',
     child:[
         {
@@ -150,6 +505,10 @@ const SideNavitems=[
               {
                 title:'Members',
                 child:[
+                  {
+                    title:'New Member',
+                    link:'/lmacm/src/oda/members/new-member'
+                  },
                   {
                     title:'Available Members',
                     link:'/lmacm/src/oda/members/available-members'
@@ -262,7 +621,7 @@ export function NavbarAfterLogin({ session }) {
 
   return (
     <>
-      <Navbar className="mx-auto max-w-screen-xl p-2 lg:rounded-full lg:pl-6">
+      <Navbar className="sticky-top mx-auto max-w-screen-xl p-2 lg:rounded-full lg:pl-6">
         <div className="relative mx-auto flex items-center justify-between text-blue-gray-900">
 
           <div className=''>

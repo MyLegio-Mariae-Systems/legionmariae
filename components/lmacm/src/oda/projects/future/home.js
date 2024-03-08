@@ -1,28 +1,7 @@
 'use client'
 
-import {
-    MagnifyingGlassIcon,
-    ChevronUpDownIcon,
-  } from "@heroicons/react/24/outline";
-  import { PencilIcon, UserPlusIcon } from "@heroicons/react/24/solid";
-  import {
-    Card,
-    CardHeader,
-    Input,
-    Typography,
-    Button,
-    CardBody,
-    Chip,
-    CardFooter,
-    Tabs,
-    TabsHeader,
-    Tab,
-    Avatar,
-    IconButton,
-    Tooltip,
-  } from "@material-tailwind/react";
 import ODAMembersTable from "../../tables";
-   
+
   const TABS = [
     {
       label: "All",
@@ -88,9 +67,8 @@ import ODAMembersTable from "../../tables";
     },
   ];
    
-export default function ODADeaconMembersHome() {
-  
-  const TITLE='Deacon Members'
+export default function ODAFutureProjectsHome() {
+  const TITLE='Future Projects'
 
   const data={TABS,TABLE_HEAD,TABLE_ROWS,TITLE}
 

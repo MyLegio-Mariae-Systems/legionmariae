@@ -231,7 +231,7 @@ export function ODADashboardHome() {
             />
             </Typography>
             <div className="mb-0 flex justify-end mt-1 col-md-12">
-            <Typography as='a' href='' className="btn btn-dark">
+            <Typography as='a' href='/lmacm/src/oda/projects/available-projects' className="btn btn-dark">
               View
             </Typography>
             </div>
@@ -268,7 +268,7 @@ export function ODADashboardHome() {
             />
             </Typography>
             <div className="mb-0 flex justify-end mt-1 col-md-12">
-            <Typography as='a' href='' className="btn btn-dark">
+            <Typography as='a' href='/lmacm/src/oda/projects/ongoing-projects' className="btn btn-dark">
               View
             </Typography>
             </div>
@@ -305,7 +305,7 @@ export function ODADashboardHome() {
             />
             </Typography>
             <div className="mb-0 flex justify-end mt-1 col-md-12">
-            <Typography as='a' href='' className="btn btn-dark">
+            <Typography as='a' href='/lmacm/src/oda/projects/completed-projects' className="btn btn-dark">
               View
             </Typography>
             </div>
@@ -342,7 +342,7 @@ export function ODADashboardHome() {
             />
             </Typography>
             <div className="mb-0 flex justify-end mt-1 col-md-12">
-            <Typography as='a' href='' className="btn btn-dark">
+            <Typography as='a' href='/lmacm/src/oda/projects/pending-projects' className="btn btn-dark">
               View
             </Typography>
             </div>
@@ -379,7 +379,7 @@ export function ODADashboardHome() {
             />
             </Typography>
             <div className="mb-0 flex justify-end mt-1 col-md-12">
-            <Typography as='a' href='' className="btn btn-dark">
+            <Typography as='a' href='/lmacm/src/oda/projects/future-projects' className="btn btn-dark">
               View
             </Typography>
             </div>
@@ -436,7 +436,7 @@ export function ODADashboardHome() {
             />
             </Typography>
             <div className="mb-0 flex justify-end mt-1 col-md-12">
-            <Typography as='a' href='' className="btn btn-dark">
+            <Typography as='a' href='/lmacm/src/oda/contributions/available-contributions' className="btn btn-dark">
               View
             </Typography>
             </div>
@@ -473,7 +473,7 @@ export function ODADashboardHome() {
             />
             </Typography>
             <div className="mb-0 flex justify-end mt-1 col-md-12">
-            <Typography as='a' href='' className="btn btn-dark">
+            <Typography as='a' href='/lmacm/src/oda/contributions/ongoing-contributions' className="btn btn-dark">
               View
             </Typography>
             </div>

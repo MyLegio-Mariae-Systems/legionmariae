@@ -21,7 +21,7 @@ const authOptions={
                 
                 // if (typeof credentials !=='undefined') {
 
-                    // await DbConnect();
+                    await DbConnect();
 
                 //     userData=await loginUser(credentials.username,credentials.password,request)
                 // }
