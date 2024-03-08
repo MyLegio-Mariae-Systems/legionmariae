@@ -88,7 +88,7 @@ import ODAMembersTable from "../../tables";
     },
   ];
    
-export default function ODAAvailableMembersHome() {
+export default function ODAOfficialMembersHome() {
     const date=new Date()
     return (
       <Card className="h-full w-full">
@@ -96,7 +96,7 @@ export default function ODAAvailableMembersHome() {
           <div className="mb-8 flex flex-wrap items-center justify-between gap-8">
             <div>
               <Typography  className='text-3xl text-primary fw-bold'>
-                Available Members
+                Official Members
               </Typography>
               <Typography color="gray" className="mt-1 font-normal">
                 See information about all members

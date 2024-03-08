@@ -15,13 +15,13 @@ const authOptions={
             credentials:{username:{},password:{}},
             async authorize(credentials,request){
 
-                console.log(credentials);
+                // console.log(credentials);
 
                 let userData
                 
                 // if (typeof credentials !=='undefined') {
 
-                    await DbConnect();
+                    // await DbConnect();
 
                 //     userData=await loginUser(credentials.username,credentials.password,request)
                 // }

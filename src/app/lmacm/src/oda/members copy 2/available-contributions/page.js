@@ -1,7 +1,7 @@
 import { redirect } from "next/navigation";
 import { getServerSession } from "next-auth";
 import authOptions from "@/app/api/auth/[...nextauth]/options";
-import ODAAvailableMembersPage from "../../../../../../components/lmacm/src/oda/members/available";
+import ODAAvailableMembersPage from "../../../../../../../components/lmacm/src/oda/members/available";
 
 const year=new Date().getFullYear()
 
@@ -10,7 +10,7 @@ export const metadata = {
     description: `Legion Maria Organization of Deacons and Acolytes Available Members`,
 };
 
-export default async function ODADashboard(request) {
+export default async function ODAAvailableContributions(request) {
 
   const session=await getServerSession(authOptions)
 

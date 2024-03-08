@@ -88,7 +88,7 @@ import ODAMembersTable from "../../tables";
     },
   ];
    
-export default function ODAAvailableMembersHome() {
+export default function ODARegisteredMembersHome() {
     const date=new Date()
     return (
       <Card className="h-full w-full">
@@ -96,10 +96,10 @@ export default function ODAAvailableMembersHome() {
           <div className="mb-8 flex flex-wrap items-center justify-between gap-8">
             <div>
               <Typography  className='text-3xl text-primary fw-bold'>
-                Available Members
+                Registered Members
               </Typography>
               <Typography color="gray" className="mt-1 font-normal">
-                See information about all members
+                See information about only {date.getFullYear()} registered members.
               </Typography>
             </div>
             <div className="flex flex-wrap shrink-0 gap-2 ">
@@ -108,7 +108,6 @@ export default function ODAAvailableMembersHome() {
               </Button> */}
               <select class="rounded-md border ">
                 <option>Available Members</option>
-                <option>{date.getFullYear()} Registered Members</option>
                 <option>Not Registered Members</option>
               </select>
               <Button className="flex items-center gap-1" size="sm">

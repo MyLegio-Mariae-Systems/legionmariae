@@ -38,7 +38,7 @@ export function ODADashboardHome() {
   const date=new Date()
 
   return (
-    <div className="col-md-12">
+    <div className="col-md-12 bg-light max-h-screen">
 
       <div className='mt-3'>
         <Typography variant="h4" className="mb-2 text-start text-primary ms-4 me-1">
@@ -74,7 +74,7 @@ export function ODADashboardHome() {
             />
             </Typography>
             <div className="mb-0 flex justify-end mt-1 col-md-12">
-            <Typography as='a' href='/lmacm/src/oda/available-members' className="btn btn-dark">
+            <Typography as='a' href='/lmacm/src/oda/members/available-members' className="btn btn-dark">
               View
             </Typography>
             </div>
@@ -111,7 +111,7 @@ export function ODADashboardHome() {
             />
             </Typography>
             <div className="mb-0 flex justify-end mt-1 col-md-12">
-            <Typography as='a' href='' className="btn btn-dark">
+            <Typography as='a' href='/lmacm/src/oda/members/registered-members' className="btn btn-dark">
               View
             </Typography>
             </div>
@@ -148,7 +148,7 @@ export function ODADashboardHome() {
             />
             </Typography>
             <div className="mb-0 flex justify-end mt-1 col-md-12">
-            <Typography as='a' href='' className="btn btn-dark">
+            <Typography as='a' href='/lmacm/src/oda/members/deacon-members' className="btn btn-dark">
               View
             </Typography>
             </div>
@@ -185,7 +185,7 @@ export function ODADashboardHome() {
             />
             </Typography>
             <div className="mb-0 flex justify-end mt-1 col-md-12">
-            <Typography as='a' href='' className="btn btn-dark">
+            <Typography as='a' href='/lmacm/src/oda/members/acolyte-members' className="btn btn-dark">
               View
             </Typography>
             </div>

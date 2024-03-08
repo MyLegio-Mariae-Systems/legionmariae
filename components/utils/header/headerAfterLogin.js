@@ -41,6 +41,7 @@ import {
   ChevronDoubleDownIcon,
 } from "@heroicons/react/24/solid";
 import { ChartBarIcon, ChevronLeftIcon, LinkIcon } from "@heroicons/react/24/outline";
+import { signOut } from "next-auth/react";
  
 // profile menu component
 const profileMenuItems = [
@@ -116,6 +117,7 @@ function ProfileMenu() {
                 variant="small"
                 className="font-normal"
                 color={isLastItem ? "red" : "inherit"}
+                onClick={signOut}
               >
                 {label}
               </Typography>
@@ -129,126 +131,44 @@ function ProfileMenu() {
 
 const SideNavitems=[
   {
-      title:'Members',
-      child:[
-          {
-              title:'Mission O.D.A',
-              child:[
-                {
-                  title:'Members',
-                  child:[
-                    {
-                      title:'Available Members',
-                      link:'#'
-                    },
-                    {
-                      title:'Registered Members',
-                      link:'#'
-                    },
-                    {
-                      title:'Deacon Members',
-                      link:'#'
-                    },
-                    {
-                      title:'Acolyte Members',
-                      link:'#'
-                    },
-                    {
-                      title:'Official Members',
-                      link:'#'
-                    },
-                  ]
-                  
-                },
-                {
-                  title:'Projects',
-                  child:[
-                    {
-                      title:'Available Projects',
-                      link:'#'
-                    },
-                    {
-                      title:'Ongoing Projects',
-                      link:'#'
-                    },
-                    {
-                      title:'Completed Projects',
-                      link:'#'
-                    },
-                    {
-                      title:'Pending Projects',
-                      link:'#'
-                    },
-                    {
-                      title:'Future Projects',
-                      link:'#'
-                    },
-                  ]
-                  
-                },
-                {
-                  title:'Contributions',
-                  child:[
-                    {
-                      title:'My Contributions',
-                      link:'#'
-                    },
-                    {
-                      title:'Available Contributions',
-                      link:'#'
-                    },
-                    {
-                      title:'Ongoing Contributions',
-                      link:'#'
-                    },
-                    
-                  ]
-                  
-                },
-                {
-                  title:'Files',
-                  child:[
-                    {
-                      title:'Downloaded Files',
-                      link:'#'
-                    },
-                    
-                  ]
-                  
-                },
-              ],
-          },
-          
-      ]
-  },
-  {
     title:'O.D.A',
     child:[
         {
             title:'Mission O.D.A',
             child:[
               {
+                title:'Dashboard',
+                child:[
+                  {
+                    title:'Home Dashboard',
+                    link:'/lmacm/src/oda/dashboard/home-dashboard'
+                  },
+                  
+                ]
+                
+              },
+              {
                 title:'Members',
                 child:[
                   {
                     title:'Available Members',
-                    link:'#'
+                    link:'/lmacm/src/oda/members/available-members'
                   },
                   {
                     title:'Registered Members',
-                    link:'#'
+                    link:'/lmacm/src/oda/members/registered-members'
                   },
                   {
                     title:'Deacon Members',
-                    link:'#'
+                    link:'/lmacm/src/oda/members/deacon-members'
                   },
                   {
                     title:'Acolyte Members',
-                    link:'#'
+                    link:'/lmacm/src/oda/members/acolyte-members'
                   },
                   {
                     title:'Official Members',
-                    link:'#'
+                    link:'/lmacm/src/oda/members/official-members'
                   },
                 ]
                 
@@ -258,23 +178,23 @@ const SideNavitems=[
                 child:[
                   {
                     title:'Available Projects',
-                    link:'#'
+                    link:'/lmacm/src/oda/projects/available-projects'
                   },
                   {
                     title:'Ongoing Projects',
-                    link:'#'
+                    link:'/lmacm/src/oda/projects/ongoing-projects'
                   },
                   {
                     title:'Completed Projects',
-                    link:'#'
+                    link:'/lmacm/src/oda/projects/completed-projects'
                   },
                   {
                     title:'Pending Projects',
-                    link:'#'
+                    link:'/lmacm/src/oda/projects/pending-projects'
                   },
                   {
                     title:'Future Projects',
-                    link:'#'
+                    link:'/lmacm/src/oda/projects/future-projects'
                   },
                 ]
                 
@@ -284,15 +204,15 @@ const SideNavitems=[
                 child:[
                   {
                     title:'My Contributions',
-                    link:'#'
+                    link:'/lmacm/src/oda/contributions/my-contributions'
                   },
                   {
                     title:'Available Contributions',
-                    link:'#'
+                    link:'/lmacm/src/oda/contributions/available-contributions'
                   },
                   {
                     title:'Ongoing Contributions',
-                    link:'#'
+                    link:'/lmacm/src/oda/contributions/ongoing-contributions'
                   },
                   
                 ]
@@ -303,7 +223,7 @@ const SideNavitems=[
                 child:[
                   {
                     title:'Downloaded Files',
-                    link:'#'
+                    link:'/lmacm/src/oda/files/downloaded-files'
                   },
                   
                 ]
@@ -423,9 +343,9 @@ export function NavbarAfterLogin({ session }) {
                       <ListItem className="p-0" selected={open === key + 1}>
                         <AccordionHeader onClick={() => handleOpen(key + 1)} className="border-b-0 p-3">
                           <ListItemPrefix>
-                            <PresentationChartLineIcon className="h-5 w-5" />
+                            <PresentationChartLineIcon color="red" className="h-5 w-5" />
                           </ListItemPrefix>
-                          <Typography color="blue-gray" className="m-auto fw-bold">
+                          <Typography color="black" className="m-auto fw-bold">
                             {parent.title}
                           </Typography>
                         </AccordionHeader>
@@ -448,7 +368,7 @@ export function NavbarAfterLogin({ session }) {
                                   <ListItem className="p-0" selected={open1 === 'a' + key + 1}>
                                     <AccordionHeader onClick={() => handleOpen1('a' + key + 1)} className="border-b-0 p-2">
                                       <ListItemPrefix>
-                                        <ChartBarIcon className="h-5 w-5" />
+                                        <ChartBarIcon color="purple" className="h-5 w-5" />
                                       </ListItemPrefix>
                                       <Typography color="red" className="m-auto font-normal">
                                         {subParent1.title}
@@ -473,9 +393,9 @@ export function NavbarAfterLogin({ session }) {
                                             <ListItem className="p-0" selected={open2 === 'b' + key + 1}>
                                               <AccordionHeader onClick={() => handleOpen2('b' + key + 1)} className="border-b-0 p-1">
                                                 <ListItemPrefix>
-                                                  <ChartPieIcon className="h-5 w-5" />
+                                                  <ChartPieIcon color='blue' className="h-5 w-5" />
                                                 </ListItemPrefix>
-                                                <Typography color="green" className="m-auto font-normal">
+                                                <Typography color="purple" className="m-auto font-normal">
                                                   {subParent2.title}
                                                 </Typography>
                                               </AccordionHeader>
@@ -489,7 +409,7 @@ export function NavbarAfterLogin({ session }) {
                                                         <a onClick={()=>{setIsDrawerOpen(false)}} href={result.link} key={'c'+key+1} className='text-decoration-none'>
                                                             <ListItem>
                                                             <ListItemPrefix>
-                                                                <LinkIcon  className="h-5 w-5" />
+                                                                <LinkIcon color="green"  className="h-5 w-5" />
                                                             </ListItemPrefix>
                                                             {result.title}
                                                             </ListItem>

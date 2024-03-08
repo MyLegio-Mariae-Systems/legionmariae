@@ -310,7 +310,7 @@ export default function NavbarB4Login({session}) {
               })
           }
           else{
-              router.push('/lmacm/src/oda/dashboard')
+              router.push('/lmacm/src/oda/dashboard/home-dashboard')
           }
 
       }
