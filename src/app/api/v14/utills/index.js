@@ -2,15 +2,14 @@
 
 import mongoose, {connect, connection} from 'mongoose'
 import { SMTPClient } from 'emailjs';
-// import nodeMailer from 'nodemailer'
-// import sanitizeHtml from 'sanitize-html';
-// import Joi from 'joi';
-// import moment from 'moment';
-// import crypto from 'crypto';
-// import {addMonths} from 'date-fns'
-// import { NextResponse } from 'next/server';
-
-// import jwt from 'jsonwebtoken'
+import nodeMailer from 'nodemailer'
+import sanitizeHtml from 'sanitize-html';
+import Joi from 'joi';
+import moment from 'moment';
+import crypto from 'crypto';
+import {addMonths, format} from 'date-fns'
+import { NextResponse } from 'next/server';
+import jwt from 'jsonwebtoken'
 
 // DB CONNECTION
 
@@ -44,56 +43,50 @@ export default async function DbConnect(){
 
 export async function sendEmail(subject,message,send_to){
 
-    //Create Email transporter
-    // const transporter=nodeMailer.createTransport({
-    //     host:process.env.EMAIL_HOST,
-    //     port:587,
-    //     auth:{
-    //         user:process.env.EMAIL_USER,
-    //         pass:process.env.EMAIL_PASSWORD,
-    //     },
-    //     tls:{
-    //         rejectUnauthorized:false
-    //     }
-    // })
-
-    // // Options for sending email
-
-    // const options={
-    //     from:sent_from,
-    //     to:send_to,
-    //     subject:subject,
-    //     html:message
-    // }
-
-    // //Send Email
-    // transporter.sendMail(options,function(err,info){
-    //     if (err) {
-    //         console.log(err);
-    //     }
-        
-    // })
-
-    const client = new SMTPClient({
-        user: process.env.EMAIL_USER,
-        password: process.env.EMAIL_PASSWORD,
-        host: process.env.EMAIL_HOST,
-        ssl: true,
-    });
-    
-    // send the message and get a callback with an error or details of the message that was sent
-    client.send(
-        {
-            text: message,
-            from: process.env.EMAIL_USER,
-            to: send_to,
-            cc: 'info.legiomariae@gmail.com',
-            subject: subject,
+    const transporter=nodeMailer.createTransport({
+        host:process.env.EMAIL_HOST,
+        port:587,
+        auth:{
+            user:process.env.EMAIL_USER,
+            pass:process.env.EMAIL_PASSWORD,
         },
-        (err, message) => {
-            console.log(err || message);
+        tls:{
+            rejectUnauthorized:false
         }
-    );
+    })
+
+    const options={
+        from:process.env.EMAIL_USER,
+        to:send_to,
+        subject:subject,
+        html:message
+    }
+
+    await transporter.sendMail(options,function(err){
+        if (err) {
+            console.log(err);
+        }
+    })
+
+    // const client = new SMTPClient({
+    //     user: process.env.EMAIL_USER,
+    //     password: process.env.EMAIL_PASSWORD,
+    //     host: process.env.EMAIL_HOST,
+    //     ssl: true,
+    // });
+    
+    // client.send(
+    //     {
+    //         text: message,
+    //         from: process.env.EMAIL_USER,
+    //         to: send_to,
+    //         cc: 'info.legiomariae@gmail.com',
+    //         subject: subject,
+    //     },
+    //     (err, message) => {
+    //         console.log(err || message);
+    //     }
+    // );
 }
 
 export const sanitizeMessage=async(message) =>{
@@ -112,23 +105,28 @@ export const sanitizeMessage=async(message) =>{
 
 // INPUT VALIDATION
 
-export async function newButcheryValidation (data){
+export async function newArchDiocesValidation (data){
     const schema = Joi.object({
-        subscription: Joi.number().required(),
-        mobile: Joi.number().required(),
-        email: Joi.string().trim().email().required(),
-        password: Joi.string().trim().required(),
-        confirmPassword: Joi.string().trim().required(),
-        firstName: Joi.string().trim().required(),
-        lastName: Joi.string().trim().required(),
-        country: Joi.string().trim().required(),
-        isoCode: Joi.string().trim().required(),
-        phoneCode: Joi.string().trim().required(),
-        region: Joi.string().trim().required(),
-        branch: Joi.string().trim().required(),
-        terms: Joi.boolean().required(),
-        role: Joi.string().trim().required(),
         name: Joi.string().trim().required(),
+        country: Joi.string().trim().required(),
+    });
+
+    return schema.validate(data);
+};
+
+export async function newDiocesValidation (data){
+    const schema = Joi.object({
+        name: Joi.string().trim().required(),
+        archDioces: Joi.string().trim().required(),
+    });
+
+    return schema.validate(data);
+};
+
+export async function newMissionValidation (data){
+    const schema = Joi.object({
+        name: Joi.string().trim().required(),
+        dioces: Joi.string().trim().required(),
     });
 
     return schema.validate(data);
@@ -238,8 +236,10 @@ export const getFirstAndLastWord=async(value)=>{
 
 export const DayTime=async()=>{
 
-    const dayTime=moment().format('LL')
-    return dayTime
+    const date=new Date()
+    const formattedDate = format(date, 'EEEE, MMMM d, yyyy');
+
+    return formattedDate
 }
 
 export const AddDate=async(from,value)=>{
@@ -290,4 +290,10 @@ export async function deleteCookies(request,value) {
       request.cookies.delete(value)
       request.cookies.has(value) // => false
      
+}
+
+export async function today(){
+
+    return new Date().toISOString().split('T')[0]
+
 }

@@ -1,6 +1,8 @@
 'use client'
 
-import NewArchDioces from "@/app/api/v14/controllers/arch-dioces/route";
+import { getArchDioces_Select } from "@/app/api/v14/controllers/arch-dioces/route";
+import { getDioces_Select } from "@/app/api/v14/controllers/dioces/route";
+import NewMission from "@/app/api/v14/controllers/mission/route";
 import {
   Card,
   Input,
@@ -12,16 +14,24 @@ import { Country } from "country-state-city";
 import React from 'react'
 import toast, { Toaster } from "react-hot-toast";
  
-export default function NewArchDiocesHome() {
+export default function NewMissionHome() {
 
   let toastId
 
   const [formData, setformData] = React.useState();
+  const [ArchDioces, setArchDioces] = React.useState([]);
+  const [Dioces, setDioces] = React.useState([]);
   const [responseMessage, setresponseMessage] = React.useState('');
   const [Error, setError] = React.useState(false);
   const [Success, setSuccess] = React.useState(false);
 
   let countryData=Country.getAllCountries()
+
+  React.useEffect(()=>{
+
+    getArchDioces()
+
+  },[])
 
 
   const handleInputChange = (e) => {
@@ -31,17 +41,17 @@ export default function NewArchDiocesHome() {
     setError(false)
   }
 
-  const newArchDioces=async(e)=>{
+
+  const newMission=async(e)=>{
     setSuccess(false)
     setError(false)
 
     e.preventDefault()
 
     try {
-
       toastId=toast.loading('Loading. Please wait...',{id:toastId})
 
-      let response=await NewArchDioces(formData)
+      let response=await NewMission(formData)
 
       toast.dismiss(toastId)
 
@@ -68,6 +78,34 @@ export default function NewArchDiocesHome() {
     }
   }
 
+  const getArchDioces=async()=>{
+    
+    try {
+
+      let response=await getArchDioces_Select()
+
+      setArchDioces(response.data)
+      
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  const getDioces=async(e)=>{
+
+    const { value } =await e.target;
+    
+    try {
+
+      let response=await getDioces_Select(value)
+
+      setDioces(response.data)
+      
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
 
   return (
     
@@ -90,12 +128,12 @@ export default function NewArchDiocesHome() {
         }}
       >
       </Toaster>
-      <Card color="transparent" shadow={false} className='col-md-5 p-1'>
+      <Card color="transparent" shadow={false} className='col-md-5'>
         <Typography variant="h2" color="blue" className='text-center m-3 fw-bold'>
-          New Arch Dioces
+          New Mission
         </Typography>
         <Typography color="gray" className="mt-1 font-normal">
-          Enter arch dioces details to register.
+          Enter mission details to register.
         </Typography>
 
         {
@@ -109,13 +147,55 @@ export default function NewArchDiocesHome() {
             <Alert color='red' className='mb-2'>{responseMessage}</Alert>
           )
         }
-
         
-            <form className="mt-8 mb-2 w-80 max-w-screen-lg sm:w-96" onSubmit={newArchDioces}>
+            <form className="mt-8 mb-2 w-80 max-w-screen-lg sm:w-96" onSubmit={newMission}>
               <div className="mb-1 flex flex-col gap-6">
 
                 <Typography variant="h6" color="blue-gray" className="-mb-3">
-                  Arch Dioces Name
+                  Choose Arch Dioces
+                </Typography>
+                <select
+                size="lg"
+                className=" form-select !border-t-blue-gray-200 focus:!border-t-gray-900 mb-2"
+                name='arch_dioces'
+                required
+                onChange={getDioces}
+                >
+                    <option></option>
+                    {
+                        ArchDioces?.map(({code,name,country},key)=>{
+                          return  (
+                          <option key={key} value={code}className='flex justify-between'>
+                            <div>{name}</div>
+                            <div>{country}</div>
+                          </option>
+                          )
+                        })
+                    }
+                </select>
+
+                <Typography variant="h6" color="blue-gray" className="-mb-3">
+                  Choose Dioces
+                </Typography>
+                <select
+                size="lg"
+                className=" form-select !border-t-blue-gray-200 focus:!border-t-gray-900 mb-2"
+                name='dioces'
+                required
+                onChange={handleInputChange}
+                >
+                    <option></option>
+                    {
+                        Dioces?.map(({code,name},key)=>{
+                          return  (
+                          <option key={key} value={code}>{name}</option>
+                          )
+                        })
+                    }
+                </select>
+
+                <Typography variant="h6" color="blue-gray" className="-mb-3">
+                  Mission Name
                 </Typography>
                 <Input
                   size="lg"
@@ -129,25 +209,6 @@ export default function NewArchDiocesHome() {
                   onChange={handleInputChange}
                   minLength={3}
                 />
-
-
-                <Typography variant="h6" color="blue-gray" className="-mb-3">
-                  Choose Country
-                </Typography>
-                <select
-                size="lg"
-                className=" form-select !border-t-blue-gray-200 focus:!border-t-gray-900 mb-2"
-                name='country'
-                required
-                onChange={handleInputChange}
-                >
-                    <option></option>
-                    {
-                        countryData?.map(({name},key)=>{
-                          return  <option key={key} value={name}>{name}</option>
-                        })
-                    }
-                </select>
 
               </div>
 

@@ -1,5 +1,5 @@
 
-import mongoose, { Schema, model, models } from 'mongoose'
+import { Schema, model, models } from 'mongoose'
 
 const diocesSchema=new Schema({
 
@@ -14,20 +14,14 @@ const diocesSchema=new Schema({
         trim:true,
         
     },
-    nameLowerCase:{
-        type:String,
-        required:true,
-        
-        trim:true
-    },
     archDioces:{
-        type:mongoose.Schema.Types.ObjectId,
+        type:String,
         required:true,
         
 
     },
     incharge:{
-        type:mongoose.Schema.Types.ObjectId,
+        type:String,
         default:null,
         
 
@@ -43,18 +37,22 @@ const diocesSchema=new Schema({
         
     },
     addedBy:{
-        type:mongoose.Schema.Types.ObjectId,
+        type:String,
         default:null
 
     },
     updatedBy:{
-        type:mongoose.Schema.Types.ObjectId,
+        type:String,
         default:null
 
     },
-    __v:{
+    subscription:{
+        type:String,
+        required:true,
+    },
+    isDeleted:{
         type: Number,
-        default:0,
+        default:1,
         
 
     }
@@ -65,7 +63,7 @@ const diocesSchema=new Schema({
 
 })
 
-diocesSchema.index({code:1,nameLowerCase:1,archDioces:1})
+diocesSchema.index({code:1,name:1,archDioces:1})
 
 
 const Dioces=models.Dioxes || model("Dioxes",diocesSchema)

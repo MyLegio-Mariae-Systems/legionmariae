@@ -14,19 +14,13 @@ const missionSchema=new Schema({
         
         trim:true
     },
-    nameLowerCase:{
-        type:String,
-        required:true,
-        
-        trim:true
-    },
     dioces:{
-        type:mongoose.Schema.Types.ObjectId,
+        type:String,
         required:true,
         
     },
     incharge:{
-        type:mongoose.Schema.Types.ObjectId,
+        type:String,
         default:null,
         
     },
@@ -40,18 +34,22 @@ const missionSchema=new Schema({
         
     },
     addedBy:{
-        type:mongoose.Schema.Types.ObjectId,
+        type:String,
         default:null
 
     },
     updatedBy:{
-        type:mongoose.Schema.Types.ObjectId,
+        type:String,
         default:null
 
     },
-    __v:{
+    subscription:{
+        type:String,
+        required:true,
+    },
+    isDeleted:{
         type: Number,
-        default:0,
+        default:1,
         
 
     }
@@ -62,7 +60,7 @@ const missionSchema=new Schema({
 
 })
 
-missionSchema.index({code:1,nameLowerCase:1})
+missionSchema.index({code:1,name:1})
 
 const Mission=models.Misxion || model("Misxion",missionSchema)
 module.exports=Mission

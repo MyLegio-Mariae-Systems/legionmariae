@@ -3,23 +3,23 @@ import mongoose, { Schema, model, models } from 'mongoose'
 
 const ODAMissionRegistrationSchema=new Schema({
 
+    oda_username:{
+        type: String,
+    },
     username:{
         type: String,
     },
-    id:{
-        type: mongoose.Schema.Types.ObjectId,
-    },
     first_name:{
         type: String,
-        required:[true,'Please enter first name'],
+        required:true,
     },
     last_name:{
         type: String,
-        required:[true,'Please enter last name'],
+        required:true,
     },
     email:{
         type: String,
-        required:[true,'Please enter your email'],
+        required:true,
         trim:true,
         match:[
             /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
@@ -31,28 +31,27 @@ const ODAMissionRegistrationSchema=new Schema({
         required:true,
     },
     mission1:{
-        type:mongoose.Schema.Types.ObjectId,
+        type:String,
         required:true,
     },
     mission2:{
-        type:mongoose.Schema.Types.ObjectId,
+        type:String,
     },
     category:{
         type: String,
-        required:[true,'Please choose category'],
+        required:true,
         enum:['Deacon','Acolyte'],
     },
     password:{
         type: String,
-        required:[true,'Please enter a password'],
-        minLength:[8,"Password must be atleast 8 characters"],
+        required:true,
     },
     addedBy:{
-        type:mongoose.Schema.Types.ObjectId,
+        type:String,
         default:null
     },
     updatedBy:{
-        type:mongoose.Schema.Types.ObjectId,
+        type:String,
         default:null
     },
     verified:{
@@ -71,7 +70,7 @@ const ODAMissionRegistrationSchema=new Schema({
     
 })
 
-ODAMissionRegistrationSchema.index({username:1,mission:1,mission:1,isDeleted:1})
+ODAMissionRegistrationSchema.index({user_name:1,mission:1,mission:1,isDeleted:1,first_name:1,last_name:1})
 
 
 ODAMissionRegistrationSchema.pre('save', async function(next){

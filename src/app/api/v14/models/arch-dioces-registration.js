@@ -1,5 +1,5 @@
 
-import mongoose, { Schema, model, models } from 'mongoose'
+import { Schema, model, models } from 'mongoose'
 
 const archDiocesSchema=new Schema({
 
@@ -11,21 +11,14 @@ const archDiocesSchema=new Schema({
         type:String,
         required:true,
         trim:true,
-        
-    },
-    nameLowerCase:{
-        type:String,
-        required:true,
-        trim:true
     },
     incharge:{
-        type:mongoose.Schema.Types.ObjectId,
+        type:String,
         default:null,
     },
     country:{
         type:String,
         required:true,
-        
     },
     email:{
         type:String,
@@ -34,28 +27,29 @@ const archDiocesSchema=new Schema({
         match:[
             /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
         ],
-        
     },
     addedBy:{
-        type:mongoose.Schema.Types.ObjectId,
+        type:String,
         default:null,
-
     },
     updatedBy:{
-        type:mongoose.Schema.Types.ObjectId,
+        type:String,
         default:null,
     },
-    __v:{
+    subscription:{
+        type:String,
+        required:true,
+    },
+    isDeleted:{
         type: Number,
-        default:0,
-        
+        default:1,
     }
     
 },{
     timestamps:true,
 })
 
-archDiocesSchema.index({code:1,nameLowerCase:1})
+archDiocesSchema.index({code:1,name:1})
 
 
 const Archdioces=models.DioxesArch || model("DioxesArch",archDiocesSchema)

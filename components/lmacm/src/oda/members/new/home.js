@@ -15,10 +15,10 @@ export default function ODANewMemberHome() {
 
   let toastId
 
-  const [missionRegisered, setmissionRegisered]=React.useState(true)
+  const [missionRegistered, setmissionRegistered]=React.useState(true)
   const [isDeacon, setisDeacon]=React.useState(false)
   const [formData, setformData] = React.useState({
-    missionRegisered,
+    missionRegistered,
   });
 
 
@@ -167,7 +167,7 @@ export default function ODANewMemberHome() {
         
 
         {
-          !missionRegisered && (
+          !missionRegistered && (
             isDeacon && (
             <div className="flex w-full flex-col gap-2 mb-2 ">
               <Alert  icon={<IconOutlined />}>
@@ -186,7 +186,7 @@ export default function ODANewMemberHome() {
         <select
           size="lg"
           className=" form-select !border-t-blue-gray-200 focus:!border-t-gray-900 mb-2"
-          onChange={()=>setmissionRegisered(!missionRegisered)}
+          onChange={()=>setmissionRegistered(!missionRegistered)}
           
         >
           <option>Yes</option>
@@ -194,7 +194,7 @@ export default function ODANewMemberHome() {
         </select>
 
         {
-          missionRegisered ? (
+          missionRegistered ? (
 
             <>
             <form className="mt-8 mb-2 w-80 max-w-screen-lg sm:w-96">
