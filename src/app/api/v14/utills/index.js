@@ -132,6 +132,22 @@ export async function newMissionValidation (data){
     return schema.validate(data);
 };
 
+export async function newMissionODAValidation (data){
+    const schema = Joi.object({
+        first_name: Joi.string().trim().alphanum().min(3).max(30).required(),
+        last_name: Joi.string().trim().alphanum().min(3).max(30).required(),
+        contact: Joi.number().integer().allow('').optional(),
+        middle_names: Joi.string().alphanum().min(3).max(30).allow('').optional(),
+        mission: Joi.string().trim().alphanum().min(7).max(10).required(),
+        email: Joi.string().trim().email({ minDomainSegments: 2, tlds: { allow: ['com', 'net'] } }).allow('').optional(),
+        missionRegistered: Joi.string().trim().required(),
+        category: Joi.string().trim().required(),
+        username: Joi.string().allow('').optional(),
+    });
+
+    return schema.validate(data);
+};
+
 export async function newBranchValidation (data){
     const schema = Joi.object({
         name: Joi.string().trim().required(),

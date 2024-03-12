@@ -3,6 +3,7 @@
 import { getArchDioces_Select } from "@/app/api/v14/controllers/arch-dioces/route";
 import { getDioces_Select } from "@/app/api/v14/controllers/dioces/route";
 import { getMission_Select } from "@/app/api/v14/controllers/mission/route";
+import NewMissionODAMember from "@/app/api/v14/controllers/oda/route";
 import {
   Card,
   Input,
@@ -20,7 +21,7 @@ export default function ODANewMemberHome() {
 
   const [missionRegistered, setmissionRegistered]=React.useState(true)
   const [isDeacon, setisDeacon]=React.useState(false)
-  const [formData, setformData] = React.useState({missionRegistered});
+  const [formData, setformData] = React.useState({missionRegistered:'true',middle_names:''});
   const [ArchDioces, setArchDioces] = React.useState([]);
   const [Dioces, setDioces] = React.useState([]);
   const [Mission, setMission] = React.useState([]);
@@ -147,16 +148,38 @@ export default function ODANewMemberHome() {
 
   const newMember=async(e)=>{
 
+    setSuccess(false)
+    setError(false)
+
     e.preventDefault()
 
     try {
+      toastId=toast.loading('Loading. Please wait...',{id:toastId})
 
-      console.log(formData);
+      let response=await NewMissionODAMember(formData)
+
+      toast.dismiss(toastId)
+
+      if (response.success) {
+
+        setresponseMessage('Successful!')
+        setSuccess(true)
+        setError(false)
+
+        
+      } else {
+        setresponseMessage(response.message)
+        setError(true)
+        setSuccess(false)
+        
+      }
       
     } catch (error) {
-
-      console.log(error.message);
-      
+      setresponseMessage('Unknown Error occured', error.message)
+      toast.error('Unknown Error occured')
+      setError(true)
+      setSuccess(false)
+      console.log(error);
     }
 
   }
@@ -183,7 +206,7 @@ export default function ODANewMemberHome() {
         }}
       >
       </Toaster>
-      <Card color="transparent" shadow={false} className='col-md-5'>
+      <Card color="transparent" shadow={false} className='col-md-5 p-2'>
         <Typography variant="h2" color="blue" className='text-center m-3 fw-bold'>
           New Member
         </Typography>
@@ -221,6 +244,26 @@ export default function ODANewMemberHome() {
             })
           }
         </select>
+        <Typography
+        variant="small"
+        color="gray"
+        className=" flex items-center gap-1 font-normal"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="currentColor"
+            className="-mt-px h-4 w-4 text-danger"
+
+          >
+            <path
+              fillRule="evenodd"
+              d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12zm8.706-1.442c1.146-.573 2.437.463 2.126 1.706l-.709 2.836.042-.02a.75.75 0 01.67 1.34l-.04.022c-1.147.573-2.438-.463-2.127-1.706l.71-2.836-.042.02a.75.75 0 11-.671-1.34l.041-.022zM12 9a.75.75 0 100-1.5.75.75 0 000 1.5z"
+              clipRule="evenodd"
+            />
+          </svg>
+          This field is required
+        </Typography>
 
         <Typography variant="h6" color="blue-gray" className="-mb-3">
           Dioces
@@ -239,6 +282,26 @@ export default function ODANewMemberHome() {
             })
           }
         </select>
+        <Typography
+        variant="small"
+        color="gray"
+        className=" flex items-center gap-1 font-normal"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="currentColor"
+            className="-mt-px h-4 w-4 text-danger"
+
+          >
+            <path
+              fillRule="evenodd"
+              d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12zm8.706-1.442c1.146-.573 2.437.463 2.126 1.706l-.709 2.836.042-.02a.75.75 0 01.67 1.34l-.04.022c-1.147.573-2.438-.463-2.127-1.706l.71-2.836-.042.02a.75.75 0 11-.671-1.34l.041-.022zM12 9a.75.75 0 100-1.5.75.75 0 000 1.5z"
+              clipRule="evenodd"
+            />
+          </svg>
+          This field is required
+        </Typography>
 
         <Typography variant="h6" color="blue-gray" className="-mb-3">
           Mission
@@ -258,6 +321,26 @@ export default function ODANewMemberHome() {
             })
           }
         </select>
+        <Typography
+        variant="small"
+        color="gray"
+        className=" flex items-center gap-1 font-normal"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="currentColor"
+            className="-mt-px h-4 w-4 text-danger"
+
+          >
+            <path
+              fillRule="evenodd"
+              d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12zm8.706-1.442c1.146-.573 2.437.463 2.126 1.706l-.709 2.836.042-.02a.75.75 0 01.67 1.34l-.04.022c-1.147.573-2.438-.463-2.127-1.706l.71-2.836-.042.02a.75.75 0 11-.671-1.34l.041-.022zM12 9a.75.75 0 100-1.5.75.75 0 000 1.5z"
+              clipRule="evenodd"
+            />
+          </svg>
+          This field is required
+        </Typography>
         <hr />
         
 
@@ -287,6 +370,7 @@ export default function ODANewMemberHome() {
           <option value={true}>Yes</option>
           <option value={false}>No</option>
         </select>
+        
 
         {
           missionRegistered ? (
@@ -310,22 +394,65 @@ export default function ODANewMemberHome() {
                 <option>Deacon</option>
                 <option>Acolyte</option>
               </select>
+              <Typography
+              variant="small"
+              color="gray"
+              className=" flex items-center gap-1 font-normal"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                  className="-mt-px h-4 w-4 text-danger"
 
-                <Typography variant="h6" color="blue-gray" className="-mb-3">
-                  Member Username
-                </Typography>
-                <Input
-                  size="lg"
-                  placeholder="M012345678"
-                  className=" !border-t-blue-gray-200 focus:!border-t-gray-900 mb-2"
-                  labelProps={{
-                    className: "before:content-none after:content-none",
-                  }}
-                  name='username'
-                  required
-                  onChange={handleInputChange}
-                  minLength={10}
-                />
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12zm8.706-1.442c1.146-.573 2.437.463 2.126 1.706l-.709 2.836.042-.02a.75.75 0 01.67 1.34l-.04.022c-1.147.573-2.438-.463-2.127-1.706l.71-2.836-.042.02a.75.75 0 11-.671-1.34l.041-.022zM12 9a.75.75 0 100-1.5.75.75 0 000 1.5z"
+                    clipRule="evenodd"
+                  />
+                </svg>
+                This field is required
+              </Typography>
+
+              <Typography variant="h6" color="blue-gray" className="-mb-3">
+                Member Username
+              </Typography>
+              <input
+                size="lg"
+                placeholder="M012345678"
+                className="form-control !border-t-blue-gray-200 focus:!border-t-gray-900 mb-2"
+                labelProps={{
+                  className: "before:content-none after:content-none",
+                }}
+                name='username'
+                required
+                onChange={handleInputChange}
+                minLength={10}
+                inputProps={{
+                  autoComplete: "off",
+                }}
+              />
+              <Typography
+              variant="small"
+              color="gray"
+              className=" flex items-center gap-1 font-normal"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                  className="-mt-px h-4 w-4 text-danger"
+
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12zm8.706-1.442c1.146-.573 2.437.463 2.126 1.706l-.709 2.836.042-.02a.75.75 0 01.67 1.34l-.04.022c-1.147.573-2.438-.463-2.127-1.706l.71-2.836-.042.02a.75.75 0 11-.671-1.34l.041-.022zM12 9a.75.75 0 100-1.5.75.75 0 000 1.5z"
+                    clipRule="evenodd"
+                  />
+                </svg>
+                This field is required
+              </Typography>
                 
               </div>
 
@@ -338,7 +465,7 @@ export default function ODANewMemberHome() {
 
           ):(
             <>
-            <form className="mt-8 mb-2 w-80 max-w-screen-lg sm:w-96" onSubmit={newMember}>
+            <form className="mt-8 mb-2 w-80 max-w-screen-lg sm:w-96 " onSubmit={newMember}>
               <div className="mb-1 flex flex-col gap-6">
 
               <Typography variant="h6" color="blue-gray" className="-mb-3">
@@ -356,14 +483,34 @@ export default function ODANewMemberHome() {
                 <option>Deacon</option>
                 <option>Acolyte</option>
               </select>
+              <Typography
+              variant="small"
+              color="gray"
+              className=" flex items-center gap-1 font-normal"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                  className="-mt-px h-4 w-4 text-danger"
+
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12zm8.706-1.442c1.146-.573 2.437.463 2.126 1.706l-.709 2.836.042-.02a.75.75 0 01.67 1.34l-.04.022c-1.147.573-2.438-.463-2.127-1.706l.71-2.836-.042.02a.75.75 0 11-.671-1.34l.041-.022zM12 9a.75.75 0 100-1.5.75.75 0 000 1.5z"
+                    clipRule="evenodd"
+                  />
+                </svg>
+                This field is required
+              </Typography>
 
                 <Typography variant="h6" color="blue-gray" className="-mb-3">
                   First Name
                 </Typography>
-                <Input
+                <input
                   size="lg"
                   placeholder="Simeo"
-                  className=" !border-t-blue-gray-200 focus:!border-t-gray-900 mb-2"
+                  className=" !border-t-blue-gray-200 focus:!border-t-gray-900 mb-2 form-control"
                   labelProps={{
                     className: "before:content-none after:content-none",
                   }}
@@ -371,16 +518,57 @@ export default function ODANewMemberHome() {
                   required
                   onChange={handleInputChange}
                   minLength={3}
-                  />
+                  inputProps={{
+                    autoComplete: "off",
+                  }}
+                />
+                <Typography
+                variant="small"
+                color="gray"
+                className=" flex items-center gap-1 font-normal"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    fill="currentColor"
+                    className="-mt-px h-4 w-4 text-danger"
+
+                  >
+                    <path
+                      fillRule="evenodd"
+                      d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12zm8.706-1.442c1.146-.573 2.437.463 2.126 1.706l-.709 2.836.042-.02a.75.75 0 01.67 1.34l-.04.022c-1.147.573-2.438-.463-2.127-1.706l.71-2.836-.042.02a.75.75 0 11-.671-1.34l.041-.022zM12 9a.75.75 0 100-1.5.75.75 0 000 1.5z"
+                      clipRule="evenodd"
+                    />
+                  </svg>
+                  This field is required
+                </Typography>
+
+                <Typography variant="h6" color="blue-gray" className="-mb-3">
+                  Middle Names
+                </Typography>
+                <input
+                  size="lg"
+                  placeholder="Simeo"
+                  className=" !border-t-blue-gray-200 focus:!border-t-gray-900 mb-2 form-control"
+                  labelProps={{
+                    className: "before:content-none after:content-none",
+                  }}
+                  name='middle_names'
+                  onChange={handleInputChange}
+                  minLength={3}
+                  inputProps={{
+                    autoComplete: "off",
+                  }}
+                />
 
 
                 <Typography variant="h6" color="blue-gray" className="-mb-3">
                   Last Name
                 </Typography>
-                <Input
+                <input
                   size="lg"
                   placeholder="Hosea"
-                  className=" !border-t-blue-gray-200 focus:!border-t-gray-900 mb-2"
+                  className="form-control !border-t-blue-gray-200 focus:!border-t-gray-900 mb-2"
                   name='last_name'
                   labelProps={{
                     className: "before:content-none after:content-none",
@@ -389,17 +577,37 @@ export default function ODANewMemberHome() {
                   onChange={handleInputChange}
                   minLength={3}
                 />
+                <Typography
+                variant="small"
+                color="gray"
+                className=" flex items-center gap-1 font-normal"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    fill="currentColor"
+                    className="-mt-px h-4 w-4 text-danger"
+
+                  >
+                    <path
+                      fillRule="evenodd"
+                      d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12zm8.706-1.442c1.146-.573 2.437.463 2.126 1.706l-.709 2.836.042-.02a.75.75 0 01.67 1.34l-.04.022c-1.147.573-2.438-.463-2.127-1.706l.71-2.836-.042.02a.75.75 0 11-.671-1.34l.041-.022zM12 9a.75.75 0 100-1.5.75.75 0 000 1.5z"
+                      clipRule="evenodd"
+                    />
+                  </svg>
+                  This field is required
+                </Typography>
 
 
                 <Typography variant="h6" color="blue-gray" className="-mb-3">
                   Email Address
                 </Typography>
-                <Input
+                <input
                   type="email"
                   size="lg"
                   name='email'
                   placeholder="a working email address"
-                  className=" !border-t-blue-gray-200 focus:!border-t-gray-900 mb-2"
+                  className="form-control !border-t-blue-gray-200 focus:!border-t-gray-900 mb-2"
                   labelProps={{
                     className: "before:content-none after:content-none",
                   }}
@@ -407,24 +615,73 @@ export default function ODANewMemberHome() {
                   onChange={handleInputChange}
                   minLength={11}
                 />
+                {
+                  isDeacon && (
+                  <Typography
+                    variant="small"
+                    color="gray"
+                    className=" flex items-center gap-1 font-normal"
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 24 24"
+                        fill="currentColor"
+                        className="-mt-px h-4 w-4 text-danger"
+
+                      >
+                        <path
+                          fillRule="evenodd"
+                          d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12zm8.706-1.442c1.146-.573 2.437.463 2.126 1.706l-.709 2.836.042-.02a.75.75 0 01.67 1.34l-.04.022c-1.147.573-2.438-.463-2.127-1.706l.71-2.836-.042.02a.75.75 0 11-.671-1.34l.041-.022zM12 9a.75.75 0 100-1.5.75.75 0 000 1.5z"
+                          clipRule="evenodd"
+                        />
+                      </svg>
+                      This field is required
+                    </Typography>
+                  )
+                }
 
                 <Typography variant="h6" color="blue-gray" className="-mb-3">
                   Contact Number
                 </Typography>
 
-                <Input
+                <input
                   type="tel"
                   size="lg"
-                  name='first_contact'
+                  name='contact'
                   placeholder="0712345678"
-                  className=" !border-t-blue-gray-200 focus:!border-t-gray-900 mb-2"
+                  className="form-control !border-t-blue-gray-200 focus:!border-t-gray-900 mb-2"
                   labelProps={{
                     className: "before:content-none after:content-none",
                   }}
                   required={isDeacon}
                   onChange={handleInputChange}
-                  minLength={10}
+                  maxLength={10}
                 />
+                {
+                  isDeacon && (
+                  <Typography
+                    variant="small"
+                    color="gray"
+                    className=" flex items-center gap-1 font-normal"
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 24 24"
+                        fill="currentColor"
+                        className="-mt-px h-4 w-4 text-danger"
+
+                      >
+                        <path
+                          fillRule="evenodd"
+                          d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12zm8.706-1.442c1.146-.573 2.437.463 2.126 1.706l-.709 2.836.042-.02a.75.75 0 01.67 1.34l-.04.022c-1.147.573-2.438-.463-2.127-1.706l.71-2.836-.042.02a.75.75 0 11-.671-1.34l.041-.022zM12 9a.75.75 0 100-1.5.75.75 0 000 1.5z"
+                          clipRule="evenodd"
+                        />
+                      </svg>
+                      This field is required
+                    </Typography>
+                  )
+                }
+                
                
               </div>
 

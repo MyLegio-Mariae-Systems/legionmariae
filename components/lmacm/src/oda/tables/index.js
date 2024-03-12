@@ -154,31 +154,31 @@ export default function ODAMembersTable({propData}) {
               </thead>
               <tbody>
                 {propData.TABLE_ROWS.map(
-                  ({ img, name, email, job, org, online, date }, index) => {
+                  ({ oda_username, first_name, last_name, middle_names, email, contact, category, primaryMission, secondaryMission}, index) => {
                     const isLast = index === propData.TABLE_ROWS.length - 1;
                     const classes = isLast
                       ? "p-4"
                       : "p-4 border-b border-blue-gray-50";
     
                     return (
-                      <tr key={name}>
+                      <tr key={index}>
                         <td className={classes}>
                           <div className="flex items-center gap-3">
-                            <Avatar src={img} alt={name} size="sm" />
+                            {/* <Avatar src={img} alt={name} size="sm" /> */}
                             <div className="flex flex-col">
                               <Typography
                                 variant="small"
                                 color="blue-gray"
                                 className="font-normal"
                               >
-                                {name}
+                                {oda_username}  
                               </Typography>
                               <Typography
                                 variant="small"
                                 color="blue-gray"
                                 className="font-normal opacity-70"
                               >
-                                {email}
+                                {category} {first_name} {middle_names} {last_name}
                               </Typography>
                             </div>
                           </div>
@@ -190,18 +190,18 @@ export default function ODAMembersTable({propData}) {
                               color="blue-gray"
                               className="font-normal"
                             >
-                              {job}
+                              {contact}
                             </Typography>
                             <Typography
                               variant="small"
                               color="blue-gray"
                               className="font-normal opacity-70"
                             >
-                              {org}
+                              {email}
                             </Typography>
                           </div>
                         </td>
-                        <td className={classes}>
+                        {/* <td className={classes}>
                           <div className="w-max">
                             <Chip
                               variant="ghost"
@@ -210,14 +210,21 @@ export default function ODAMembersTable({propData}) {
                               color={online ? "green" : "blue-gray"}
                             />
                           </div>
-                        </td>
+                        </td> */}
                         <td className={classes}>
                           <Typography
                             variant="small"
                             color="blue-gray"
                             className="font-normal"
                           >
-                            {date}
+                            {primaryMission?.name}
+                          </Typography>
+                          <Typography
+                            variant="small"
+                            color="blue-gray"
+                            className="font-normal"
+                          >
+                            {secondaryMission?.name}
                           </Typography>
                         </td>
                         <td className={classes}>

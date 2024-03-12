@@ -5,6 +5,7 @@ const ODAMissionRegistrationSchema=new Schema({
 
     oda_username:{
         type: String,
+        required:true,
     },
     username:{
         type: String,
@@ -13,22 +14,23 @@ const ODAMissionRegistrationSchema=new Schema({
         type: String,
         required:true,
     },
+    middle_names:{
+        type: String,
+    },
     last_name:{
         type: String,
         required:true,
     },
     email:{
         type: String,
-        required:true,
         trim:true,
         match:[
             /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
             "Please enter a valid email"
         ],
     },
-    first_contact:{
+    contact:{
         type: Number,
-        required:true,
     },
     mission1:{
         type:String,
@@ -58,7 +60,6 @@ const ODAMissionRegistrationSchema=new Schema({
         type: Boolean,
         enum:[true,false],
         default:false,
-        
     },
     isDeleted:{
         type: Number,
@@ -67,7 +68,6 @@ const ODAMissionRegistrationSchema=new Schema({
     
 },{
     timestamps:true,
-    
 })
 
 ODAMissionRegistrationSchema.index({user_name:1,mission:1,mission:1,isDeleted:1,first_name:1,last_name:1})

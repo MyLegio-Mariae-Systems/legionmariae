@@ -1,36 +1,37 @@
 'use server'
 
-import DbConnect, { DayTime, generateCode, getFirstAndLastWord, newMissionValidation, sendEmail, today } from "../../utills";
+import DbConnect, { DayTime, generateCode, getFirstAndLastWord, newMissionODAValidation, sendEmail, today } from "../../utills";
 import Archdioces from '../../models/arch-dioces-registration'
 import Dioces from '../../models/dicoes-registration'
 import Mission from '../../models/mission-registration'
+import ODA from '../../models/oda-mission-registration'
 
 DbConnect()
 
 let tokenId
 
-async function generateUniqueCode(prefix) {
-    let code;
-    do {
-        code = await generateCode(prefix);
-    } while (await Mission.findOne({ code }));
+// async function generateUniqueCode(prefix) {
+//     let code;
+//     do {
+//         code = await generateCode(prefix);
+//     } while (await Mission.findOne({ code }));
 
-    return code;
-}
+//     return code;
+// }
 
-async function generateUniqueEmail(emailName) {
-    let email;
+async function generateUniqueUsername(prefix) {
+    let oda_username;
     let random;
     do {
-        random = Math.floor(Math.random() * (99 - 10)) + 10;
-        email = (emailName + random + `@legionmariae.com`).toLowerCase();
-    } while (await Mission.findOne({ email }));
+        random = Math.floor(Math.random() * (999999 - 111111)) + 111111;
+        oda_username = prefix + random ;
+    } while (await ODA.findOne({ oda_username }));
 
-    return email;
+    return oda_username;
 }
 
 
-export default async function NewMission(value) {
+export default async function NewMissionODAMember(value) {
     let responseData={
         message:'',
         success:false
@@ -38,16 +39,26 @@ export default async function NewMission(value) {
   
     try {
 
-        const validate=await newMissionValidation(value)
+        const validate=await newMissionODAValidation(value)
 
         if (validate.error) {
         console.log(validate.error);
-        responseData.message='Fill in all fields.'      
+        responseData.message=validate?.error?.message     
 
         return responseData
         }
 
-        let {name,dioces}=validate.value
+        let {
+          first_name,
+          last_name,
+          middle_names,
+          mission,
+          contact,
+          email,
+          missionRegistered,
+          category,
+          username,
+        }=validate.value
   
     //   const NullAddedBy = await Mission.findOne({ addedBy: null });
       
@@ -56,50 +67,109 @@ export default async function NewMission(value) {
     //     responseData.success=false
     //     return responseData
     //   }
+
+    let promises=[
+      generateUniqueUsername('O'),
+      ODA.findOne({email: { $regex: new RegExp('^' + email + '$', 'i') }}),
+      ODA.findOne({contact}),
+      ODA.findOne({
+        $or: [
+          { mission1: mission },
+          { mission2: mission }
+        ],
+        username
+      }),
+      // Members.findOne({
+      //   username,isDeleted:1
+      // })
+    ]
+
+    const responses = await Promise.allSettled(promises);
   
-      const emailName = await getFirstAndLastWord(name,true);
+    const data = responses.flatMap((response) =>
+      [response.value]
+    );
+
+    if (missionRegistered==='true') {
+
+      if (data[3]) {
+        responseData.message='Member already exists.'
+        responseData.success=false
+        return responseData
+      }
+
+      
+
+      
+      ODA.update(
+        { status: "inactive" },
+        { $unset: { 
+          email: "", 
+          contact: "", 
+          first_name: "", 
+          last_name: "", 
+          middle_names: "", 
+        } },
+        { multi: true }
+      )
+
+      ODA.update(
+        {
+
+        },
+        {
+
+        }
+      )
+     
+
+      
+    }
+
+    
   
-      let promises=[
-        generateUniqueCode('A'),
-        generateUniqueEmail(emailName),
-        // Members.findOne({email:'info.legionmariae.com'})
-      ]
+      // const emailName = await getFirstAndLastWord(name,true);
   
-      const responses = await Promise.allSettled(promises);
+      
   
-      const data = responses.flatMap((response) =>
-        [response.value]
-      );
+      
       // Using a transaction to ensure atomicity of operations
   
       try {
-        const existingMission = await Mission.findOne({ 
-            name: { $regex: new RegExp('^' + name + '$', 'i') }, 
-            dioces 
-        });
+        if (data[1]) {
+          responseData.message='Email address already exists.'
+          responseData.success=false
+          return responseData
+        }
         
-        if (existingMission) {
-            responseData.message='Mission name already exists.'
+        if (data[2]) {
+            responseData.message='Contact number already exists.'
             responseData.success=false
             return responseData
         }
   
-        const mission = await Mission.create(
+        const oda = await ODA.create(
           {
-            code:data[0],
-            name,
+            oda_username:data[0],
+            first_name,
+            last_name,
+            middle_names,
+            username:null,
             // incharge: data[2] ? data[2]._id : tokenId,
-            incharge: null,
-            dioces,
-            email:data[1],
+            mission1: mission,
+            mission2: null,
+            category,
+            email,
+            contact,
             addedBy: tokenId || null,
             updatedBy: tokenId || null,
-            subscription:await today(),
+            password:new Date(),
+            verified: email ? false : true,
             isDeleted:1,
           }
         );
   
-        if (!mission) {
+        if (!oda) {
             responseData.message='Invalid data'
             responseData.success=false
             return responseData
@@ -120,18 +190,20 @@ export default async function NewMission(value) {
         }
   
         const message = `
-          <h3>Registration of <b class='text-primary'>${mission.name} Mission</b></h3>
-          <p>New mission has been registered successfully.</p>
+          <h3>Registration to Mission O.D.A</h3>
+          <p>Your O.D.A registration is successful.</p>
           <p>Registered By: <b>${fullname}</b></p>
           <p>Registered Date: <b>${await DayTime()}</b></p>
           
           <p>Kind Regards</p>
           <p>Legio Mariae</p>
         `;
-        const subject = 'Mission Registration';
-        const send_to = process.env.EMAIL_USER;
-  
-        // await sendEmail(subject, message, send_to);
+        const subject = 'ODA Registration';
+        const send_to = email;
+
+        if (email) {
+          // await sendEmail(subject, message, send_to);
+        }
 
         responseData.success=true
         return responseData
@@ -154,7 +226,99 @@ export default async function NewMission(value) {
     }
 }
 
-export async function getMission_Select (){
+// export const addODAMember=async(res,body)=>{
+
+//   let {mission,id,category,role,official}=body
+
+//   try {
+
+//       if (mission.length===24) {
+//           mission=await Mission.findById(mission)
+//       } else {
+//           mission=await Mission.findOne({code:upperCase(mission)})
+          
+//       }
+
+//       let saved
+//       let roleExist
+
+//       if (category==='Priest') {
+
+//           let userVerified=await Adult.findOne({_id:id,verified:true,__v:0})
+
+//           if (!userVerified) {
+//               return res.json({
+//                   success:false,
+//                   message:`Member's account is not active or verified.`
+//               })
+//           }
+//       }
+
+//       let memberExist=await ODA.findOne({levelId:mission._id,userId:id})
+
+//       if (memberExist) {
+//           return res.json({
+//               success:false,
+//               message:'Member is already registered'
+//           })
+//       }
+
+//       if (category==='Priest') {
+//           let roleMemberExist=await ODA.findOne({userId:id,role})
+
+//           if (roleMemberExist) {
+//               return res.json({
+//                   success:false,
+//                   message:`Member is already a ${role}`
+//               })
+//           }
+
+//           roleExist=await ODA.findOne({levelId:mission._id,role})
+
+//           if (roleExist) {
+              
+//               roleExist.userId=id || roleExist.userId,
+//               roleExist.updatedBy=tokenId
+
+//               await roleExist.save()
+
+//               return res.json({
+//                   success:true
+//               })
+//           }
+
+//       }
+
+//       saved=await ODA.create({
+//           userId:id,
+//           role,
+//           official,
+//           levelId:mission._id,
+//           level:'Mission',
+//           addedBy:tokenId,
+//           updatedBy:tokenId
+//       })
+
+//       if (saved) {
+          
+//           return res.json({
+//               success:true
+//           })
+//       }
+//       else{
+//           return res.json({
+//               success:false,
+//               message:'Invalid data'
+//           })
+//       }
+      
+//   } catch (error) {
+//       console.log('Error=> '+error);
+//       return res.json({message:'Server error occured',success:false})
+//   }
+// }
+
+export async function getODAMembers (){
 
     let responseData={
         message:'',
@@ -165,22 +329,53 @@ export async function getMission_Select (){
     try {
 
         let pipeline=[
-            {
-                $project:{
-                    code:1,
-                    name:1,
-                    country:1,
-                }
+          {
+            $lookup: {
+              from: 'misxions',
+              localField: 'mission1',
+              foreignField: 'code',
+              as: 'primaryMission',
             },
-            {
-                $project:{
-                    _id:0,
-                }
-            }
+          },
+          {
+            $unwind: { path: '$primaryMission', preserveNullAndEmptyArrays: true },
+          },
+          {
+            $lookup: {
+              from: 'misxions',
+              localField: 'mission2',
+              foreignField: 'code',
+              as: 'secondaryMission',
+            },
+          },
+          {
+            $unwind: { path: '$secondaryMission', preserveNullAndEmptyArrays: true },
+          },
+          {
+              $project:{
+                  oda_username:1,
+                  first_name:1,
+                  last_name:1,
+                  contact:1,
+                  middle_names:1,
+                  category:1,
+                  primaryMission:{
+                    code:1,name:1
+                  },
+                  secondaryMission:{
+                    code:1,name:1
+                  },
+              }
+          },
+          {
+              $project:{
+                  _id:0,
+              }
+          }
 
         ]
 
-        let aggregatedDocuments =await Mission.aggregate(pipeline)
+        let aggregatedDocuments =await ODA.aggregate(pipeline)
 
         let data = JSON.stringify(aggregatedDocuments);
 
