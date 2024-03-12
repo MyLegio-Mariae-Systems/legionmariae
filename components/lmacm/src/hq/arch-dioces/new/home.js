@@ -71,7 +71,7 @@ export default function NewArchDiocesHome() {
 
   return (
     
-    <div className='col-md-12 flex justify-center'>
+    <div className='col-md-12 flex justify-center bg-white'>
       <Toaster 
         toastOptions={{
             success:{

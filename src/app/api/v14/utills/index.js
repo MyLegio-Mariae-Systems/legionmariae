@@ -219,11 +219,11 @@ export const generateId=async(value)=>{
 
 }
 
-export const getFirstAndLastWord=async(value)=>{
+export const getFirstAndLastWord=async(value, second=false)=>{
 
     value=value.trim()
     const text=value.split(" ")
-    var newText1=text[0]
+    var newText1=second ? text[1] : text[0]
     var newText2=text[text.length-1]
 
     var emailText=newText1

@@ -59,7 +59,7 @@ export default async function NewDioces (value) {
       const emailName = await getFirstAndLastWord(name);
   
       let promises=[
-        generateUniqueCode('A'),
+        generateUniqueCode('D'),
         generateUniqueEmail(emailName),
         // Members.findOne({email:'info.legionmariae.com'})
       ]
@@ -130,7 +130,7 @@ export default async function NewDioces (value) {
         const subject = 'Dioces Registration';
         const send_to = process.env.EMAIL_USER;
   
-        await sendEmail(subject, message, send_to);
+        // await sendEmail(subject, message, send_to);
 
         responseData.success=true
         return responseData
@@ -165,7 +165,7 @@ export async function getDioces_Select (code){
 
         let pipeline=[
             {
-                $match:{code}
+                $match:{archDioces:code}
             },
             {
                 $project:{

@@ -38,7 +38,7 @@ export function ODADashboardHome() {
   const date=new Date()
 
   return (
-    <div className="col-md-12 bg-light max-h-screen">
+    <div className="col-md-12 bg-white max-h-screen">
 
       <div className='mt-3'>
         <Typography variant="h4" className="mb-2 text-start text-primary ms-4 me-1">

@@ -129,7 +129,7 @@ export default async function NewArchDioces (value) {
         const subject = 'Arch Dioces Registration';
         const send_to = process.env.EMAIL_USER;
   
-        await sendEmail(subject, message, send_to);
+        // await sendEmail(subject, message, send_to);
 
         responseData.success=true
         return responseData

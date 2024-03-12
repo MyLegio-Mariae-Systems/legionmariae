@@ -1,5 +1,8 @@
 'use client'
 
+import { getArchDioces_Select } from "@/app/api/v14/controllers/arch-dioces/route";
+import { getDioces_Select } from "@/app/api/v14/controllers/dioces/route";
+import { getMission_Select } from "@/app/api/v14/controllers/mission/route";
 import {
   Card,
   Input,
@@ -17,9 +20,19 @@ export default function ODANewMemberHome() {
 
   const [missionRegistered, setmissionRegistered]=React.useState(true)
   const [isDeacon, setisDeacon]=React.useState(false)
-  const [formData, setformData] = React.useState({
-    missionRegistered,
-  });
+  const [formData, setformData] = React.useState({missionRegistered});
+  const [ArchDioces, setArchDioces] = React.useState([]);
+  const [Dioces, setDioces] = React.useState([]);
+  const [Mission, setMission] = React.useState([]);
+  const [responseMessage, setresponseMessage] = React.useState('');
+  const [Error, setError] = React.useState(false);
+  const [Success, setSuccess] = React.useState(false);
+
+  React.useEffect(()=>{
+
+    getArchDioces()
+
+  },[])
 
 
   const handleInputChange = (e) => {
@@ -33,9 +46,9 @@ export default function ODANewMemberHome() {
       } else {
         setisDeacon(false)
       }
-
       
     }
+
 
   }
 
@@ -89,10 +102,69 @@ export default function ODANewMemberHome() {
     );
   }
 
+  const getArchDioces=async()=>{
+    
+    try {
+
+      let response=await getArchDioces_Select()
+
+      setArchDioces(response.data)
+      
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  const getDioces=async(e)=>{
+
+    const { value } =await e.target;
+    
+    try {
+
+      let response=await getDioces_Select(value)
+
+      setDioces(response.data)
+      
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  const getMission=async(e)=>{
+
+    const { value } =await e.target;
+    
+    try {
+
+      let response=await getMission_Select(value)
+
+      setMission(response.data)
+      
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  const newMember=async(e)=>{
+
+    e.preventDefault()
+
+    try {
+
+      console.log(formData);
+      
+    } catch (error) {
+
+      console.log(error.message);
+      
+    }
+
+  }
+
 
   return (
     
-    <div className='col-md-12 flex justify-center'>
+    <div className='col-md-12 flex justify-center bg-white'>
       <Toaster 
         toastOptions={{
             success:{
@@ -118,6 +190,18 @@ export default function ODANewMemberHome() {
         <Typography color="gray" className="mt-1 font-normal">
           Enter member's details to register.
         </Typography>
+
+        {
+          Success && (
+            <Alert color='green' className='mb-2'>{responseMessage}</Alert>
+          )
+        }
+
+        {
+          Error && (
+            <Alert color='red' className='mb-2'>{responseMessage}</Alert>
+          )
+        }
         
 
         <Typography variant="h6" color="blue-gray" className="-mb-3">
@@ -126,13 +210,16 @@ export default function ODANewMemberHome() {
         <select
           size="lg"
           className=" form-select !border-t-blue-gray-200 focus:!border-t-gray-900 mb-2"
-          onChange={handleInputChange}
-          name='arch_dioces'
-          
+          onChange={getDioces}
         >
           <option></option>
-          <option>Nairobi</option>
-          <option>Kisumu</option>
+          {
+            ArchDioces?.map(({code,name,country},key)=>{
+              return  (
+              <option key={key} value={code}>{name} ({country})</option>
+              )
+            })
+          }
         </select>
 
         <Typography variant="h6" color="blue-gray" className="-mb-3">
@@ -141,13 +228,16 @@ export default function ODANewMemberHome() {
         <select
           size="lg"
           className=" form-select !border-t-blue-gray-200 focus:!border-t-gray-900 mb-2"
-          onChange={handleInputChange}
-          name='dioces'
-          
+          onChange={getMission}
         >
           <option></option>
-          <option>Nairobi</option>
-          <option>Thika</option>
+          {
+            Dioces?.map(({code,name},key)=>{
+              return  (
+              <option key={key} value={code}>{name}</option>
+              )
+            })
+          }
         </select>
 
         <Typography variant="h6" color="blue-gray" className="-mb-3">
@@ -160,8 +250,13 @@ export default function ODANewMemberHome() {
           name='mission'
         >
           <option></option>
-          <option>St. Teresa Kariobangi</option>
-          <option>St. Gabriel Babadogo</option>
+          {
+            Mission?.map(({code,name},key)=>{
+              return  (
+              <option key={key} value={code}>{name}</option>
+              )
+            })
+          }
         </select>
         <hr />
         
@@ -181,23 +276,23 @@ export default function ODANewMemberHome() {
         }
 
         <Typography variant="h6" color="blue-gray" className="-mb-3">
-          Mission Registered?
+          Registered in Mission?
         </Typography>
         <select
           size="lg"
           className=" form-select !border-t-blue-gray-200 focus:!border-t-gray-900 mb-2"
-          onChange={()=>setmissionRegistered(!missionRegistered)}
-          
+          onChange={(e)=>{setmissionRegistered(!missionRegistered); handleInputChange(e)}}
+          name="missionRegistered"
         >
-          <option>Yes</option>
-          <option>No</option>
+          <option value={true}>Yes</option>
+          <option value={false}>No</option>
         </select>
 
         {
           missionRegistered ? (
 
             <>
-            <form className="mt-8 mb-2 w-80 max-w-screen-lg sm:w-96">
+            <form className="mt-8 mb-2 w-80 max-w-screen-lg sm:w-96" onSubmit={newMember}>
               <div className="mb-1 flex flex-col gap-6">
 
               <Typography variant="h6" color="blue-gray" className="-mb-3">
@@ -243,7 +338,7 @@ export default function ODANewMemberHome() {
 
           ):(
             <>
-            <form className="mt-8 mb-2 w-80 max-w-screen-lg sm:w-96">
+            <form className="mt-8 mb-2 w-80 max-w-screen-lg sm:w-96" onSubmit={newMember}>
               <div className="mb-1 flex flex-col gap-6">
 
               <Typography variant="h6" color="blue-gray" className="-mb-3">
@@ -267,7 +362,7 @@ export default function ODANewMemberHome() {
                 </Typography>
                 <Input
                   size="lg"
-                  placeholder="name@mail.com"
+                  placeholder="Simeo"
                   className=" !border-t-blue-gray-200 focus:!border-t-gray-900 mb-2"
                   labelProps={{
                     className: "before:content-none after:content-none",
@@ -284,7 +379,7 @@ export default function ODANewMemberHome() {
                 </Typography>
                 <Input
                   size="lg"
-                  placeholder="name@mail.com"
+                  placeholder="Hosea"
                   className=" !border-t-blue-gray-200 focus:!border-t-gray-900 mb-2"
                   name='last_name'
                   labelProps={{

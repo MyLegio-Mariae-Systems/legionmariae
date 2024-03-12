@@ -109,7 +109,7 @@ export default function NewMissionHome() {
 
   return (
     
-    <div className='col-md-12 flex justify-center'>
+    <div className='col-md-12 flex justify-center bg-white'>
       <Toaster 
         toastOptions={{
             success:{
@@ -128,7 +128,7 @@ export default function NewMissionHome() {
         }}
       >
       </Toaster>
-      <Card color="transparent" shadow={false} className='col-md-5'>
+      <Card color="transparent" shadow={false} className='col-lg-5 col-md-12'>
         <Typography variant="h2" color="blue" className='text-center m-3 fw-bold'>
           New Mission
         </Typography>
@@ -165,10 +165,7 @@ export default function NewMissionHome() {
                     {
                         ArchDioces?.map(({code,name,country},key)=>{
                           return  (
-                          <option key={key} value={code}className='flex justify-between'>
-                            <div>{name}</div>
-                            <div>{country}</div>
-                          </option>
+                          <option key={key} value={code}>{name} ({country})</option>
                           )
                         })
                     }

@@ -60,7 +60,7 @@ export default async function NewMission(value) {
       const emailName = await getFirstAndLastWord(name,true);
   
       let promises=[
-        generateUniqueCode('M'),
+        generateUniqueCode('A'),
         generateUniqueEmail(emailName),
         // Members.findOne({email:'info.legionmariae.com'})
       ]
@@ -154,7 +154,7 @@ export default async function NewMission(value) {
     }
 }
 
-export async function getMission_Select (code){
+export async function getMission_Select (){
 
     let responseData={
         message:'',
@@ -166,12 +166,10 @@ export async function getMission_Select (code){
 
         let pipeline=[
             {
-              $match:{dioces:code}
-            },
-            {
                 $project:{
                     code:1,
                     name:1,
+                    country:1,
                 }
             },
             {
