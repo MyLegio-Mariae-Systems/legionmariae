@@ -48,12 +48,14 @@ export default function NewArchDiocesHome() {
       if (response.success) {
 
         setresponseMessage('Successful!')
+        toast.success('Successful!')
         setSuccess(true)
         setError(false)
 
         
       } else {
         setresponseMessage(response.message)
+        toast.error(response.message)
         setError(true)
         setSuccess(false)
         

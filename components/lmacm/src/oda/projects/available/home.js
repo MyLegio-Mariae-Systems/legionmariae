@@ -1,6 +1,6 @@
 'use client'
 
-import ODAMembersTable from "../../tables";
+import ODAMembersTable from "../../oda-tables/oda-members";
 
 
   const TABS = [

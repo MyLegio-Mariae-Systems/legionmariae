@@ -1,7 +1,7 @@
 'use client'
 
 import { getODAMembers } from "@/app/api/v14/controllers/oda/route";
-import ODAMembersTable from "../../tables";
+import ODAMembersTable from "../../oda-tables/oda-members";
 import React from 'react'
    
   const TABS = [
@@ -36,7 +36,14 @@ export default function ODAAvailableMembersHome() {
 
   const getAllODAMembers=async()=>{
 
-    const response=await getODAMembers()
+    const data={
+      searchParams:'',
+      category:'All',
+      page:0,
+      pageLimit:30
+    }
+
+    const response=await getODAMembers(data)
 
     console.log(response.data);
 
@@ -47,7 +54,14 @@ export default function ODAAvailableMembersHome() {
   const data={TABS,TABLE_HEAD,TABLE_ROWS,TITLE}
 
   return (
-    <ODAMembersTable propData={data}/>
+    <>
+    {
+      TABLE_ROWS && (
+        <ODAMembersTable propData={data} category={'All'}/>
+
+      )
+    }
+    </>
   )
     
 }

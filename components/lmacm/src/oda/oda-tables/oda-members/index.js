@@ -1,5 +1,6 @@
 'use client'
 
+import { getODAMembers, getODAOfficialMembers } from "@/app/api/v14/controllers/oda/route";
 import {
   MagnifyingGlassIcon,
 } from "@heroicons/react/24/outline";
@@ -25,8 +26,10 @@ import {
 } from "@material-tailwind/react";
 import { useRouter } from "next/navigation";
 import toast, { ToastBar, Toaster} from 'react-hot-toast'
+import React from 'react'
+import pluralize from 'pluralize'
 
-export default function ODAMembersTable({propData}) {
+export default function ODAMembersTable({propData, category}) {
 
   const router=useRouter()
 
@@ -34,6 +37,39 @@ export default function ODAMembersTable({propData}) {
 
   let toastId
 
+  const [TABLE_ROWS, setTABLE_ROWS] = React.useState([]);
+  const [Data, setData] = React.useState({searchParams:'',category,page:'',pageLimit:''});
+  const [PageCount,setPageCount]=React.useState(0)
+  const [OutOfPage,setOutOfPage]=React.useState(0)
+
+
+  const page=React.useRef(1)
+  const pageLimit=React.useRef(30)
+
+
+  React.useEffect(() => {
+    Data.pageLimit=pageLimit.current
+    Data.page=page.current
+    toast.loading('Loading. Please wait...',{id:toastId})
+    if (propData && propData.TABLE_ROWS) {
+      let pages=Math.ceil(propData.TABLE_ROWS[0]?.pageCount / pageLimit.current)
+    
+      setPageCount(pages)
+      setTABLE_ROWS(propData.TABLE_ROWS);
+    }
+
+    if (propData) {
+      toast.dismiss(toastId)
+    }
+  }, [propData]);
+
+  
+
+  // console.log(TABLE_ROWS);
+  const handlePageClick=(value)=>{
+    page.current=page.current + value
+    getAllODAMembers()
+  }
 
   const returnTabs=()=>{
 
@@ -43,7 +79,10 @@ export default function ODAMembersTable({propData}) {
         <Tabs value="all" className="w-full md:w-max">
           <TabsHeader>
             {propData.TABS.map(({ label, value }) => (
-              <Tab key={value} value={value}>
+              <Tab key={value} value={value} onClick={()=>{
+                Data.category=pluralize.singular(value)
+                getAllODAMembers()
+                }}>
                 &nbsp;&nbsp;{label}&nbsp;&nbsp;
               </Tab>
             ))}
@@ -57,15 +96,41 @@ export default function ODAMembersTable({propData}) {
 
     const {value}=await e.target
 
-    if (propData.TITLE==='Available Members') {
-      toastId=toast.loading('Available Members',{id:toastId})
-      
-    } else if (propData.TITLE==='Registered Members') {
-      
-      toastId=toast.loading('Registered Members',{id:toastId})
+    Data.searchParams=value
 
-    }
+    getAllODAMembers()
+
     
+
+    
+    
+  }
+
+  const getAllODAMembers=async()=>{
+
+    // console.log(Data);
+
+    Data.page=page.current-1
+
+    toastId=toast.loading('Loading. Please wait...',{id:toastId})
+    let response
+
+    if (propData.TITLE==='Official Members') {
+      response=await getODAOfficialMembers(Data)
+    } else if (propData.TITLE==='Registered Members') {
+      response=await getODAMembers(Data)
+    }
+
+    let pages=Math.ceil(response.data[0]?.pageCount / pageLimit.current)
+    
+    setPageCount(pages)
+
+    toast.dismiss(toastId)
+
+    // console.log(pages);
+
+    setTABLE_ROWS(response.data)
+
   }
 
     return (
@@ -153,9 +218,9 @@ export default function ODAMembersTable({propData}) {
                 </tr>
               </thead>
               <tbody>
-                {propData.TABLE_ROWS.map(
-                  ({ oda_username, first_name, last_name, middle_names, email, contact, category, primaryMission, secondaryMission}, index) => {
-                    const isLast = index === propData.TABLE_ROWS.length - 1;
+                {TABLE_ROWS?.map(
+                  ({documents}, index) => {
+                    const isLast = index === TABLE_ROWS.length - 1;
                     const classes = isLast
                       ? "p-4"
                       : "p-4 border-b border-blue-gray-50";
@@ -171,14 +236,14 @@ export default function ODAMembersTable({propData}) {
                                 color="blue-gray"
                                 className="font-normal"
                               >
-                                {oda_username}  
+                                {documents?.oda_username}  
                               </Typography>
                               <Typography
                                 variant="small"
                                 color="blue-gray"
                                 className="font-normal opacity-70"
                               >
-                                {category} {first_name} {middle_names} {last_name}
+                                {documents?.category} {documents?.first_name} {documents?.middle_names} {documents?.last_name}
                               </Typography>
                             </div>
                           </div>
@@ -190,14 +255,14 @@ export default function ODAMembersTable({propData}) {
                               color="blue-gray"
                               className="font-normal"
                             >
-                              {contact}
+                              {documents?.contact}
                             </Typography>
                             <Typography
                               variant="small"
                               color="blue-gray"
                               className="font-normal opacity-70"
                             >
-                              {email}
+                              {documents?.email}
                             </Typography>
                           </div>
                         </td>
@@ -217,14 +282,14 @@ export default function ODAMembersTable({propData}) {
                             color="blue-gray"
                             className="font-normal"
                           >
-                            {primaryMission?.name}
+                            {documents?.primaryMission?.code} {documents?.primaryMission?.name}
                           </Typography>
                           <Typography
                             variant="small"
                             color="blue-gray"
                             className="font-normal"
                           >
-                            {secondaryMission?.name}
+                            {documents?.secondaryMission?.code} {documents?.secondaryMission?.name}
                           </Typography>
                         </td>
                         <td className={classes}>
@@ -243,13 +308,13 @@ export default function ODAMembersTable({propData}) {
           </CardBody>
           <CardFooter className="flex items-center justify-between border-t border-blue-gray-50 p-4">
             <Typography variant="small" color="blue-gray" className="font-normal">
-              Page 1 of 10
+              Page {page.current} of {PageCount}
             </Typography>
             <div className="flex gap-2">
-              <Button variant="outlined" size="sm">
+              <Button variant="outlined" size="sm" onClick={()=>handlePageClick(-1)} disabled={page.current < 2 ? true : false}>
                 Previous
               </Button>
-              <Button variant="outlined" size="sm">
+              <Button variant="outlined" size="sm" onClick={()=>handlePageClick(+1)} disabled={page.current === PageCount ? true : false || PageCount < 1 ? true : false}>
                 Next
               </Button>
             </div>

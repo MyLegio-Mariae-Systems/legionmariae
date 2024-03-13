@@ -70,7 +70,7 @@ const ODAMissionRegistrationSchema=new Schema({
     timestamps:true,
 })
 
-ODAMissionRegistrationSchema.index({user_name:1,mission:1,mission:1,isDeleted:1,first_name:1,last_name:1})
+ODAMissionRegistrationSchema.index({oda_username:1,mission1:1,mission2:1,isDeleted:1,first_name:1,last_name:1})
 
 
 ODAMissionRegistrationSchema.pre('save', async function(next){
