@@ -16,10 +16,9 @@ const odaOfficialsSchema=new Schema({
     },
     updatedBy:{
         type: String,
-        required:true,
     },
     isDeleted:{
-        type: String,
+        type: Number,
         required:true,
     },
 

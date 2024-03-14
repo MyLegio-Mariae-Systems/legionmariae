@@ -11,15 +11,6 @@ DbConnect()
 
 let tokenId
 
-// async function generateUniqueCode(prefix) {
-//     let code;
-//     do {
-//         code = await generateCode(prefix);
-//     } while (await Mission.findOne({ code }));
-
-//     return code;
-// }
-
 async function generateUniqueUsername() {
     let oda_username;
     let random;
@@ -448,6 +439,101 @@ export async function getODAMembers (Params){
 
 }
 
+export async function getODADeaconsAcolyteMembers (mission){
+
+  let responseData={
+      message:'',
+      success:false,
+      data:[]
+  }
+
+  try {
+
+    let Missions=[]
+
+    const matchQuery =
+      mission === 'All'
+        ? {}
+        : {
+            $or: [
+              { mission1: mission },
+              { mission2: mission },
+            ],
+        };
+
+
+    let pipelineODA=[
+      {
+        $match:{...matchQuery, isDeleted:1}
+      },
+      {
+        $sort: {
+          createdAt: 1,
+        },
+      },
+      {
+          $project:{
+            oda_username:1,
+            first_name:1,
+            last_name:1,
+            contact:1,
+            email:1,
+            middle_names:1,
+            category:1,
+          }
+      },
+      {
+        $project:{
+          _id: 0,
+        }
+    }
+
+    ]
+
+    let pipelineMissions=[
+      {
+          $project:{
+            name:1,
+            code:1,
+          }
+      },
+      {
+        $project:{
+          _id: 0,
+        }
+    }
+
+    ]
+
+    let aggregatedDocuments =await ODA.aggregate(pipelineODA)
+
+    // console.log(aggregatedDocuments);
+
+    if (mission==='All') {
+
+      Missions=await Mission.aggregate(pipelineMissions)
+      
+    }
+
+    let dataODA = JSON.stringify(aggregatedDocuments);
+    let dataMissions = JSON.stringify(Missions);
+
+    let data = {ODAMembers:JSON.parse(dataODA),Missions:JSON.parse(dataMissions)};
+    responseData.data=data
+
+    return responseData
+      
+  } catch (error) {
+      console.log(error);
+
+      responseData.message=error.message || 'Please try again later, an unknown error occurred'
+      responseData.success=false
+      return responseData
+  }
+
+
+}
+
 export async function getODAOfficialMembers (Params){
 
   let responseData={
@@ -457,7 +543,8 @@ export async function getODAOfficialMembers (Params){
   }
 
   let searchParams=Params.searchParams
-  let category=Params.category
+  let role=Params.role
+  let mission=Params.mission
   let limit=Params.pageLimit
   let page=Params.page
 
@@ -469,25 +556,29 @@ export async function getODAOfficialMembers (Params){
         : {
             $or: [
               { oda_username: { $regex: searchParams, $options: 'i' } },
-              { role: { $regex: searchParams, $options: 'i' } },
-              
             ],
         };
     
-    const matchQueryCategory =
-    category === 'All'
+    const matchQueryRole =
+      role === 'All'
+        ? {}
+        : {role};
+    
+
+    const matchQueryMission =
+      mission === 'All'
       ? {}
       : 
-      { mission: category }
+      { mission }
 
 
     let pipeline=[
       {
-        $match:{...matchQuery, ...matchQueryCategory, isDeleted:1}
+        $match:{...matchQuery, ...matchQueryMission, ...matchQueryRole, isDeleted:1}
       },
       {
         $lookup: {
-          from: 'misxions',
+          from: 'misxionadomemdas',
           localField: 'oda_username',
           foreignField: 'oda_username',
           as: 'odaMembers',
@@ -555,7 +646,7 @@ export async function getODAOfficialMembers (Params){
 
     ]
 
-    let aggregatedDocuments =await ODA.aggregate(pipeline)
+    let aggregatedDocuments =await ODAMissionOfficials.aggregate(pipeline)
 
     let data = JSON.stringify(aggregatedDocuments);
 
@@ -598,9 +689,7 @@ export async function NewMissionODAOfficialMember(value) {
   //   }
 
   let promises=[
-    ODAMissionOfficials.find({oda_username}),
-    ODAMissionOfficials.findOne({oda_username,mission}),
-    // ODAMissionOfficials.findOne({mission,role}),
+    ODAMissionOfficials.findOne({oda_username}),
     ODA.findOne({oda_username}),
   ]
 
@@ -610,59 +699,38 @@ export async function NewMissionODAOfficialMember(value) {
     [response.value]
   );
 
-  
     try {
-      if (data[0] && data[0].lenght>1) {
-        responseData.message=`Member with username, ${oda_username} has reached his limit of being an official.`
+
+      if (data[1].mission1 !== mission && data[1].mission2 !== mission ) {
+        responseData.message=`Member with username, ${oda_username} is not a member of the mission's O.D.A you selected.`
+        responseData.success=false
+        return responseData
+      }
+
+      if (data[0]) {
+        responseData.message=`Member with username, ${oda_username} is already an official of O.D.A in another mission.`
         responseData.success=false
         return responseData
       }
       
-      if (data[1]) {
-        responseData.message=`Member with username, ${oda_username} is already the ${data[1].role} in your mission's O.D.A.`
-        responseData.success=false
-        return responseData
-      }
-
-      // if (data[2]) {
-
-      //   ODAMissionOfficials.update(
-      //     {
-      //       oda_username,
-      //       mission
-      //     },
-      //     {
-      //       role,
-      //       updatedBy:null,
-      //       isDeleted:1
-      //     },
-      //     {
-      //       $upsert:true
-      //     }
-      //   )
-        
-      // } else {
-        
-      // }
-
       const filter = {
-        oda_username,
+        role,
         mission
       };
       
       const update = {
-        role,
+        oda_username,
         updatedBy: null,
         isDeleted: 1
       };
       
-      const oda=ODAMissionOfficials.findOneAndUpdate(filter, update, {
+      const oda=await ODAMissionOfficials.findOneAndUpdate(filter, update, {
         upsert: true, // Creates a new document when no document matches the query criteria
         new: true, // Returns the updated document
         runValidators: true // Applies Mongoose validators to the update operation
       })
       
-
+// console.log(oda);
       if (!oda) {
           responseData.message='Invalid data'
           responseData.success=false
@@ -693,9 +761,9 @@ export async function NewMissionODAOfficialMember(value) {
         <p>Legio Mariae</p>
       `;
       const subject = 'ODA Official Registration';
-      const send_to = data[2]?.email;
+      const send_to = data[1]?.email;
 
-      if (email) {
+      if (data[1]?.email) {
         // await sendEmail(subject, message, send_to);
       }
 
@@ -720,5 +788,105 @@ export async function NewMissionODAOfficialMember(value) {
   }
 }
 
+export async function ODALogin(username, password, req) {
+  try {
+    if (!username || !password) {
+      return {
+        message: 'Please enter username and password',
+        success: false,
+      };
+    }
+
+    let promises=[
+      ODA.findOne({ oda_username:username}),
+      ODAMissionOfficials.findOne({ oda_username:username}),
+    ]
+  
+    const responses = await Promise.allSettled(promises);
+  
+    const data = responses.flatMap((response) =>
+      [response.value]
+    );
+    const user = data[0]
+    const official = data[1]
+
+    if (!user) {
+      return {
+        message: 'User not found',
+        success: false,
+      };
+    }
+
+    if (user.isDeleted === -1) {
+      return {
+        message: 'Invalid username or password',
+        success: false,
+      };
+    }
+
+    if (user.isDeleted > 1) {
+      return {
+        message: 'This account has been suspended',
+        success: false,
+      };
+    }
+
+    // if (!user.verified) {
+    //   return {
+    //     message: 'Email not verified. Please verify your business email address',
+    //     success: false,
+    //   };
+    // }
+
+    const validPassword = await bcrypt.compare(password, user.password);
+
+    if (validPassword) {
+
+      // const cashierName = user.firstName + ' ' + user.lastName + ' (' + user.username + ')';
+      // if (process.env.NODE_ENV === 'production') {
+      //   loginDetails(req, cashierUser.cashier, butchery.email, butchery.name, cashierName);
+      // }
+
+      let sessionData={
+        role:'',
+        access:'',
+        name:'',
+        level_name:'',
+        level_code:'',
+        access_name:'',
+      }
+
+      if (official.length > 0 ) {
+
+        sessionData.role=official.role
+        sessionData.access_name='oda'
+        sessionData.role=official.role
+        sessionData.role=official.role
+        sessionData.role=official.role
+      }
+
+      let access = 0
+
+      return {
+        success: true,
+        user,
+        butchery,
+        access,
+        branch,
+      };
+    } else {
+      return {
+        message: 'Invalid username or password',
+        success: false,
+      };
+    }
+  } catch (error) {
+    console.log('Error =>' + error);
+    return {
+      message: 'Unknown server error has occurred',
+      success: false,
+    };
+  }
+}
 
   

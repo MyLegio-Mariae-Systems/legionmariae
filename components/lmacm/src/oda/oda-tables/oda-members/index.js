@@ -40,7 +40,7 @@ export default function ODAMembersTable({propData, category}) {
   const [TABLE_ROWS, setTABLE_ROWS] = React.useState([]);
   const [Data, setData] = React.useState({searchParams:'',category,page:'',pageLimit:''});
   const [PageCount,setPageCount]=React.useState(0)
-  const [OutOfPage,setOutOfPage]=React.useState(0)
+  const [MembersFound,setMembersFound]=React.useState(0)
 
 
   const page=React.useRef(1)
@@ -53,7 +53,7 @@ export default function ODAMembersTable({propData, category}) {
     toast.loading('Loading. Please wait...',{id:toastId})
     if (propData && propData.TABLE_ROWS) {
       let pages=Math.ceil(propData.TABLE_ROWS[0]?.pageCount / pageLimit.current)
-    
+      setMembersFound(propData.TABLE_ROWS[0]?.pageCount)
       setPageCount(pages)
       setTABLE_ROWS(propData.TABLE_ROWS);
     }
@@ -99,10 +99,6 @@ export default function ODAMembersTable({propData, category}) {
     Data.searchParams=value
 
     getAllODAMembers()
-
-    
-
-    
     
   }
 
@@ -115,15 +111,16 @@ export default function ODAMembersTable({propData, category}) {
     toastId=toast.loading('Loading. Please wait...',{id:toastId})
     let response
 
-    if (propData.TITLE==='Official Members') {
-      response=await getODAOfficialMembers(Data)
-    } else if (propData.TITLE==='Registered Members') {
+    // if (propData.TITLE==='Official Members') {
+    //   response=await getODAOfficialMembers(Data)
+    // } else if (propData.TITLE==='Registered Members') {
       response=await getODAMembers(Data)
-    }
+    // }
 
     let pages=Math.ceil(response.data[0]?.pageCount / pageLimit.current)
     
     setPageCount(pages)
+    setMembersFound(response.data[0]?.pageCount)
 
     toast.dismiss(toastId)
 
@@ -192,10 +189,15 @@ export default function ODAMembersTable({propData, category}) {
                   onChange={searchData}
                 />
               </div>
+              
             </div>
+            <Typography color="gray" className="mt-3 fw-bold text-end me-3">
+                Total Officials : <span className="text-danger">{MembersFound ? MembersFound : 0}</span>
+            </Typography>
+
           </CardHeader>
           <CardBody className="overflow-scroll px-0">
-            <table className="mt-4 w-full min-w-max table-auto text-left">
+            <table className="mt-0 w-full min-w-max table-auto text-left">
               <thead>
                 <tr>
                   {propData.TABLE_HEAD.map((head, index) => (

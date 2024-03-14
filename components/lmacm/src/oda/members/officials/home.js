@@ -1,11 +1,15 @@
 'use client'
 
-import { getODAOfficialMembers } from "@/app/api/v14/controllers/oda/route";
+import { getODADeaconsAcolyteMembers, getODAOfficialMembers } from "@/app/api/v14/controllers/oda/route";
 import ODAOfficialMembersTable from "../../oda-tables/oda-officials";
 import React from 'react'
 
  
   const TABS = [
+    {
+      label: "All",
+      value: "All",
+    },
     {
       label: "Chairman",
       value: "Chairman",
@@ -49,40 +53,48 @@ export default function ODAOfficialMembersHome() {
   const TITLE='Official Members'
 
   const [TABLE_ROWS, setTABLE_ROWS]=React.useState([])
+  const [DeaconsAcolytes, setDeaconsAcolytes] = React.useState([]);
+  const [Missions, setMissions] = React.useState([]);
 
 
 
   React.useEffect(()=>{
+    getODA_OfficialMembers()
     getAllODAMembers()
   },[])
 
-  const getAllODAMembers=async()=>{
+  const getODA_OfficialMembers=async()=>{
 
     const data={
+      role:'All',
       searchParams:'',
-      category:'All',
+      mission:'All',
       page:0,
       pageLimit:30
     }
 
     const response=await getODAOfficialMembers(data)
 
-    console.log(response.data);
-
     setTABLE_ROWS(response.data)
 
   }
 
-  const data={TABS,TABLE_HEAD,TABLE_ROWS,TITLE}
+  const getAllODAMembers=async()=>{
+
+    const mission='All'
+
+    const response=await getODADeaconsAcolyteMembers(mission)
+
+    setDeaconsAcolytes(response.data.ODAMembers)
+    setMissions(response.data.Missions)
+
+  }
+
+  const data={TABS,TABLE_HEAD,TABLE_ROWS,TITLE,DeaconsAcolytes,Missions}
 
   return (
     <>
-    {
-      TABLE_ROWS && (
-        <ODAOfficialMembersTable propData={data} category={'All'}/>
-
-      )
-    }
+      <ODAOfficialMembersTable propData={data} mission={'All'}/>
     </>
   )
 }

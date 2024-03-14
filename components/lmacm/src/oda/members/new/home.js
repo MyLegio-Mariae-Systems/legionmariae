@@ -21,7 +21,7 @@ export default function ODANewMemberHome() {
 
   const [missionRegistered, setmissionRegistered]=React.useState(true)
   const [isDeacon, setisDeacon]=React.useState(false)
-  const [formData, setformData] = React.useState({missionRegistered:'true',middle_names:''});
+  const [FormData, setFormData] = React.useState({missionRegistered:'true',middle_names:''});
   const [ArchDioces, setArchDioces] = React.useState([]);
   const [Dioces, setDioces] = React.useState([]);
   const [Mission, setMission] = React.useState([]);
@@ -38,7 +38,7 @@ export default function ODANewMemberHome() {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setformData({ ...formData, [name]: value });
+    setFormData({ ...FormData, [name]: value });
 
     if (name==='category') {
 
@@ -56,10 +56,10 @@ export default function ODANewMemberHome() {
   const validate=async()=>{
 
     if(
-      !formData.first_name || 
-      !formData.first_contact || 
-      !formData.last_name ||
-      !formData.email
+      !FormData.first_name || 
+      !FormData.first_contact || 
+      !FormData.last_name ||
+      !FormData.email
       )
     {
       toast.error('Please fill in all required fields')
@@ -76,7 +76,7 @@ export default function ODANewMemberHome() {
         return false
       }
 
-      if(isNaN(formData?.first_contact) || formData?.first_contact.length !==10){
+      if(isNaN(FormData?.first_contact) || FormData?.first_contact.length !==10){
         toast.error('Please enter a valid contact number')
         return false
       }
@@ -153,28 +153,35 @@ export default function ODANewMemberHome() {
 
     e.preventDefault()
 
+    let valid=await validate()
+
+
     try {
-      toastId=toast.loading('Loading. Please wait...',{id:toastId})
 
-      let response=await NewMissionODAMember(formData)
+      if (valid) {
+        toastId=toast.loading('Loading. Please wait...',{id:toastId})
 
-      toast.dismiss(toastId)
+        let response=await NewMissionODAMember(FormData)
 
-      if (response.success) {
+        toast.dismiss(toastId)
 
-        setresponseMessage('Successful!')
-        toast.success('Successful!')
-        setSuccess(true)
-        setError(false)
+        if (response.success) {
 
-        
-      } else {
-        setresponseMessage(response.message)
-        toast.error(response.message)
-        setError(true)
-        setSuccess(false)
-        
+          setresponseMessage('Successful!')
+          toast.success('Successful!')
+          setSuccess(true)
+          setError(false)
+
+          
+        } else {
+          setresponseMessage(response.message)
+          toast.error(response.message)
+          setError(true)
+          setSuccess(false)
+          
+        }
       }
+      
       
     } catch (error) {
       setresponseMessage('Unknown Error occured', error.message)

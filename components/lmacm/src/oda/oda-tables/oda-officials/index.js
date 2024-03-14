@@ -1,6 +1,6 @@
 'use client'
 
-import { getODAMembers, getODAOfficialMembers } from "@/app/api/v14/controllers/oda/route";
+import { NewMissionODAOfficialMember, getODAMembers, getODAOfficialMembers } from "@/app/api/v14/controllers/oda/route";
 import {
   MagnifyingGlassIcon,
 } from "@heroicons/react/24/outline";
@@ -29,7 +29,7 @@ import toast, { ToastBar, Toaster} from 'react-hot-toast'
 import React from 'react'
 import pluralize from 'pluralize'
 
-export default function ODAOfficialMembersTable({propData, category}) {
+export default function ODAOfficialMembersTable({propData, mission}) {
 
   const router=useRouter()
 
@@ -38,10 +38,12 @@ export default function ODAOfficialMembersTable({propData, category}) {
   let toastId
 
   const [TABLE_ROWS, setTABLE_ROWS] = React.useState([]);
-  const [DeaconsAolytes, setDeaconsAolytes] = React.useState([]);
-  const [Data, setData] = React.useState({searchParams:'',category,page:'',pageLimit:''});
+  const [DeaconsAcolytes, setDeaconsAcolytes] = React.useState([]);
+  const [Missions, setMissions] = React.useState([]);
+  const [Data, setData] = React.useState({searchParams:'',mission,page:'',pageLimit:'',role:''});
   const [PageCount,setPageCount]=React.useState(0)
-  const [OutOfPage,setOutOfPage]=React.useState(0)
+  const [FormData,setFormData]=React.useState()
+  const [MembersFound,setMembersFound]=React.useState(0)
 
 
   const page=React.useRef(1)
@@ -55,8 +57,11 @@ export default function ODAOfficialMembersTable({propData, category}) {
     if (propData && propData.TABLE_ROWS) {
       let pages=Math.ceil(propData.TABLE_ROWS[0]?.pageCount / pageLimit.current)
     
+      setMembersFound(propData.TABLE_ROWS[0]?.pageCount)
       setPageCount(pages)
       setTABLE_ROWS(propData.TABLE_ROWS);
+      setDeaconsAcolytes(propData.DeaconsAcolytes);
+      setMissions(propData.Missions);
     }
 
     if (propData) {
@@ -81,7 +86,7 @@ export default function ODAOfficialMembersTable({propData, category}) {
           <TabsHeader className='bg-white'>
             {propData.TABS.map(({ label, value }) => (
               <Tab className='' key={value} value={value} onClick={()=>{
-                Data.category=pluralize.singular(value)
+                Data.role=value
                 getAllODAOfficialMembers()
                 }}>
                 &nbsp;&nbsp;{label}&nbsp;&nbsp;
@@ -100,10 +105,6 @@ export default function ODAOfficialMembersTable({propData, category}) {
     Data.searchParams=value
 
     getAllODAOfficialMembers()
-
-    
-
-    
     
   }
 
@@ -115,55 +116,48 @@ export default function ODAOfficialMembersTable({propData, category}) {
 
     toastId=toast.loading('Loading. Please wait...',{id:toastId})
 
-
-    let response
-    response=await getODAOfficialMembers(Data)
+    let response=await getODAOfficialMembers(Data)
 
     let pages=Math.ceil(response.data[0]?.pageCount / pageLimit.current)
-    
+
+    setMembersFound(response.data[0]?.pageCount)
     setPageCount(pages)
 
     toast.dismiss(toastId)
 
-    // console.log(pages);
-
     setTABLE_ROWS(response.data)
-
-    response=await getODAMembers(Data)
-    
-
-
 
   }
 
-  const getAllODAMembers=async()=>{
+  const newODAOfficialMember=async()=>{
 
-    // console.log(Data);
+    try {
 
-    Data.page=page.current-1
+      toastId=toast.loading('Loading. Please wait...',{id:toastId})
+      
+      let response=await NewMissionODAOfficialMember(FormData)
+      toast.dismiss(toastId)
 
-    toastId=toast.loading('Loading. Please wait...',{id:toastId})
+      if (response.success) {
+        toast.success('Successful!')
+        getAllODAOfficialMembers()
+      } else {
+        toast.error(response.message)
+      }
+      
+      
+    } catch (error) {
+      toast.error('Client error occurred')
+      console.log(error);
+    }
+  }
 
-
-    let response
-    response=await getODAOfficialMembers(Data)
-
-    let pages=Math.ceil(response.data[0]?.pageCount / pageLimit.current)
-    
-    setPageCount(pages)
-
-    toast.dismiss(toastId)
-
-    // console.log(pages);
-
-    setTABLE_ROWS(response.data)
-
-    response=await getODAMembers(Data)
-    
-
-
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({ ...FormData, [name]: value });
 
   }
+
 
     return (
         <>
@@ -199,20 +193,44 @@ export default function ODAOfficialMembersTable({propData, category}) {
               </div>
               {
                 propData.TITLE === 'Official Members' && (
-                  <div className="flex flex-wrap shrink-0 gap-2 ">
+                  <div className="flex flex-wrap shrink-0 gap-4 overflow-scroll w-full mt-2 mb-2">
                     {/* <Button variant="outlined" size="sm">
                       view all
                     </Button> */}
-                    <select class="rounded-md border ">
-                      <option>Available Members</option>
-                      <option>Not Registered Members</option>
+                    <select class="rounded-md border " onChange={handleInputChange} name="oda_username">
+                      <option value={''}>Choose Member</option>
+                      {
+                        DeaconsAcolytes?.map((result,key)=>{
+
+                          return <option key={key} value={result?.oda_username}>{result?.oda_username}, {result?.category} {result?.first_name} {result?.middle_names} {result?.last_name}</option>
+
+                        })
+                      }
+                      
                     </select>
-                    <select class="rounded-md border ">
-                      <option>Available Members</option>
-                      <option>Not Registered Members</option>
+                    <select class="rounded-md border " onChange={handleInputChange} name="role">
+                      <option value={''}>Choose Role</option>
+                      {
+                        propData.TABS?.map(({ label, value },key)=>{
+
+                          return <option key={key} value={value}>{label}</option>
+
+                        })
+                      }
+                      
+                    </select>
+                    <select class="rounded-md border " onChange={handleInputChange} name="mission">
+                      <option value={''}>Choose Mission</option>
+                      {
+                        Missions?.map((result,key)=>{
+
+                          return <option value={result?.code}>{result?.code}, {result?.name}</option>
+
+                        })
+                      }
                     </select> 
 
-                    <Button className="flex items-center gap-1" size="sm" onClick={()=> router.push('/lmacm/src/oda/members/new-member')}>
+                    <Button className="flex items-center gap-1" size="sm" onClick={newODAOfficialMember}>
                       <UserPlusIcon strokeWidth={2} className="h-4 w-4" /> Add Official
                     </Button>
                   </div>
@@ -230,6 +248,9 @@ export default function ODAOfficialMembersTable({propData, category}) {
                 />
               </div>
             </div>
+            <Typography color="gray" className="mt-3 fw-bold text-end me-3">
+                Total Members : <span className="text-danger">{MembersFound ? MembersFound : 0}</span>
+            </Typography>
           </CardHeader>
           <CardBody className="overflow-scroll px-0">
             <table className="mt-4 w-full min-w-max table-auto text-left">
