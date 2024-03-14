@@ -48,7 +48,7 @@ import React from 'react'
    
   
    
-export default function ODAOfficialMembersHome() {
+export default function ODAOfficialMembersHome({session}) {
     
   const TITLE='Official Members'
 

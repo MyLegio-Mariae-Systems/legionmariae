@@ -1,6 +1,6 @@
-import { AuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials"
 import DbConnect from "../../v14/utills";
+import { ODALogin } from "../../v14/controllers/oda/route";
 // import { loginUser } from "../../v1/controller/user/route";
 
 const authOptions={
@@ -19,37 +19,29 @@ const authOptions={
 
                 let userData
                 
-                // if (typeof credentials !=='undefined') {
+                if (typeof credentials !=='undefined') {
 
                     await DbConnect();
 
-                //     userData=await loginUser(credentials.username,credentials.password,request)
-                // }
-                // else{
-                //     throw new Error('Invalid credentials')
-                // }
+                    if (isNaN(credentials.username)) {
+                        // userData=await loginUser(credentials.username,credentials.password,request)
+                        
+                        throw new Error('Invalid credentials')
+                    } else {
+                        userData=await ODALogin(credentials.username,credentials.password,request)
+                    }
 
-                // if (!userData.success) {
-                //     throw new Error(userData.message)
-                // }
+                }
+                else{
+                    throw new Error('Invalid credentials')
+                }
 
-                
-                // return {
-                //     id:userData.user.id,
-                //     access:userData.access,
-                //     name:userData.user.firstName+' '+userData.user.lastName,
-                //     email:userData.butchery.email,
-                //     butcheryName:userData.butchery.name,
-                //     branch:userData.user.branch,
-                //     package:userData.branch.subscription[0].package,
-                //     branchName:userData.branch.name,
-                //     phone:userData.butchery.country[0].phoneCode+userData.butchery.mobile
-                // }
+                if (!userData.success) {
+                    throw new Error(userData.message)
+                }
 
                 return {
-                    id:'123456789012345678901234',
-                    name:'Meshack',
-                    email:'btgavygarvey@gmail.com',
+                    ...userData.sessionData
                 }
 
             }
@@ -66,7 +58,11 @@ const authOptions={
             if(user){
                 token.id=user.id
                 token.name=user.name
-                token.email=user.email
+                token.role=user.role
+                token.access=user.access
+                token.level_name=user.level_name
+                token.level_code=user.level_code
+                token.access_name=user.access_name
             }
             return token
         },
@@ -74,7 +70,11 @@ const authOptions={
             if(token){
                 session.user.id=token.id
                 session.user.name=token.name
-                session.user.email=token.email
+                session.user.role=token.role
+                session.user.access=token.access
+                session.user.level_name=token.level_name
+                session.user.level_code=token.level_code
+                session.user.access_name=token.access_name
             }
             return session
         }

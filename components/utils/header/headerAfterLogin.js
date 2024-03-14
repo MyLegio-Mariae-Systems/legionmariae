@@ -117,7 +117,7 @@ function ProfileMenu() {
                 variant="small"
                 className="font-normal"
                 color={isLastItem ? "red" : "inherit"}
-                onClick={signOut}
+                onClick={isLastItem ? signOut :''}
               >
                 {label}
               </Typography>

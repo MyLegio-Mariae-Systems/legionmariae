@@ -192,7 +192,7 @@ export default function ODAMembersTable({propData, category}) {
               
             </div>
             <Typography color="gray" className="mt-3 fw-bold text-end me-3">
-                Total Officials : <span className="text-danger">{MembersFound ? MembersFound : 0}</span>
+                Total Members : <span className="text-danger">{MembersFound ? MembersFound : 0}</span>
             </Typography>
 
           </CardHeader>

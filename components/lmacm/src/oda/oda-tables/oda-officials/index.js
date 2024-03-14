@@ -40,9 +40,9 @@ export default function ODAOfficialMembersTable({propData, mission}) {
   const [TABLE_ROWS, setTABLE_ROWS] = React.useState([]);
   const [DeaconsAcolytes, setDeaconsAcolytes] = React.useState([]);
   const [Missions, setMissions] = React.useState([]);
-  const [Data, setData] = React.useState({searchParams:'',mission,page:'',pageLimit:'',role:''});
+  const [Data, setData] = React.useState({searchParams:'',mission,page:'',pageLimit:'',role:'All'});
   const [PageCount,setPageCount]=React.useState(0)
-  const [FormData,setFormData]=React.useState()
+  const [FormData,setFormData]=React.useState({mission})
   const [MembersFound,setMembersFound]=React.useState(0)
 
 
@@ -249,7 +249,7 @@ export default function ODAOfficialMembersTable({propData, mission}) {
               </div>
             </div>
             <Typography color="gray" className="mt-3 fw-bold text-end me-3">
-                Total Members : <span className="text-danger">{MembersFound ? MembersFound : 0}</span>
+                Total Officials : <span className="text-danger">{MembersFound ? MembersFound : 0}</span>
             </Typography>
           </CardHeader>
           <CardBody className="overflow-scroll px-0">

@@ -6,6 +6,7 @@ import Dioces from '../../models/dicoes-registration'
 import Mission from '../../models/mission-registration'
 import ODA from '../../models/oda-mission-registration'
 import ODAMissionOfficials from '../../models/oda-mission-officials'
+import bcrypt from "bcryptjs/dist/bcrypt";
 
 DbConnect()
 
@@ -688,6 +689,8 @@ export async function NewMissionODAOfficialMember(value) {
   //     return responseData
   //   }
 
+  
+  // await ODAMissionOfficials.deleteMany()
   let promises=[
     ODAMissionOfficials.findOne({oda_username}),
     ODA.findOne({oda_username}),
@@ -707,19 +710,25 @@ export async function NewMissionODAOfficialMember(value) {
         return responseData
       }
 
+      let filter={}
+
       if (data[0]) {
-        responseData.message=`Member with username, ${oda_username} is already an official of O.D.A in another mission.`
-        responseData.success=false
-        return responseData
+        
+        filter = {
+          oda_username
+        };
+      }
+      else{
+        filter = {
+          role,
+          mission
+        };
       }
       
-      const filter = {
-        role,
-        mission
-      };
-      
       const update = {
+        role,
         oda_username,
+        mission,
         updatedBy: null,
         isDeleted: 1
       };
@@ -810,14 +819,7 @@ export async function ODALogin(username, password, req) {
     const user = data[0]
     const official = data[1]
 
-    if (!user) {
-      return {
-        message: 'User not found',
-        success: false,
-      };
-    }
-
-    if (user.isDeleted === -1) {
+    if (!user || user.isDeleted === -1) {
       return {
         message: 'Invalid username or password',
         success: false,
@@ -840,7 +842,7 @@ export async function ODALogin(username, password, req) {
 
     const validPassword = await bcrypt.compare(password, user.password);
 
-    if (validPassword) {
+    if (!validPassword) {
 
       // const cashierName = user.firstName + ' ' + user.lastName + ' (' + user.username + ')';
       // if (process.env.NODE_ENV === 'production') {
@@ -848,6 +850,7 @@ export async function ODALogin(username, password, req) {
       // }
 
       let sessionData={
+        id:'',
         role:'',
         access:'',
         name:'',
@@ -856,23 +859,20 @@ export async function ODALogin(username, password, req) {
         access_name:'',
       }
 
-      if (official.length > 0 ) {
+      if (official) {
 
+        sessionData.id=official.oda_username
         sessionData.role=official.role
         sessionData.access_name='oda'
-        sessionData.role=official.role
-        sessionData.role=official.role
-        sessionData.role=official.role
+        sessionData.name=user.first_name+' '+user.last_name
+        sessionData.access=1
+        sessionData.level_name='Mission'
+        sessionData.level_code=official.mission
       }
-
-      let access = 0
 
       return {
         success: true,
-        user,
-        butchery,
-        access,
-        branch,
+        sessionData
       };
     } else {
       return {

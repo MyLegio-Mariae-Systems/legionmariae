@@ -57,7 +57,7 @@ export default function ODANewMemberHome() {
 
     if(
       !FormData.first_name || 
-      !FormData.first_contact || 
+      !FormData.contact || 
       !FormData.last_name ||
       !FormData.email
       )
@@ -68,7 +68,7 @@ export default function ODANewMemberHome() {
     }
 
     if(
-        !email.match(
+        !FormData.email.match(
         /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
         )
       ){
@@ -76,7 +76,7 @@ export default function ODANewMemberHome() {
         return false
       }
 
-      if(isNaN(FormData?.first_contact) || FormData?.first_contact.length !==10){
+      if(isNaN(FormData?.contact) || FormData?.contact.length !==10){
         toast.error('Please enter a valid contact number')
         return false
       }

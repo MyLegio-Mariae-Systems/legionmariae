@@ -19,7 +19,9 @@ export default async function ODADashboard(request) {
 
     const toDashboard=()=>{
         redirect('/')
-      }
+    }
+
+    console.log(session);
 
     return(
         <>
