@@ -10,6 +10,8 @@ import handleDownload from "../../../../src/app/api/v14/utills";
 import downloadDivContent from "../download/calendar";
 import { usePathname } from "next/navigation";
 import NavbarB4Login from "../../header/headerB4Login";
+import { PlusIcon } from "@heroicons/react/24/solid";
+import toast, { Toaster } from "react-hot-toast";
 
  
 export default function LiturgicalCalenderPage({pathname, session}) {
@@ -19,7 +21,7 @@ export default function LiturgicalCalenderPage({pathname, session}) {
 
     const [Year,setYear]=React.useState(year)
     const [Years,setYears]=React.useState([])
-    const [isVisible,setIsVisible]=React.useState(false)
+    const [FormData,setFormData]=React.useState()
 
     const TABLE_HEAD = ["NAME", "DAY", "FEAST/EVENT", "COMMEMORATION", "COLOUR"];
     const TABLE_ROWS = AshWenesday(Year)
@@ -140,14 +142,56 @@ export default function LiturgicalCalenderPage({pathname, session}) {
         downloadDivContent(Year, TABLE_HEAD, TABLE_ROWS, 'liturgical_calendar', `${Year}_Liturgical_Calendar.pdf`, pathName);
     }
 
+    async function handleInputChange(e) {
+
+        const {name,value}=await e.target
+
+        setFormData({...FormData, [name]: value})
+
+        toast.success(value)
+
+    }
+
+    async function addAshWednesday() {
+
+        if (!FormData?.date) {
+
+            toast.error('Ash Wednesday date is empty')
+            return
+            
+        }
+
+        toast.success(FormData?.date)
+
+    }
+
 
   return (
     <>
+    <Toaster 
+        toastOptions={{
+            success:{
+                style:{
+                    background:'green',
+                    color:'white'
+                }
+            },
+            error:{
+                style:{
+                    background:'red',
+                    color:'white'
+                }
+            },
+            
+        }}
+
+        >
+    </Toaster>
     <NavbarB4Login session={session} />
     <Card className="h-full w-full overflow-scroll">
 
     <CardHeader floated={false} shadow={false} className="rounded-none">
-        <div className="col-md-12 mb-4 gap-8 md:flex-row md:items-center">
+        <div className="col-md-12 mb-4 gap-2 md:flex-row md:items-center">
           <div className="col-md-12">
             <Typography variant="h4" color="black ">
               {Year} Liturgical Calender
@@ -156,8 +200,29 @@ export default function LiturgicalCalenderPage({pathname, session}) {
               You can search for liturgical calender of any year.
             </Typography>
           </div>
-          <div className="col-md-12 flex w-full shrink-0 gap-2 md:w-max">
-            <div className="col-md-10 w-full md:w-72">
+          
+          <div className="col-md-12 flex w-full flex-wrap shrink-0 gap-2 md:w-max mb-3">
+            <div className="col-md-9 w-full md:w-72">
+            
+              <Input
+                    type="date"
+                    min={new Date().toISOString().split('T')[0]}
+                    onChange={handleInputChange}
+                    name="date"
+                    class="peer h-full w-full rounded-[7px] border border-blue-gray-200 border-t-transparent bg-transparent px-3 py-2.5 font-sans text-sm font-normal text-blue-gray-700 outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 empty:!bg-gray-900 focus:border-2 focus:border-gray-900 focus:border-t-transparent focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50" />
+              
+            </div>
+            <div className='col-md-2'>
+            <Button className="flex items-center gap-3" size="sm" onClick={addAshWednesday}>
+              <PlusIcon strokeWidth={2} className="h-4 w-4" /> Add Ash Wednesday
+            </Button>
+            </div>
+            
+            
+          </div>
+
+          <div className="col-md-12 flex w-full flex-wrap shrink-0 gap-3 md:w-max ">
+            <div className="col-md-9 w-full md:w-72">
             
               <select
                     onChange={searchYear}

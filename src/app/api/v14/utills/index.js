@@ -11,6 +11,7 @@ import {addMonths, format} from 'date-fns'
 import { NextResponse } from 'next/server';
 import jwt from 'jsonwebtoken'
 
+
 // DB CONNECTION
 
 const conn={
@@ -313,3 +314,4 @@ export async function today(){
     return new Date().toISOString().split('T')[0]
 
 }
+

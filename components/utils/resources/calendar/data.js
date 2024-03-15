@@ -1324,26 +1324,26 @@ export default function fixedDates(year) {
                 {
                     date:`${year}-08-01`,
                     feast:``,
-                    saint:``,
-                    color:``,
+                    saint:`St. Samona`,
+                    color:`White`,
                 },
                 {
                     date:`${year}-08-02`,
                     feast:``,
-                    saint:``,
-                    color:``,
+                    saint:`St. Alphonsus Liguori.`,
+                    color:`White`,
                 },
                 {
                     date:`${year}-08-03`,
                     feast:``,
-                    saint:`St. Peter Julian Eymard`,
+                    saint:`St. Peter Julian Eymard. St. Lydia`,
                     color:`White`,
                 },
                 {
                     date:`${year}-08-04`,
                     feast:``,
-                    saint:``,
-                    color:``,
+                    saint:`St. Bartholomew`,
+                    color:`White`,
                 },
                 {
                     date:`${year}-08-05`,
@@ -1354,20 +1354,20 @@ export default function fixedDates(year) {
                 {
                     date:`${year}-08-06`,
                     feast:``,
-                    saint:``,
-                    color:``,
+                    saint:`St. Xystus. St. Felicissimus. ST. Agapitus.`,
+                    color:`White`,
                 },
                 {
                     date:`${year}-08-07`,
                     feast:``,
-                    saint:``,
-                    color:``,
+                    saint:`St. Cajetan`,
+                    color:`White`,
                 },
                 {
                     date:`${year}-08-08`,
                     feast:``,
-                    saint:``,
-                    color:``,
+                    saint:`St. Smaragdus. St. Largus`,
+                    color:`White`,
                 },
                 {
                     date:`${year}-08-09`,
@@ -1378,13 +1378,13 @@ export default function fixedDates(year) {
                 {
                     date:`${year}-08-10`,
                     feast:``,
-                    saint:``,
-                    color:``,
+                    saint:`St. Lawrence - Martyr`,
+                    color:`Red`,
                 },
                 {
                     date:`${year}-08-11`,
                     feast:``,
-                    saint:`St. Philomena`,
+                    saint:`St. Philomena. St. Tiburtius. St. Susana`,
                     color:`White`,
                 },
                 {
@@ -1402,13 +1402,13 @@ export default function fixedDates(year) {
                 {
                     date:`${year}-08-14`,
                     feast:``,
-                    saint:``,
-                    color:``,
+                    saint:`St. Maxmillian Kolbe`,
+                    color:`White`,
                 },
                 {
                     date:`${year}-08-15`,
                     feast:`Solemnity of the Assumption of the Blessed Virgin Mary`,
-                    saint:``,
+                    saint:`St. Tarsicius`,
                     color:`White`,
                 },
                 {
@@ -1426,8 +1426,8 @@ export default function fixedDates(year) {
                 {
                     date:`${year}-08-18`,
                     feast:``,
-                    saint:``,
-                    color:``,
+                    saint:`St. Victoria Rosoamanarivo`,
+                    color:`White`,
                 },
                 {
                     date:`${year}-08-19`,
@@ -1438,8 +1438,8 @@ export default function fixedDates(year) {
                 {
                     date:`${year}-08-20`,
                     feast:``,
-                    saint:``,
-                    color:``,
+                    saint:`St. Bernard`,
+                    color:`White`,
                 },
                 {
                     date:`${year}-08-21`,
@@ -1450,7 +1450,7 @@ export default function fixedDates(year) {
                 {
                     date:`${year}-08-22`,
                     feast:`Feast of the Queenship of Mary`,
-                    saint:``,
+                    saint:`St. Timothy. St. Hippollytus. St. Symphorian`,
                     color:`White`,
                 },
                 {
@@ -1468,14 +1468,14 @@ export default function fixedDates(year) {
                 {
                     date:`${year}-08-25`,
                     feast:``,
-                    saint:`St. Patricia`,
+                    saint:`St. Patricia. St. Louis - King of France`,
                     color:`White`,
                 },
                 {
                     date:`${year}-08-26`,
                     feast:``,
-                    saint:``,
-                    color:``,
+                    saint:`St. Zephyrinus`,
+                    color:`White`,
                 },
                 {
                     date:`${year}-08-27`,
@@ -1492,13 +1492,13 @@ export default function fixedDates(year) {
                 {
                     date:`${year}-08-29`,
                     feast:``,
-                    saint:``,
-                    color:``,
+                    saint:`St. Sabina`,
+                    color:`White`,
                 },
                 {
                     date:`${year}-08-30`,
                     feast:``,
-                    saint:`St. Rose of Lima`,
+                    saint:`St. Rose of Lima. St. Adauctus`,
                     color:`White`,
                 },
                 {
@@ -1516,8 +1516,8 @@ export default function fixedDates(year) {
                 {
                     date:`${year}-09-01`,
                     feast:``,
-                    saint:``,
-                    color:``,
+                    saint:`St. Aegidius. St. Anna - Prophetess.`,
+                    color:`White`,
                 },
                 {
                     date:`${year}-09-02`,
@@ -1528,20 +1528,20 @@ export default function fixedDates(year) {
                 {
                     date:`${year}-09-03`,
                     feast:``,
-                    saint:``,
-                    color:``,
+                    saint:`St. Pius X`,
+                    color:`White`,
                 },
                 {
                     date:`${year}-09-04`,
                     feast:``,
-                    saint:``,
-                    color:``,
+                    saint:`St. Rosalia. St. Rose`,
+                    color:`White`,
                 },
                 {
                     date:`${year}-09-05`,
                     feast:``,
-                    saint:``,
-                    color:``,
+                    saint:`St. Lawrence Justinian`,
+                    color:`White`,
                 },
                 {
                     date:`${year}-09-06`,
@@ -1552,8 +1552,8 @@ export default function fixedDates(year) {
                 {
                     date:`${year}-09-07`,
                     feast:``,
-                    saint:``,
-                    color:``,
+                    saint:`St. Regina`,
+                    color:`White`,
                 },
                 {
                     date:`${year}-09-08`,
@@ -1564,20 +1564,20 @@ export default function fixedDates(year) {
                 {
                     date:`${year}-09-09`,
                     feast:``,
-                    saint:``,
-                    color:``,
+                    saint:`St. Peter Claver`,
+                    color:`White`,
                 },
                 {
                     date:`${year}-09-10`,
                     feast:``,
-                    saint:``,
-                    color:``,
+                    saint:`St. Nicholas`,
+                    color:`White`,
                 },
                 {
                     date:`${year}-09-11`,
                     feast:``,
-                    saint:``,
-                    color:``,
+                    saint:`St. Paphnutius`,
+                    color:`White`,
                 },
                 {
                     date:`${year}-09-12`,
@@ -1600,7 +1600,7 @@ export default function fixedDates(year) {
                 {
                     date:`${year}-09-15`,
                     feast:`The feast of Our Lady of Sorrows`,
-                    saint:``,
+                    saint:`St. Nicomedes`,
                     color:`White`,
                 },
                 {
@@ -1642,14 +1642,14 @@ export default function fixedDates(year) {
                 {
                     date:`${year}-09-22`,
                     feast:``,
-                    saint:``,
-                    color:``,
+                    saint:`St. Maurice & the Theban Legion - Martyrs`,
+                    color:`Red`,
                 },
                 {
                     date:`${year}-09-23`,
                     feast:``,
-                    saint:``,
-                    color:``,
+                    saint:`St. Linus - Martyr. St. Padre Pio. St. Thecla`,
+                    color:`Red`,
                 },
                 {
                     date:`${year}-09-24`,
@@ -1678,13 +1678,13 @@ export default function fixedDates(year) {
                 {
                     date:`${year}-09-28`,
                     feast:``,
-                    saint:``,
-                    color:``,
+                    saint:`St. Wenceslaus - Martyr****`,
+                    color:`Red`,
                 },
                 {
                     date:`${year}-09-29`,
                     feast:``,
-                    saint:``,
+                    saint:`St. Michael - Archangel`,
                     color:``,
                 },
                 {
@@ -1703,8 +1703,8 @@ export default function fixedDates(year) {
                 {
                     date:`${year}-10-01`,
                     feast:``,
-                    saint:``,
-                    color:``,
+                    saint:`St. Remegius`,
+                    color:`White`,
                 },
                 {
                     date:`${year}-10-02`,
@@ -1715,8 +1715,8 @@ export default function fixedDates(year) {
                 {
                     date:`${year}-10-03`,
                     feast:``,
-                    saint:``,
-                    color:``,
+                    saint:`St. Therese of Lisieux.`,
+                    color:`White`,
                 },
                 {
                     date:`${year}-10-04`,
@@ -1727,20 +1727,20 @@ export default function fixedDates(year) {
                 {
                     date:`${year}-10-05`,
                     feast:``,
-                    saint:``,
-                    color:``,
+                    saint:`St. Plaridus***`,
+                    color:`White`,
                 },
                 {
                     date:`${year}-10-06`,
                     feast:``,
-                    saint:``,
-                    color:``,
+                    saint:`St. Bruno`,
+                    color:`White`,
                 },
                 {
                     date:`${year}-10-07`,
                     feast:`Feast of Our Lady of the Rosary`,
-                    saint:``,
-                    color:`White`,
+                    saint:`St. Mark. Sts. B***, Marcellus & Apoleius - Martyrs`,
+                    color:`Red`,
                 },
                 {
                     date:`${year}-10-08`,
@@ -1751,8 +1751,8 @@ export default function fixedDates(year) {
                 {
                     date:`${year}-10-09`,
                     feast:``,
-                    saint:``,
-                    color:``,
+                    saint:`Sts. Sergius, Rusticus & Eleutherius - Martyrs.`,
+                    color:`Red`,
                 },
                 {
                     date:`${year}-10-10`,
@@ -1781,14 +1781,14 @@ export default function fixedDates(year) {
                 {
                     date:`${year}-10-14`,
                     feast:``,
-                    saint:``,
-                    color:``,
+                    saint:`St. Callistus - Martyr.`,
+                    color:`Red`,
                 },
                 {
                     date:`${year}-10-15`,
                     feast:``,
-                    saint:``,
-                    color:``,
+                    saint:`St. Teresa of Avila`,
+                    color:`White`,
                 },
                 {
                     date:`${year}-10-16`,
@@ -1799,20 +1799,20 @@ export default function fixedDates(year) {
                 {
                     date:`${year}-10-17`,
                     feast:``,
-                    saint:``,
-                    color:``,
+                    saint:`St. Margaret Mary Alacoque`,
+                    color:`White`,
                 },
                 {
                     date:`${year}-10-18`,
                     feast:``,
-                    saint:``,
-                    color:``,
+                    saint:`St. Luke - Evangelist`,
+                    color:`White`,
                 },
                 {
                     date:`${year}-10-19`,
                     feast:``,
-                    saint:``,
-                    color:``,
+                    saint:`St. Peter of Alcantara`,
+                    color:`White`,
                 },
                 {
                     date:`${year}-10-20`,
@@ -1823,25 +1823,25 @@ export default function fixedDates(year) {
                 {
                     date:`${year}-10-21`,
                     feast:``,
-                    saint:``,
-                    color:``,
+                    saint:`St. Ursula`,
+                    color:`White`,
                 },
                 {
                     date:`${year}-10-22`,
                     feast:``,
-                    saint:``,
-                    color:``,
+                    saint:`St. Mary Salome`,
+                    color:`White`,
                 },
                 {
                     date:`${year}-10-23`,
                     feast:``,
-                    saint:``,
-                    color:``,
+                    saint:`St. Anthony Mary Claret`,
+                    color:`White`,
                 },
                 {
                     date:`${year}-10-24`,
                     feast:``,
-                    saint:``,
+                    saint:`St. Raphael - Archangel`,
                     color:``,
                 },
                 {
@@ -1853,8 +1853,8 @@ export default function fixedDates(year) {
                 {
                     date:`${year}-10-26`,
                     feast:``,
-                    saint:``,
-                    color:``,
+                    saint:`St. Alfred`,
+                    color:`White`,
                 },
                 {
                     date:`${year}-10-27`,
@@ -1865,26 +1865,26 @@ export default function fixedDates(year) {
                 {
                     date:`${year}-10-28`,
                     feast:``,
-                    saint:``,
-                    color:``,
+                    saint:`Sts. Simon & Jude`,
+                    color:`White`,
                 },
                 {
                     date:`${year}-10-29`,
                     feast:``,
-                    saint:``,
-                    color:``,
+                    saint:`St. Narcissus`,
+                    color:`White`,
                 },
                 {
                     date:`${year}-10-30`,
                     feast:``,
-                    saint:``,
-                    color:``,
+                    saint:`St. Alphonsus ROdriguez***`,
+                    color:`White`,
                 },
                 {
                     date:`${year}-10-31`,
                     feast:``,
-                    saint:``,
-                    color:``,
+                    saint:`St. Wolfgang`,
+                    color:`White`,
                 },
                 
             ]
