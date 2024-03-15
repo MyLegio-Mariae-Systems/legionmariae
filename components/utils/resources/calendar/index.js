@@ -12,6 +12,9 @@ import { usePathname } from "next/navigation";
 import NavbarB4Login from "../../header/headerB4Login";
 import { PlusIcon } from "@heroicons/react/24/solid";
 import toast, { Toaster } from "react-hot-toast";
+import { Today } from "../../../utils";
+import setCalendar, { getCalendar } from "@/app/api/v14/controllers/hq/route";
+import AnimatedNumbers from "react-animated-numbers";
 
  
 export default function LiturgicalCalenderPage({pathname, session}) {
@@ -19,15 +22,18 @@ export default function LiturgicalCalenderPage({pathname, session}) {
     const year=new Date().getFullYear()
     const pathName = pathname+''+usePathname()
 
+    let toastId
+
     const [Year,setYear]=React.useState(year)
     const [Years,setYears]=React.useState([])
-    const [FormData,setFormData]=React.useState()
+    const [Downloads,setDownloads]=React.useState([])
 
     const TABLE_HEAD = ["NAME", "DAY", "FEAST/EVENT", "COMMEMORATION", "COLOUR"];
     const TABLE_ROWS = AshWenesday(Year)
  
     React.useEffect(()=>{
         listYears()
+        getDownloads()
     },[])
 
     
@@ -139,32 +145,44 @@ export default function LiturgicalCalenderPage({pathname, session}) {
     }
 
     async function downloadCalender() {
-        downloadDivContent(Year, TABLE_HEAD, TABLE_ROWS, 'liturgical_calendar', `${Year}_Liturgical_Calendar.pdf`, pathName);
-    }
 
-    async function handleInputChange(e) {
+        let date= Today()
 
-        const {name,value}=await e.target
+        try {
 
-        setFormData({...FormData, [name]: value})
+            toastId=toast.loading('Loading. Please wait...',{id:toastId})
 
-        toast.success(value)
+            let response=await setCalendar(date.fullDate,2)
+            toast.dismiss(toastId)
 
-    }
+            if (response.success) {
 
-    async function addAshWednesday() {
-
-        if (!FormData?.date) {
-
-            toast.error('Ash Wednesday date is empty')
-            return
+                await downloadDivContent(Year, TABLE_HEAD, TABLE_ROWS, 'liturgical_calendar', `${Year}_Liturgical_Calendar.pdf`, pathName);
+                toast.success('Download Successful!')
+                getDownloads()
+                
+            } else {
+                toast.error(response.message)
+                console.log(response.message);
+            }
             
+        } catch (error) {
+            console.log(error);
+            toast.error('Client error occured')
+        }
+    }
+
+    async function getDownloads() {
+        
+        const response=await getCalendar()
+
+        console.log(response);
+
+        if (response && response.length>0) {
+            setDownloads(response[0]?.downloads)
         }
 
-        toast.success(FormData?.date)
-
     }
-
 
   return (
     <>
@@ -192,35 +210,32 @@ export default function LiturgicalCalenderPage({pathname, session}) {
 
     <CardHeader floated={false} shadow={false} className="rounded-none">
         <div className="col-md-12 mb-4 gap-2 md:flex-row md:items-center">
-          <div className="col-md-12">
-            <Typography variant="h4" color="black ">
-              {Year} Liturgical Calender
-            </Typography>
-            <Typography color="gray" className="mt-1 font-normal">
-              You can search for liturgical calender of any year.
-            </Typography>
+          <div className="col-md-12 flex flex-wrap w-full">
+            <div className="col-md-7">
+                <Typography variant="h4" color="black ">
+                {Year} Liturgical Calender
+                </Typography>
+                <Typography color="gray" className="mt-1 font-normal">
+                You can search for liturgical calender of any year.
+                </Typography>
+            </div>
+            <div className="col-md-4 flex gap-2">
+                <AnimatedNumbers
+                includeComma
+                transitions={(index) => ({
+                    type: "spring",
+                    duration: index + 0.3,
+                })}
+                animateToNumber={Downloads.length}
+                className='text-danger fw-bold'
+                />
+                <Typography color="gray" className="font-normal">
+                    Downloads in <span className='text-primary fw-bold'>{Year}</span>
+                </Typography>
+            </div>
+            
           </div>
           
-          <div className="col-md-12 flex w-full flex-wrap shrink-0 gap-2 md:w-max mb-3">
-            <div className="col-md-9 w-full md:w-72">
-            
-              <Input
-                    type="date"
-                    min={new Date().toISOString().split('T')[0]}
-                    onChange={handleInputChange}
-                    name="date"
-                    class="peer h-full w-full rounded-[7px] border border-blue-gray-200 border-t-transparent bg-transparent px-3 py-2.5 font-sans text-sm font-normal text-blue-gray-700 outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 empty:!bg-gray-900 focus:border-2 focus:border-gray-900 focus:border-t-transparent focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50" />
-              
-            </div>
-            <div className='col-md-2'>
-            <Button className="flex items-center gap-3" size="sm" onClick={addAshWednesday}>
-              <PlusIcon strokeWidth={2} className="h-4 w-4" /> Add Ash Wednesday
-            </Button>
-            </div>
-            
-            
-          </div>
-
           <div className="col-md-12 flex w-full flex-wrap shrink-0 gap-3 md:w-max ">
             <div className="col-md-9 w-full md:w-72">
             
@@ -237,8 +252,6 @@ export default function LiturgicalCalenderPage({pathname, session}) {
                     }
                     
                 </select>
-                
-              
             </div>
             <div className='col-md-2'>
             <Button className="flex items-center gap-3" size="sm" onClick={downloadCalender}>
@@ -492,6 +505,8 @@ function getSundaysBetweenExcluding(startDate,endDate){
 export function AshWenesday(year) {
 
     const {data4, ashWednesdayDates}=fixedSundayFeasts()
+
+    console.log(ashWednesdayDates,data4);
 
     const ashWenesdayDate = ashWednesdayDates.filter(date => date.startsWith(`${year}-`));
 

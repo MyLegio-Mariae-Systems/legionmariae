@@ -480,6 +480,24 @@ const SideNavitems=[
           },
         ],
       },
+      {
+        title:'Calendar',
+        child:[
+          {
+            title:'Liturgical Calendar',
+            child:[
+
+              {
+                title:'Calendar Dashboard',
+                link:'/lmacm/src/hq/calendar'
+              },
+              
+            ]
+            
+          },
+          
+        ],
+      },
         
     ]
   },

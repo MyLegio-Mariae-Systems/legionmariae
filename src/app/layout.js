@@ -19,6 +19,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <Script src="https://unpkg.com/@material-tailwind/html@latest/scripts/collapse.js" />
+      <Script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/datepicker.min.js" />
       <body className={inter.className}>{children}</body>
     </html>
   );

@@ -1,3 +1,6 @@
+'use client'
+
+import { getCalendar } from "@/app/api/v14/controllers/hq/route";
 
 export default function fixedDates(year) {
 
@@ -1895,7 +1898,7 @@ export default function fixedDates(year) {
                 {
                     date:`${year}-11-01`,
                     feast:`All Saints`,
-                    saint:``,
+                    saint:`St. Deborah, Rachel & Ruth`,
                     color:`White`,
                 },
                 {
@@ -1907,26 +1910,26 @@ export default function fixedDates(year) {
                 {
                     date:`${year}-11-03`,
                     feast:``,
-                    saint:``,
-                    color:``,
+                    saint:`St. Martin de Porres. St. Malachy`,
+                    color:`White`,
                 },
                 {
                     date:`${year}-11-04`,
                     feast:``,
-                    saint:``,
-                    color:``,
+                    saint:`St. Vitalis. St. Agricola`,
+                    color:`White`,
                 },
                 {
                     date:`${year}-11-05`,
                     feast:``,
-                    saint:``,
-                    color:``,
+                    saint:`Sts. Zachary & Elizabeth`,
+                    color:`White`,
                 },
                 {
                     date:`${year}-11-06`,
                     feast:``,
-                    saint:``,
-                    color:``,
+                    saint:`St. Leonard of Limoges. St. Leonard Reresby`,
+                    color:`White`,
                 },
                 {
                     date:`${year}-11-07`,
@@ -1949,20 +1952,20 @@ export default function fixedDates(year) {
                 {
                     date:`${year}-11-10`,
                     feast:``,
-                    saint:``,
-                    color:``,
+                    saint:`Sts. Tryphon, Respicius & Nympha - Martyrs. St. Andrew Avellino`,
+                    color:`Red`,
                 },
                 {
                     date:`${year}-11-11`,
                     feast:``,
-                    saint:``,
-                    color:``,
+                    saint:`St. Mennas - Martyr`,
+                    color:`Red`,
                 },
                 {
                     date:`${year}-11-12`,
                     feast:``,
-                    saint:``,
-                    color:``,
+                    saint:`St. Martin - Martyr`,
+                    color:`Red`,
                 },
                 {
                     date:`${year}-11-13`,
@@ -1973,14 +1976,14 @@ export default function fixedDates(year) {
                 {
                     date:`${year}-11-14`,
                     feast:``,
-                    saint:``,
-                    color:``,
+                    saint:`St. Laurence O'Toole`,
+                    color:`White`,
                 },
                 {
                     date:`${year}-11-15`,
                     feast:``,
-                    saint:``,
-                    color:``,
+                    saint:`St. Albert the Great`,
+                    color:`White`,
                 },
                 {
                     date:`${year}-11-16`,
@@ -2003,8 +2006,8 @@ export default function fixedDates(year) {
                 {
                     date:`${year}-11-19`,
                     feast:``,
-                    saint:``,
-                    color:``,
+                    saint:`St. Pondanus***`,
+                    color:`White`,
                 },
                 {
                     date:`${year}-11-20`,
@@ -2027,8 +2030,8 @@ export default function fixedDates(year) {
                 {
                     date:`${year}-11-23`,
                     feast:``,
-                    saint:``,
-                    color:``,
+                    saint:`St. Miguel Pro`,
+                    color:`White`,
                 },
                 {
                     date:`${year}-11-24`,
@@ -2045,14 +2048,14 @@ export default function fixedDates(year) {
                 {
                     date:`${year}-11-26`,
                     feast:``,
-                    saint:``,
-                    color:``,
+                    saint:`St. Peter of Alexandria. St. Leonard`,
+                    color:`White`,
                 },
                 {
                     date:`${year}-11-27`,
                     feast:``,
-                    saint:``,
-                    color:``,
+                    saint:`St. Leonard Kimura`,
+                    color:`White`,
                 },
                 {
                     date:`${year}-11-28`,
@@ -2063,14 +2066,14 @@ export default function fixedDates(year) {
                 {
                     date:`${year}-11-29`,
                     feast:``,
-                    saint:``,
-                    color:``,
+                    saint:`St. Saturninus`,
+                    color:`White`,
                 },
                 {
                     date:`${year}-11-30`,
                     feast:``,
-                    saint:``,
-                    color:``,
+                    saint:`St. Maura. St. Andrew - Apostle`,
+                    color:`White`,
                 },
                 
                 
@@ -2088,8 +2091,8 @@ export default function fixedDates(year) {
                 {
                     date:`${year}-12-02`,
                     feast:``,
-                    saint:``,
-                    color:``,
+                    saint:`St. Bibiana [Vivian]`,
+                    color:`White`,
                 },
                 {
                     date:`${year}-12-03`,
@@ -2100,8 +2103,8 @@ export default function fixedDates(year) {
                 {
                     date:`${year}-12-04`,
                     feast:``,
-                    saint:``,
-                    color:``,
+                    saint:`St. Barbara - Martyr`,
+                    color:`Red`,
                 },
                 {
                     date:`${year}-12-05`,
@@ -2118,8 +2121,8 @@ export default function fixedDates(year) {
                 {
                     date:`${year}-12-07`,
                     feast:``,
-                    saint:``,
-                    color:``,
+                    saint:`St. Ambrose`,
+                    color:`White`,
                 },
                 {
                     date:`${year}-12-08`,
@@ -2130,14 +2133,14 @@ export default function fixedDates(year) {
                 {
                     date:`${year}-12-09`,
                     feast:``,
-                    saint:``,
-                    color:``,
+                    saint:`St. Juan Diego. St. Leocadia`,
+                    color:`White`,
                 },
                 {
                     date:`${year}-12-10`,
                     feast:``,
-                    saint:``,
-                    color:``,
+                    saint:`St. Melchiades - Martyr`,
+                    color:`Red`,
                 },
                 {
                     date:`${year}-12-11`,
@@ -2154,14 +2157,14 @@ export default function fixedDates(year) {
                 {
                     date:`${year}-12-13`,
                     feast:``,
-                    saint:``,
-                    color:``,
+                    saint:`St. Lucy - Martyr`,
+                    color:`Red`,
                 },
                 {
                     date:`${year}-12-14`,
                     feast:``,
-                    saint:``,
-                    color:``,
+                    saint:`St. Nicasius`,
+                    color:`White`,
                 },
                 {
                     date:`${year}-12-15`,
@@ -2172,14 +2175,14 @@ export default function fixedDates(year) {
                 {
                     date:`${year}-12-16`,
                     feast:``,
-                    saint:``,
-                    color:``,
+                    saint:`St. Misael - Martyr. St. Azarias - Martyr. St. Alice. St. Ananias - Martyr`,
+                    color:`Red`,
                 },
                 {
                     date:`${year}-12-17`,
                     feast:``,
-                    saint:``,
-                    color:``,
+                    saint:`St. Lazarus`,
+                    color:`White`,
                 },
                 {
                     date:`${year}-12-18`,
@@ -2190,8 +2193,8 @@ export default function fixedDates(year) {
                 {
                     date:`${year}-12-19`,
                     feast:``,
-                    saint:``,
-                    color:``,
+                    saint:`St. Urban V`,
+                    color:`White`,
                 },
                 {
                     date:`${year}-12-20`,
@@ -2202,26 +2205,26 @@ export default function fixedDates(year) {
                 {
                     date:`${year}-12-21`,
                     feast:``,
-                    saint:``,
-                    color:``,
+                    saint:`St. Thomas - Apostle`,
+                    color:`White`,
                 },
                 {
                     date:`${year}-12-22`,
                     feast:``,
-                    saint:``,
-                    color:``,
+                    saint:`St. Zeno`,
+                    color:`White`,
                 },
                 {
                     date:`${year}-12-23`,
                     feast:``,
-                    saint:``,
-                    color:``,
+                    saint:`St. Yvo of Chartres`,
+                    color:`White`,
                 },
                 {
                     date:`${year}-12-24`,
                     feast:``,
-                    saint:``,
-                    color:``,
+                    saint:`Sts. Adam & Eve`,
+                    color:`White`,
                 },
                 {
                     date:`${year}-12-25`,
@@ -2232,8 +2235,8 @@ export default function fixedDates(year) {
                 {
                     date:`${year}-12-26`,
                     feast:``,
-                    saint:``,
-                    color:``,
+                    saint:`St. Stephen`,
+                    color:`White`,
                 },
                 {
                     date:`${year}-12-27`,
@@ -2256,14 +2259,14 @@ export default function fixedDates(year) {
                 {
                     date:`${year}-12-30`,
                     feast:``,
-                    saint:``,
-                    color:``,
+                    saint:`St. Sabinus`,
+                    color:`White`,
                 },
                 {
                     date:`${year}-12-31`,
                     feast:``,
-                    saint:``,
-                    color:``,
+                    saint:`St. Sylvester. St. Catherine Laboure`,
+                    color:`White`,
                 },
                 
             ]
@@ -2283,7 +2286,11 @@ export default function fixedDates(year) {
 
 }
 
-export function fixedSundayFeasts() {
+export async function fixedSundayFeasts() {
+
+    // const response= await getCalendar()
+
+    // console.log(response[0]?.ashWednesday);
 
     const ashWednesdayDates=[
         '2023-02-22',
@@ -2298,6 +2305,10 @@ export function fixedSundayFeasts() {
         '2032-02-11',
         '2033-03-02',
     ]
+
+    // const ashWednesdayDates= response[0]?.ashWednesday
+
+    // console.log(ashWednesdayDates);
 
     const data1=[
         {
