@@ -1,78 +1,79 @@
 'use client'
 
-import ODAMembersTable from "../../oda-tables/oda-members";
+import { getODADeaconsAcolyteMembers, getODAMissionContributionNames, getODAMissionProjects, getODAOfficialMembers, getOneODAMissionContributionName } from "@/app/api/v14/controllers/oda/route";
+import ODAContributionsTable from "../../oda-tables/oda-contributions";
+import React from 'react'
 
+ 
   const TABS = [
     {
       label: "All",
       value: "All",
     },
     {
-      label: "Deacons",
-      value: "Deacons",
+      label: "Ongoing",
+      value: 1,
     },
     {
-      label: "Acolytes",
-      value: "Acolytes",
+      label: "Completed",
+      value: 2,
     },
-  ];
-   
-  const TABLE_HEAD = ["Member", "Function", "Status", "Employed", ""];
-   
-  const TABLE_ROWS = [
-    {
-      img: "https://demos.creative-tim.com/test/corporate-ui-dashboard/assets/img/team-3.jpg",
-      name: "John Michael",
-      email: "john@creative-tim.com",
-      job: "Manager",
-      org: "Organization",
-      online: true,
-      date: "23/04/18",
-    },
-    {
-      img: "https://demos.creative-tim.com/test/corporate-ui-dashboard/assets/img/team-2.jpg",
-      name: "Alexa Liras",
-      email: "alexa@creative-tim.com",
-      job: "Programator",
-      org: "Developer",
-      online: false,
-      date: "23/04/18",
-    },
-    {
-      img: "https://demos.creative-tim.com/test/corporate-ui-dashboard/assets/img/team-1.jpg",
-      name: "Laurent Perrier",
-      email: "laurent@creative-tim.com",
-      job: "Executive",
-      org: "Projects",
-      online: false,
-      date: "19/09/17",
-    },
-    {
-      img: "https://demos.creative-tim.com/test/corporate-ui-dashboard/assets/img/team-4.jpg",
-      name: "Michael Levi",
-      email: "michael@creative-tim.com",
-      job: "Programator",
-      org: "Developer",
-      online: true,
-      date: "24/12/08",
-    },
-    {
-      img: "https://demos.creative-tim.com/test/corporate-ui-dashboard/assets/img/team-5.jpg",
-      name: "Richard Gran",
-      email: "richard@creative-tim.com",
-      job: "Manager",
-      org: "Executive",
-      online: false,
-      date: "04/10/21",
-    },
-  ];
-   
-export default function ODAAvailableContributionsHome() {
-  const TITLE='Available Contributons'
 
-  const data={TABS,TABLE_HEAD,TABLE_ROWS,TITLE}
+    
+  ];
+   
+  const TABLE_HEAD = ["Contribution", "Description", "Total_Amount", "Mission","My_Amount", "Status", ""];
+   
+  
+   
+export default function ODAAllContributionsHome({session}) {
+    
+  const TITLE='All Contributions'
+
+  const [TABLE_ROWS, setTABLE_ROWS]=React.useState([])
+  const [Missions, setMissions] = React.useState([]);
+
+
+
+  React.useEffect(()=>{
+    getContributionNames()
+  },[])
+
+  const getContributionNames=async()=>{
+
+    const data={
+      status:'All',
+      searchParams:'',
+      mission:'All',
+      page:0,
+      pageLimit:30,
+      // me:session?.user.id
+      me:757283
+    }
+
+    const response=await getODAMissionContributionNames(data)
+
+    console.log(response.data);
+
+    setTABLE_ROWS(response.data)
+
+  }
+
+  const getAllODAMembers=async()=>{
+
+    const mission='All'
+
+    const response=await getODADeaconsAcolyteMembers(mission)
+
+    setMissions(response.data.Missions)
+
+  }
+
+  const data={TABS,TABLE_HEAD,TABLE_ROWS,TITLE,Missions}
 
   return (
-    <ODAMembersTable propData={data}/>
+    <>
+      <ODAContributionsTable propData={data} session={session}/>
+    </>
   )
 }

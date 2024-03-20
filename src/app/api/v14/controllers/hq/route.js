@@ -1,6 +1,9 @@
 'use server'
 
 import Calendar from '../../models/calendar'
+import DbConnect from '../../utills'
+
+DbConnect()
 
 
 export default async function setCalendar(date,value){
@@ -11,6 +14,8 @@ export default async function setCalendar(date,value){
     }
 
     try {
+
+        // await Calendar.deleteMany()
 
         if (!date || (value===1 && !date.date)) {
             responseData.message='Date is required.'      

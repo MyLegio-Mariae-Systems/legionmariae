@@ -26,18 +26,24 @@ export default function LiturgicalCalenderPage({pathname, session}) {
 
     const [Year,setYear]=React.useState(year)
     const [Years,setYears]=React.useState([])
-    const [Downloads,setDownloads]=React.useState([])
+    const [Downloads,setDownloads]=React.useState(0)
+    const [TABLE_ROWS, setTABLE_ROWS]=React.useState([])
 
     const TABLE_HEAD = ["NAME", "DAY", "FEAST/EVENT", "COMMEMORATION", "COLOUR"];
-    const TABLE_ROWS = AshWenesday(Year)
+    // const TABLE_ROWS = AshWenesday(Year)
  
     React.useEffect(()=>{
+        getTables(year)
         listYears()
         getDownloads()
     },[])
 
     
-    
+    const getTables=async(value)=>{
+        const table_ROWS =await AshWenesday(value)
+        setTABLE_ROWS(table_ROWS)
+    }
+
     const renderRows=(details)=>{
 
         const classes = "p-1 border ";
@@ -96,44 +102,19 @@ export default function LiturgicalCalenderPage({pathname, session}) {
 
     const searchYear=(e)=>{
 
-        let year=new Date().getFullYear()
-
         const {value}=e.target
+        setYear(value)
+        getTables(value)
 
-        if (isNaN(value)) {
-
-            console.log('Invalid Year');
-
-            return
-            
-        } else if (value.length>=4) {
-            
-            if (value.length>4) {
-            console.log(`Year must be equal or greater than ${year}`);
-
-            return
-                
-            }else if (value < year) {
-            console.log('Invalid Input');
-
-            return
-            }
-            else{
-                setYear(value)
-            }
-            
-        } 
-
-
-        console.log((value));
     }
 
-    function listYears() {
+    async function listYears() {
         
-        const {ashWednesdayDates}=fixedSundayFeasts()
+        const {ashWednesdayDates}=await fixedSundayFeasts()
+        const firstAshWednesdayDate = _.first(ashWednesdayDates)
         const lastAshWednesdayDate = _.last(ashWednesdayDates)
 
-        const currentYear = new Date().getFullYear();
+        const currentYear = new Date(firstAshWednesdayDate).getFullYear();
         const endYear = new Date(lastAshWednesdayDate).getFullYear();
         // const endYear = 10099
 
@@ -147,6 +128,11 @@ export default function LiturgicalCalenderPage({pathname, session}) {
     async function downloadCalender() {
 
         let date= Today()
+
+        if (parseInt(Year) !== parseInt(year)) {
+            toast.error(`You can only download ${year} Liturgical Calendar`)
+            return
+        }
 
         try {
 
@@ -176,10 +162,8 @@ export default function LiturgicalCalenderPage({pathname, session}) {
         
         const response=await getCalendar()
 
-        console.log(response);
-
         if (response && response.length>0) {
-            setDownloads(response[0]?.downloads)
+            setDownloads(response[0]?.downloads.length)
         }
 
     }
@@ -220,15 +204,18 @@ export default function LiturgicalCalenderPage({pathname, session}) {
                 </Typography>
             </div>
             <div className="col-md-4 flex gap-2">
-                <AnimatedNumbers
+                {/* <AnimatedNumbers
                 includeComma
                 transitions={(index) => ({
                     type: "spring",
                     duration: index + 0.3,
                 })}
-                animateToNumber={Downloads.length}
+                animateToNumber={Downloads}
                 className='text-danger fw-bold'
-                />
+                /> */}
+                <Typography color="red" className="fw-bold">
+                    {Downloads.toLocaleString()}
+                </Typography>
                 <Typography color="gray" className="font-normal">
                     Downloads in <span className='text-primary fw-bold'>{Year}</span>
                 </Typography>
@@ -242,6 +229,7 @@ export default function LiturgicalCalenderPage({pathname, session}) {
               <select
                     onChange={searchYear}
                     class="peer h-full w-full rounded-[7px] border border-blue-gray-200 border-t-transparent bg-transparent px-3 py-2.5 font-sans text-sm font-normal text-blue-gray-700 outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 empty:!bg-gray-900 focus:border-2 focus:border-gray-900 focus:border-t-transparent focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50">
+                    <option value={Year}>{Year}</option>
                     {
                         Years?.map((year)=>{
                             return (
@@ -310,7 +298,7 @@ export default function LiturgicalCalenderPage({pathname, session}) {
             })}
             </tbody>
         </table>
-      </CardBody>
+    </CardBody>
       
     </Card>
     </>
@@ -355,7 +343,7 @@ function getPreviousSundays(dateString, numberOfSundays) {
     return formattedSundays;
 }
 
-function getAfterSundays(dateString, numberOfSundays) {
+async function getAfterSundays(dateString, numberOfSundays) {
     const date = new Date(dateString);
 
     let sundays = [];
@@ -384,7 +372,7 @@ function getAfterSundays(dateString, numberOfSundays) {
 
     const ArrayData = [];
 
-    const {data3}=fixedSundayFeasts()
+    const {data3}=await fixedSundayFeasts()
 
     formattedSundays.forEach((item1,key) => {
         
@@ -455,7 +443,7 @@ function getDatesBetweenExcluding(startDate, endDate, excludedDates) {
     return formattedDates;
 }
 
-function getSundaysBetweenExcluding(startDate,endDate){
+async function getSundaysBetweenExcluding(startDate,endDate){
 
     const StartDate = new Date(startDate);
     const EndDate = new Date(endDate);
@@ -474,7 +462,7 @@ function getSundaysBetweenExcluding(startDate,endDate){
 
     const ArrayData = [];
 
-    const {data1,data2}=fixedSundayFeasts()
+    const {data1,data2}=await fixedSundayFeasts()
 
     formattedFirstArray.forEach((item1,key) => {
         
@@ -502,23 +490,23 @@ function getSundaysBetweenExcluding(startDate,endDate){
     return ArrayData
 }
 
-export function AshWenesday(year) {
+export async function AshWenesday(year) {
 
-    const {data4, ashWednesdayDates}=fixedSundayFeasts()
+    const {data4, ashWednesdayDates}=await fixedSundayFeasts()
 
-    console.log(ashWednesdayDates,data4);
+    // console.log(ashWednesdayDates,data4);
 
-    const ashWenesdayDate = ashWednesdayDates.filter(date => date.startsWith(`${year}-`));
+    const ashWenesdayDate =  ashWednesdayDates?.filter(date => date.startsWith(`${year}-`));
 
     const ashWednesdayObject={
         date:ashWenesdayDate[0],
-        feast:'Ash Wenesday',
+        feast:'Ash Wenesday.\n',
         color:'Purple',
     }
 
-    const previousSundays = getSundaysBetweenExcluding(ashWenesdayDate[0],`${year}-01-06`);
-    const afterSundays = getAfterSundays(ashWenesdayDate, 7);
-    let holyWeek=getPreviousDays(afterSundays[6].date,3,1)
+    const previousSundays = await getSundaysBetweenExcluding(ashWenesdayDate[0],`${year}-01-06`);
+    const afterSundays = await getAfterSundays(ashWenesdayDate, 7);
+    let holyWeek= getPreviousDays(afterSundays[6].date,3,1)
 
     const HolyWeek=[]
 
@@ -535,7 +523,7 @@ export function AshWenesday(year) {
 
     const allDates = fixedDates(year)
 
-    const mergedArray = allDates.map(monthObj => {
+    const mergedArray = allDates?.map(monthObj => {
         const mergedDetails = monthObj.details.map(detail => {
             const correspondingDetail = previousSundays.find(item => item.date === detail.date);
             const correspondingAshWednesdayDate = detail.date === ashWednesdayObject.date ? ashWednesdayObject : null;

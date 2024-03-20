@@ -213,8 +213,9 @@ export default function ODAOfficialMembersTable({propData, mission}) {
                       {
                         propData.TABS?.map(({ label, value },key)=>{
 
-                          return <option key={key} value={value}>{label}</option>
-
+                          if (value !=='All') {
+                            return <option key={key} value={value}>{label}</option>
+                          }
                         })
                       }
                       
@@ -249,7 +250,7 @@ export default function ODAOfficialMembersTable({propData, mission}) {
               </div>
             </div>
             <Typography color="gray" className="mt-3 fw-bold text-end me-3">
-                Total Officials : <span className="text-danger">{MembersFound ? MembersFound : 0}</span>
+                Total Officials : <span className="text-danger">{MembersFound ? MembersFound.toLocaleString() : 0}</span>
             </Typography>
           </CardHeader>
           <CardBody className="overflow-scroll px-0">
@@ -365,7 +366,7 @@ export default function ODAOfficialMembersTable({propData, mission}) {
               <Button variant="outlined" size="sm" onClick={()=>handlePageClick(-1)} disabled={page.current < 2 ? true : false}>
                 Previous
               </Button>
-              <Button variant="outlined" size="sm" onClick={()=>handlePageClick(+1)} disabled={page.current === PageCount ? true : false || PageCount < 1 ? true : false}>
+              <Button variant="outlined" size="sm" onClick={()=>handlePageClick(+1)} disabled={page.current === PageCount ? true : PageCount < 1 ? true : isNaN(PageCount) ? true : false}>
                 Next
               </Button>
             </div>

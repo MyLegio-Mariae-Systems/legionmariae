@@ -197,22 +197,7 @@ const SideNavitems=[
                   title:'Available Projects',
                   link:'/lmacm/src/arch-dioces/projects/available-projects'
                 },
-                {
-                  title:'Ongoing Projects',
-                  link:'/lmacm/src/arch-dioces/projects/ongoing-projects'
-                },
-                {
-                  title:'Completed Projects',
-                  link:'/lmacm/src/arch-dioces/projects/completed-projects'
-                },
-                {
-                  title:'Pending Projects',
-                  link:'/lmacm/src/arch-dioces/projects/pending-projects'
-                },
-                {
-                  title:'Future Projects',
-                  link:'/lmacm/src/arch-dioces/projects/future-projects'
-                },
+                
               ]
               
             },
@@ -557,22 +542,8 @@ const SideNavitems=[
                     title:'Available Projects',
                     link:'/lmacm/src/oda/projects/available-projects'
                   },
-                  {
-                    title:'Ongoing Projects',
-                    link:'/lmacm/src/oda/projects/ongoing-projects'
-                  },
-                  {
-                    title:'Completed Projects',
-                    link:'/lmacm/src/oda/projects/completed-projects'
-                  },
-                  {
-                    title:'Pending Projects',
-                    link:'/lmacm/src/oda/projects/pending-projects'
-                  },
-                  {
-                    title:'Future Projects',
-                    link:'/lmacm/src/oda/projects/future-projects'
-                  },
+                  
+                  
                 ]
                 
               },

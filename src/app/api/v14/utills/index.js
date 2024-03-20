@@ -63,7 +63,7 @@ export async function sendEmail(subject,message,send_to){
         html:message
     }
 
-    await transporter.sendMail(options,function(err){
+    transporter.sendMail(options,function(err){
         if (err) {
             console.log(err);
         }
@@ -135,11 +135,11 @@ export async function newMissionValidation (data){
 
 export async function newMissionODAValidation (data){
     const schema = Joi.object({
-        first_name: Joi.string().trim().alphanum().min(3).max(30).required(),
-        last_name: Joi.string().trim().alphanum().min(3).max(30).required(),
+        first_name: Joi.string().trim().min(3).max(30).required(),
+        last_name: Joi.string().trim().min(3).max(30).required(),
         contact: Joi.number().integer().allow('').optional(),
-        middle_names: Joi.string().alphanum().min(3).max(30).allow('').optional(),
-        mission: Joi.string().trim().alphanum().min(7).max(10).required(),
+        middle_names: Joi.string().min(3).max(30).allow('').optional(),
+        mission: Joi.string().trim().min(7).max(10).required(),
         email: Joi.string().trim().email({ minDomainSegments: 2, tlds: { allow: ['com', 'net'] } }).allow('').optional(),
         missionRegistered: Joi.string().trim().required(),
         category: Joi.string().trim().required(),
@@ -149,15 +149,11 @@ export async function newMissionODAValidation (data){
     return schema.validate(data);
 };
 
-export async function newBranchValidation (data){
+export async function newProjectValidation (data){
     const schema = Joi.object({
-        name: Joi.string().trim().required(),
-        id: Joi.string().trim(),
-        butchery: Joi.string().trim().required(),
-        region: Joi.string().trim().required(),
-        package: Joi.number().required(),
-        expiryDate: Joi.date().required(),
-        mobile: Joi.number().required()
+        name: Joi.string().trim().min(3).required(),
+        description: Joi.string().min(8).trim(),
+        mission: Joi.string().trim(),
     });
 
     return schema.validate(data);

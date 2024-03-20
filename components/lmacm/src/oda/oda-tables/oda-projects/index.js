@@ -1,10 +1,10 @@
 'use client'
 
-import { getODAMembers, getODAOfficialMembers } from "@/app/api/v14/controllers/oda/route";
+import { editODAMissionProject, getODAMembers, getODAMissionProjects, getODAOfficialMembers } from "@/app/api/v14/controllers/oda/route";
 import {
   MagnifyingGlassIcon,
 } from "@heroicons/react/24/outline";
-import { PencilIcon, UserPlusIcon, ChevronUpDownIcon } from "@heroicons/react/24/solid";
+import { PencilIcon, UserPlusIcon, ChevronUpDownIcon, EyeIcon, ArrowsPointingOutIcon, ArrowLongRightIcon, ArrowRightEndOnRectangleIcon, ArrowRightCircleIcon, ForwardIcon, PauseCircleIcon, LinkIcon, ArchiveBoxIcon, PlusCircleIcon } from "@heroicons/react/24/solid";
 
 import {
   Card,
@@ -29,7 +29,7 @@ import toast, { ToastBar, Toaster} from 'react-hot-toast'
 import React from 'react'
 import pluralize from 'pluralize'
 
-export default function ODAMembersTable({propData, category}) {
+export default function ODAProjectsTable({propData}) {
 
   const router=useRouter()
 
@@ -38,9 +38,9 @@ export default function ODAMembersTable({propData, category}) {
   let toastId
 
   const [TABLE_ROWS, setTABLE_ROWS] = React.useState([]);
-  const [Data, setData] = React.useState({searchParams:'',category,page:'',pageLimit:''});
+  const [Data, setData] = React.useState({searchParams:'',status:'All',mission:'All',page:'',pageLimit:''});
   const [PageCount,setPageCount]=React.useState(0)
-  const [MembersFound,setMembersFound]=React.useState(0)
+  const [ProjectsFound,setProjectsFound]=React.useState(0)
 
 
   const page=React.useRef(1)
@@ -53,7 +53,7 @@ export default function ODAMembersTable({propData, category}) {
     toast.loading('Loading. Please wait...',{id:toastId})
     if (propData && propData.TABLE_ROWS) {
       let pages=Math.ceil(propData.TABLE_ROWS[0]?.pageCount / pageLimit.current)
-      setMembersFound(propData.TABLE_ROWS[0]?.pageCount)
+      setProjectsFound(propData.TABLE_ROWS[0]?.pageCount)
       setPageCount(pages)
       setTABLE_ROWS(propData.TABLE_ROWS);
     }
@@ -68,20 +68,20 @@ export default function ODAMembersTable({propData, category}) {
   // console.log(TABLE_ROWS);
   const handlePageClick=(value)=>{
     page.current=page.current + value
-    getAllODAMembers()
+    getODAProjects()
   }
 
   const returnTabs=()=>{
 
-    if (propData.TITLE==='Available Members' || propData.TITLE==='Registered Members') {
+    // if (propData.TITLE==='Available Members' || propData.TITLE==='Registered Members') {
       
       return (
         <Tabs value="all" className="w-full md:w-max">
           <TabsHeader>
             {propData.TABS.map(({ label, value }) => (
               <Tab key={value} value={value} onClick={()=>{
-                Data.category=pluralize.singular(value)
-                getAllODAMembers()
+                Data.status=value
+                getODAProjects()
                 }}>
                 &nbsp;&nbsp;{label}&nbsp;&nbsp;
               </Tab>
@@ -89,7 +89,7 @@ export default function ODAMembersTable({propData, category}) {
           </TabsHeader>
         </Tabs>
       )
-    }
+    // }
   }
 
   const searchData=async(e)=> {
@@ -98,11 +98,11 @@ export default function ODAMembersTable({propData, category}) {
 
     Data.searchParams=value
 
-    getAllODAMembers()
+    getODAProjects()
     
   }
 
-  const getAllODAMembers=async()=>{
+  const getODAProjects=async()=>{
 
     // console.log(Data);
 
@@ -114,13 +114,13 @@ export default function ODAMembersTable({propData, category}) {
     // if (propData.TITLE==='Official Members') {
     //   response=await getODAOfficialMembers(Data)
     // } else if (propData.TITLE==='Registered Members') {
-      response=await getODAMembers(Data)
+      response=await getODAMissionProjects(Data)
     // }
 
     let pages=Math.ceil(response.data[0]?.pageCount / pageLimit.current)
     
     setPageCount(pages)
-    setMembersFound(response.data[0]?.pageCount)
+    setProjectsFound(response.data[0]?.pageCount)
 
     toast.dismiss(toastId)
 
@@ -128,6 +128,76 @@ export default function ODAMembersTable({propData, category}) {
 
     setTABLE_ROWS(response.data)
 
+  }
+
+  const editProjectStatus=async(code,status)=>{
+
+    let FormData={code,status}
+
+    const answer=confirm(`Are you sure you want to change the status of this project? Project code: ${code}.`)
+
+    if (!answer) {
+      return
+    }
+
+    try {
+
+      toastId=toast.loading('Loading. Please wait...',{id:toastId})
+
+      let response=await editODAMissionProject(FormData,true)
+
+      toast.dismiss(toastId)
+
+      if (response.success) {
+
+        toast.success('Successful!')
+        getODAProjects()
+      } else {
+        toast.error(response.message)
+      }
+      
+    } catch (error) {
+      toast.error('Unknown Error occured')
+      console.log(error);
+    }
+
+  }
+
+  const returnTooltip=(code,value)=>{
+    
+    if (value===1 || value===4) {
+
+      return (
+        <>
+          <Tooltip content="Mark Ongoing" >
+            <IconButton variant="text" color="green" onClick={()=>{editProjectStatus(code,2)}}>
+              <ForwardIcon className="h-5 w-5" />
+            </IconButton>
+          </Tooltip>
+        </>
+      )
+      
+    } 
+    else if (value===2) {
+
+      return (
+        <>
+          <Tooltip content="Mark Completed">
+            <IconButton variant="text" color="red" onClick={()=>{editProjectStatus(code,3)}}>
+              <ArchiveBoxIcon className="h-5 w-5" />
+            </IconButton>
+          </Tooltip>
+
+          <Tooltip content="Mark Pending">
+            <IconButton variant="text" color="black" onClick={()=>{editProjectStatus(code,4)}}>
+              <PauseCircleIcon className="h-5 w-5" />
+            </IconButton>
+          </Tooltip>
+        </>
+      )
+      
+    }
+    
   }
 
     return (
@@ -162,22 +232,13 @@ export default function ODAMembersTable({propData, category}) {
                   See information about all {propData.TITLE.toLocaleLowerCase()}
                 </Typography>
               </div>
-              {
-                propData.TITLE === 'Available Members' && (
-                  <div className="flex flex-wrap shrink-0 gap-2 ">
-                    {/* <Button variant="outlined" size="sm">
-                      view all
-                    </Button> */}
-                    <select class="rounded-md border ">
-                      <option>Available Members</option>
-                      <option>Not Registered Members</option>
-                    </select>
-                    <Button className="flex items-center gap-1" size="sm" onClick={()=> router.push('/lmacm/src/oda/members/new-member')}>
-                      <UserPlusIcon strokeWidth={2} className="h-4 w-4" /> Add member
-                    </Button>
-                  </div>
-                )
-              }
+                
+                <div className=" ">
+                    <a className="btn btn-dark" size="sm" href="/lmacm/src/oda/projects/new-projects">
+                      <span>New Project</span>
+                       
+                    </a>
+                </div>
               
             </div>
             <div className="flex flex-col items-center justify-between gap-4 md:flex-row">
@@ -192,7 +253,7 @@ export default function ODAMembersTable({propData, category}) {
               
             </div>
             <Typography color="gray" className="mt-3 fw-bold text-end me-3">
-                Total Members : <span className="text-danger">{MembersFound ? MembersFound.toLocaleString() : 0}</span>
+                Total Projects : <span className="text-danger">{ProjectsFound ? ProjectsFound.toLocaleString() : 0}</span>
             </Typography>
 
           </CardHeader>
@@ -238,15 +299,16 @@ export default function ODAMembersTable({propData, category}) {
                                 color="blue-gray"
                                 className="font-normal"
                               >
-                                {documents?.oda_username}  
+                                {documents?.code}
                               </Typography>
                               <Typography
                                 variant="small"
                                 color="blue-gray"
-                                className="font-normal opacity-70"
+                                className="font-normal"
                               >
-                                {documents?.category} {documents?.first_name} {documents?.middle_names} {documents?.last_name}
+                                {documents?.name} 
                               </Typography>
+                              
                             </div>
                           </div>
                         </td>
@@ -257,49 +319,77 @@ export default function ODAMembersTable({propData, category}) {
                               color="blue-gray"
                               className="font-normal"
                             >
-                              {documents?.contact}
+                              {documents?.description}
                             </Typography>
+                            
+                          </div>
+                        </td>
+
+                        <td className={classes}>
+                          <div className="flex flex-col">
                             <Typography
                               variant="small"
                               color="blue-gray"
-                              className="font-normal opacity-70"
+                              className="font-normal"
                             >
-                              {documents?.email}
+                              {documents?.amount.toLocaleString()}
                             </Typography>
+                            
                           </div>
                         </td>
-                        {/* <td className={classes}>
+                        
+                        <td className={classes}>
+                          <Typography
+                            variant="small"
+                            color="blue-gray"
+                            className="font-normal"
+                          >
+                            {documents?.mission?.code} {documents?.mission?.name}
+                          </Typography>
+                          
+                        </td>
+                        <td className={classes}>
                           <div className="w-max">
                             <Chip
                               variant="ghost"
                               size="sm"
-                              value={online ? "online" : "offline"}
-                              color={online ? "green" : "blue-gray"}
+                              value={documents?.status===1 ? "Future" : documents?.status===2 ? "Ongoing" : documents?.status===3 ? "Completed" : documents?.status===4 ? "Pending" : "Unknown"}
+                              color={documents?.status===1 ? "purple" : documents?.status===2 ? "green" : documents?.status===3 ? "red" : documents?.status===3 ? "black" : "grey"}
                             />
                           </div>
-                        </td> */}
-                        <td className={classes}>
-                          <Typography
-                            variant="small"
-                            color="blue-gray"
-                            className="font-normal"
-                          >
-                            {documents?.primaryMission?.code} {documents?.primaryMission?.name}
-                          </Typography>
-                          <Typography
-                            variant="small"
-                            color="blue-gray"
-                            className="font-normal"
-                          >
-                            {documents?.secondaryMission?.code} {documents?.secondaryMission?.name}
-                          </Typography>
                         </td>
-                        <td className={classes}>
-                          <Tooltip content="Edit User">
-                            <IconButton variant="text">
-                              <PencilIcon className="h-4 w-4" />
+                        <td className={`${classes} flex gap-1`}>
+                          <Tooltip content="View More">
+                            <IconButton variant="text" color="blue">
+                              <EyeIcon className="h-5 w-5" />
                             </IconButton>
                           </Tooltip>
+
+                          {
+                            documents?.status !==3 && (
+                              <Tooltip content="Edit Project">
+                                <IconButton variant="text" color="purple">
+                                  <PencilIcon className="h-5 w-5" />
+                                </IconButton>
+                              </Tooltip>
+                            )
+                          }
+                          
+                          {returnTooltip(documents?.code,documents?.status)}
+
+                          {
+                            documents?.status !==1 && (
+                              <Tooltip content="View Contributions">
+                                  <a href={`/lmacm/src/oda/projects/available-projects/contributions?id=${documents?.code.toLocaleLowerCase()}&level=${documents?.mission.code.toLocaleLowerCase()}`}>
+                                    <IconButton variant="text" color="blue">
+                                      <LinkIcon className="h-5 w-5" />
+                                    </IconButton>
+                                  </a>
+                              </Tooltip>
+                            )
+                          }
+                          
+                          
                         </td>
                       </tr>
                     );

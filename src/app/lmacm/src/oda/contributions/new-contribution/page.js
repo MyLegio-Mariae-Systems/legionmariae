@@ -1,16 +1,16 @@
 import { redirect } from "next/navigation";
 import { getServerSession } from "next-auth";
 import authOptions from "@/app/api/auth/[...nextauth]/options";
-import ODAOngoingContributionsPage from "../../../../../../../components/lmacm/src/oda/contributions/ongoing";
+import ODANewContributionPage from "../../../../../../../components/lmacm/src/oda/contributions/new";
 
 const year=new Date().getFullYear()
 
 export const metadata = {
-    title: "Legion Maria of African Church Mission - O.D.A Deacon Members",
-    description: `Legion Maria's Organization of Deacons and Acolytes Members`,
+    title: "Legion Maria of African Church Mission - O.D.A New Contribution",
+    description: `Legion Maria Organization of Deacons and Acolytes Contribution Registration`,
 };
 
-export default async function ODAOngoingContributions(request) {
+export default async function ODANewContribution(request) {
 
   const session=await getServerSession(authOptions)
 
@@ -25,7 +25,7 @@ export default async function ODAOngoingContributions(request) {
         <>
         {
             session ? (
-                <ODAOngoingContributionsPage pathname={pathname} session={session}/>
+                <ODANewContributionPage pathname={pathname} session={session}/>
             ):(
                 toDashboard()
             )

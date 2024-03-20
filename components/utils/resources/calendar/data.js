@@ -21,13 +21,13 @@ export default function fixedDates(year) {
                 {
                     date:`${year}-01-02`,
                     feast:``,
-                    saint:`St. Basil the Great, Gregory Nazianzen - Bishop, St. Marcarius`,
+                    saint:`St. Basil the Great. St. Gregory Nazianzen - Bishop. St. Marcarius`,
                     color:`White`,
                 },
                 {
                     date:`${year}-01-03`,
-                    feast:``,
-                    saint:`The Most Holy Name of Jesus`,
+                    feast:`The Most Holy Name of Jesus`,
+                    saint:`St. Genevieve`,
                     color:`White`,
                 },
                 {
@@ -39,13 +39,13 @@ export default function fixedDates(year) {
                 {
                     date:`${year}-01-05`,
                     feast:``,
-                    saint:`St. Telesphorus`,
+                    saint:`St. Telesphorus. St. John Neumann`,
                     color:`White`,
                 },
                 {
                     date:`${year}-01-06`,
                     feast:`The Epiphany of the Lord`,
-                    saint:`St. Melchior, St. Baldastar***`,
+                    saint:`St. Melchior. St. Baldastar***. St. Gaspar`,
                     color:`White`,
                 },
                 {
@@ -63,25 +63,25 @@ export default function fixedDates(year) {
                 {
                     date:`${year}-01-09`,
                     feast:``,
-                    saint:`St. Julian, St. Adrian`,
+                    saint:`St. Julian. St. Adrian`,
                     color:`White`,
                 },
                 {
                     date:`${year}-01-10`,
                     feast:`Nyabinga - Anton Ooro's home - wealth brought by Baba Messiah.\nBaba Messiah the Worker`,
-                    saint:`St. Nicanor, St. William`,
+                    saint:`St. Nicanor. St. William`,
                     color:`Purple`,
                 },
                 {
                     date:`${year}-01-11`,
                     feast:``,
-                    saint:``,
+                    saint:`St. Hyginus`,
                     color:`White`,
                 },
                 {
                     date:`${year}-01-12`,
                     feast:``,
-                    saint:`St. Marguerite, St. Benedict Biscop`,
+                    saint:`St. Marguerite. St. Benedict Biscop`,
                     color:`White`,
                 },
                 {
@@ -93,13 +93,13 @@ export default function fixedDates(year) {
                 {
                     date:`${year}-01-14`,
                     feast:``,
-                    saint:`St. Malachias, St. Felix of Nola - Priest & Martyr`,
+                    saint:`St. Malachias. St. Felix of Nola - Priest & Martyr. St. Hilary`,
                     color:`Red`,
                 },
                 {
                     date:`${year}-01-15`,
                     feast:``,
-                    saint:`St. Maurus - Abbot, St. Paul the Hermit - Confessor`,
+                    saint:`St. Maurus - Abbot. St. Paul the Hermit - Confessor`,
                     color:`White`,
                 },
                 {
@@ -111,26 +111,26 @@ export default function fixedDates(year) {
                 {
                     date:`${year}-01-17`,
                     feast:``,
-                    saint:`St. Sulpice, St. Anthony - Abbot`,
+                    saint:`St. Sulpice. St. Anthony - Abbot`,
                     color:`White`,
                 },
                 {
                     date:`${year}-01-18`,
                     feast:`Chair of St. Peter at Rome`,
-                    saint:`St. Paul & Prisca - Virgin & Martyr`,
+                    saint:`Sts. Paul & Prisca - Virgin & Martyr`,
                     color:`White`,
                 },
                 {
                     date:`${year}-01-19`,
                     feast:``,
-                    saint:`St. Marius, Martha, Audifax, Abachum - Martyrs, St. Canute - King & Martyr`,
+                    saint:`Sts. Marius, Martha, Audifax, Abachum - Martyrs. St. Canute - King & Martyr`,
                     color:`Red`,
                 },
                 {
                     date:`${year}-01-20`,
                     feast:``,
-                    saint:`St. Fabian - Pope & St. Sabastian - Martyrs `,
-                    color:`Red`,
+                    saint:`St. Fabian - Pope. St. Sabastian - Martyr `,
+                    color:`White`,
                 },
                 {
                     date:`${year}-01-21`,
@@ -141,13 +141,13 @@ export default function fixedDates(year) {
                 {
                     date:`${year}-01-22`,
                     feast:``,
-                    saint:`St. Vincent & Anastasius - Martyrs`,
+                    saint:`Sts. Vincent & Anastasius - Martyrs`,
                     color:`Red`,
                 },
                 {
                     date:`${year}-01-23`,
                     feast:``,
-                    saint:`St. Raymond of Pennafort - confessor, St. Emerentiana - Virgin & Martyr`,
+                    saint:`St. Raymond of Pennafort - confessor. St. Emerentiana - Virgin & Martyr`,
                     color:`White`,
                 },
                 {
@@ -165,19 +165,19 @@ export default function fixedDates(year) {
                 {
                     date:`${year}-01-26`,
                     feast:``,
-                    saint:`St. Paula St. Polycarp - Bishop & Martyr`,
-                    color:`Red`,
+                    saint:`St. Paula. St. Polycarp - Bishop & Martyr`,
+                    color:`White`,
                 },
                 {
                     date:`${year}-01-27`,
                     feast:``,
-                    saint:`St. John Chrysostom - Bishop`,
+                    saint:`St. John Chrysostom - Bishop. St. John Chrysostom`,
                     color:`White`,
                 },
                 {
                     date:`${year}-01-28`,
                     feast:``,
-                    saint:`St. Peter Nolasco, St. Thomas Aquinas`,
+                    saint:`St. Peter Nolasco. St. Thomas Aquinas`,
                     color:`White`,
                 },
                 {
@@ -195,7 +195,7 @@ export default function fixedDates(year) {
                 {
                     date:`${year}-01-31`,
                     feast:``,
-                    saint:`St. John Bosco - Confessor`,
+                    saint:`St. John Bosco - Confessor. St. John Bosco.`,
                     color:`White`,
                 },
             ]
@@ -236,7 +236,7 @@ export default function fixedDates(year) {
                 {
                     date:`${year}-02-06`,
                     feast:``,
-                    saint:`St. Titus - Bishop of Crete & Confessor, St. Dorothy - Virgin & Martyr`,
+                    saint:`St. Titus - Bishop of Crete & Confessor. St. Dorothy - Virgin & Martyr`,
                     color:`White`,
                 },
                 {
@@ -254,7 +254,7 @@ export default function fixedDates(year) {
                 {
                     date:`${year}-02-09`,
                     feast:``,
-                    saint:`St. Cyril, Bishop of Alexandria, St. Apollonia - Virgin & Martyr`,
+                    saint:`St. Cyril - Bishop of Alexandria. St. Apollonia - Virgin & Martyr`,
                     color:`White`,
                 },
                 {
@@ -278,8 +278,8 @@ export default function fixedDates(year) {
                 {
                     date:`${year}-02-13`,
                     feast:``,
-                    saint:``,
-                    color:``,
+                    saint:`St. Agabus`,
+                    color:`White`,
                 },
                 {
                     date:`${year}-02-14`,
@@ -290,7 +290,7 @@ export default function fixedDates(year) {
                 {
                     date:`${year}-02-15`,
                     feast:``,
-                    saint:`St. Faustinus & Jovita, Martyrs`,
+                    saint:`Sts. Faustinus & Jovita, Martyrs`,
                     color:`Red`,
                 },
                 {
@@ -314,14 +314,14 @@ export default function fixedDates(year) {
                 {
                     date:`${year}-02-19`,
                     feast:``,
-                    saint:``,
-                    color:``,
+                    saint:`St. Gabinus`,
+                    color:`White`,
                 },
                 {
                     date:`${year}-02-20`,
                     feast:``,
-                    saint:``,
-                    color:``,
+                    saint:`St. Amata`,
+                    color:`White`,
                 },
                 {
                     date:`${year}-02-21`,
@@ -332,7 +332,7 @@ export default function fixedDates(year) {
                 {
                     date:`${year}-02-22`,
                     feast:`The Chair of St. Peter at Antioch`,
-                    saint:`St. Paul, Apostle`,
+                    saint:`St. Paul - Apostle`,
                     color:`White`,
                 },
                 {
@@ -356,14 +356,14 @@ export default function fixedDates(year) {
                 {
                     date:`${year}-02-26`,
                     feast:``,
-                    saint:``,
-                    color:``,
+                    saint:`St. Alexander`,
+                    color:`White`,
                 },
                 {
                     date:`${year}-02-27`,
                     feast:``,
-                    saint:``,
-                    color:``,
+                    saint:`St. Gabriel`,
+                    color:`White`,
                 },
                 {
                     date:`${year}-02-28`,
@@ -385,7 +385,7 @@ export default function fixedDates(year) {
                 },
                 {
                     date:`${year}-03-02`,
-                    feast:`Persecution of Legion Maria, Kirindo/Jerusalem`,
+                    feast:`Persecution of Legion Maria - Kirindo/Jerusalem`,
                     color:`Purple`,
                 },
                 {
@@ -397,8 +397,8 @@ export default function fixedDates(year) {
                 {
                     date:`${year}-03-04`,
                     feast:``,
-                    saint:`St. Casimir - Confessor, St. Lucius - Pope & Martyr`,
-                    color:`Red`,
+                    saint:`St. Casimir - Confessor, St. Lucius - Pope & Martyr, St. Francis of Assisi`,
+                    color:`White`,
                 },
                 {
                     date:`${year}-03-05`,
@@ -469,8 +469,8 @@ export default function fixedDates(year) {
                 {
                     date:`${year}-03-16`,
                     feast:``,
-                    saint:``,
-                    color:``,
+                    saint:`St. Abraham`,
+                    color:`White`,
                 },
                 {
                     date:`${year}-03-17`,
@@ -559,8 +559,8 @@ export default function fixedDates(year) {
                 {
                     date:`${year}-03-31`,
                     feast:``,
-                    saint:``,
-                    color:``,
+                    saint:`St. Acacius`,
+                    color:`White`,
                 },
             ]
         },
@@ -654,7 +654,7 @@ export default function fixedDates(year) {
                 {
                     date:`${year}-04-15`,
                     feast:``,
-                    saint:`St. Anastasia, St. Basilissa****`,
+                    saint:`St. Anastasia. St. Basilissa****`,
                     color:`White`,
                 },
                 {
@@ -768,7 +768,7 @@ export default function fixedDates(year) {
                 {
                     date:`${year}-05-03`,
                     feast:``,
-                    saint:`St. Philip & James - Apostles. St. Alexander, Eventius & Theodulus - Martyrs, Juvenal & Bishop. St. Timothy & Maura.`,
+                    saint:`Sts. Philip & James - Apostles. Sts. Alexander, Eventius & Theodulus - Martyrs, Juvenal & Bishop. St. Timothy & Maura.`,
                     color:`Red`,
                 },
                 {
@@ -1207,8 +1207,8 @@ export default function fixedDates(year) {
                 {
                     date:`${year}-07-13`,
                     feast:``,
-                    saint:`St. Anacletus. St. Mildred. St. Teresa`,
-                    color:`White`,
+                    saint:`St. Anacletus - Martyr. St. Mildred. St. Teresa`,
+                    color:`Red`,
                 },
                 {
                     date:`${year}-07-14`,
@@ -1309,7 +1309,7 @@ export default function fixedDates(year) {
                 {
                     date:`${year}-07-30`,
                     feast:``,
-                    saint:`St. Abdon & Serinen. St. Justin de Jacobis. St. Peter Chrysologus`,
+                    saint:`Sts. Abdon & Sennen. St. Justin de Jacobis. St. Peter Chrysologus`,
                     color:`White`,
                 },
                 {
@@ -1357,7 +1357,7 @@ export default function fixedDates(year) {
                 {
                     date:`${year}-08-06`,
                     feast:``,
-                    saint:`St. Xystus. St. Felicissimus. ST. Agapitus.`,
+                    saint:`St. Xystus. St. Felicissimus. St. Agapitus.`,
                     color:`White`,
                 },
                 {
@@ -1880,7 +1880,7 @@ export default function fixedDates(year) {
                 {
                     date:`${year}-10-30`,
                     feast:``,
-                    saint:`St. Alphonsus ROdriguez***`,
+                    saint:`St. Alphonsus Rodriguez`,
                     color:`White`,
                 },
                 {
@@ -2288,67 +2288,50 @@ export default function fixedDates(year) {
 
 export async function fixedSundayFeasts() {
 
-    // const response= await getCalendar()
+    const response= await getCalendar()
 
-    // console.log(response[0]?.ashWednesday);
+    const ashWednesdayDates= response ? response[0]?.ashWednesday : []
 
-    const ashWednesdayDates=[
-        '2023-02-22',
-        '2024-02-14',
-        '2025-03-05',
-        '2026-02-18',
-        '2027-02-10',
-        '2028-03-01',
-        '2029-02-14',
-        '2030-03-06',
-        '2031-02-26',
-        '2032-02-11',
-        '2033-03-02',
-    ]
-
-    // const ashWednesdayDates= response[0]?.ashWednesday
-
-    // console.log(ashWednesdayDates);
 
     const data1=[
         {
-            feast:`1st Sunday after Epiphany.`,
+            feast:`1st Sunday after Epiphany.\n`,
             color:`White`,
         },
         {
-            feast:`2nd Sunday After Epiphany.`,
+            feast:`2nd Sunday After Epiphany.\n`,
             color:`Green`,
         },
         {
-            feast:`3rd Sunday after Epiphany.`,
+            feast:`3rd Sunday after Epiphany.\n`,
             color:`Green`,
         },
         {
-            feast:`4th Sunday after Epiphany.`,
+            feast:`4th Sunday after Epiphany.\n`,
             color:`Green`,
         },
         {
-            feast:`5th Sunday after Epiphany.`,
+            feast:`5th Sunday after Epiphany.\n`,
             color:`Green`,
         },
         {
-            feast:`6th Sunday after Epiphany.`,
+            feast:`6th Sunday after Epiphany.\n`,
             color:`Green`,
         },
         {
-            feast:`7th Sunday after Epiphany.`,
+            feast:`7th Sunday after Epiphany.\n`,
             color:`Green`,
         },
         {
-            feast:`8th Sunday after Epiphany.`,
+            feast:`8th Sunday after Epiphany.\n`,
             color:`Green`,
         },
         {
-            feast:`9th Sunday after Epiphany.`,
+            feast:`9th Sunday after Epiphany.\n`,
             color:`Green`,
         },
         {
-            feast:`10th Sunday after Epiphany.`,
+            feast:`10th Sunday after Epiphany.\n`,
             color:`Green`,
         },
         
@@ -2357,15 +2340,15 @@ export async function fixedSundayFeasts() {
     const data2=[
         
         {
-            feast:`Septuagesima.`,
+            feast:`Septuagesima.\n`,
             color:`Purple`,
         },
         {
-            feast:`Sexagesima.`,
+            feast:`Sexagesima.\n`,
             color:`Purple`,
         },
         {
-            feast:`Quinquagesima.`,
+            feast:`Quinquagesima.\n`,
             color:`Purple`,
         },
     ]
@@ -2373,31 +2356,31 @@ export async function fixedSundayFeasts() {
     const data3=[
         
         {
-            feast:`First Sunday of Lent.`,
+            feast:`First Sunday of Lent.\n`,
             color:`Purple`,
         },
         {
-            feast:`Second Sunday of Lent.`,
+            feast:`Second Sunday of Lent.\n`,
             color:`Purple`,
         },
         {
-            feast:`Third Sunday of Lent.`,
+            feast:`Third Sunday of Lent.\n`,
             color:`Purple`,
         },
         {
-            feast:`Fourth Sunday of Lent (Laetare).`,
+            feast:`Fourth Sunday of Lent (Laetare).\n`,
             color:`Rose/White`,
         },
         {
-            feast:`Passion Sunday.`,
+            feast:`Passion Sunday.\n`,
             color:`Purple`,
         },
         {
-            feast:`Palm Sunday.`,
+            feast:`Palm Sunday.\n`,
             color:`Red/Purple`,
         },
         {
-            feast:`Easter Sunday.`,
+            feast:`Easter Sunday.\n`,
             color:`White`,
         },
     ]
@@ -2405,15 +2388,15 @@ export async function fixedSundayFeasts() {
     const data4=[
         
         {
-            feast:`Solemn Easter Vigil and First Mass of Easter Sunday.`,
+            feast:`Solemn Easter Vigil and First Mass of Easter Sunday.\n`,
             color:`Purple`,
         },
         {
-            feast:`Good Friday.`,
+            feast:`Good Friday.\n`,
             color:`Black/Purple`,
         },
         {
-            feast:`Holy Thursday.`,
+            feast:`Holy Thursday.\n`,
             color:`Purple/White`,
         }
         

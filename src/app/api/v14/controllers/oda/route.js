@@ -1,16 +1,29 @@
 'use server'
 
-import DbConnect, { DayTime, generateCode, getFirstAndLastWord, newMissionODAValidation, sendEmail, today } from "../../utills";
+import DbConnect, { DayTime, generateCode, getFirstAndLastWord, newMissionODAValidation, newProjectValidation, sendEmail, today } from "../../utills";
 import Archdioces from '../../models/arch-dioces-registration'
 import Dioces from '../../models/dicoes-registration'
 import Mission from '../../models/mission-registration'
 import ODA from '../../models/oda-mission-registration'
 import ODAMissionOfficials from '../../models/oda-mission-officials'
+import ODAMissionProjects from '../../models/oda-mission-projects'
+import ODAMissionProjectsContribution from '../../models/oda-mission-project-contributions'
+import ODAMissionProjectsContributionDetails from '../../models/oda-mission-project-contributions-details'
+import ODAMissionContributionName from '../../models/oda-mission-contribution-name'
+import ODAMissionContribution from '../../models/oda-mission-contributions'
+import ODAMissionContributionDetails from '../../models/oda-mission-contributions-details'
 import bcrypt from "bcryptjs/dist/bcrypt";
+import authOptions from "@/app/api/auth/[...nextauth]/options";
+import { getServerSession } from "next-auth";
+
+
+// const session=await getServerSession(authOptions)
+
+// console.log(session);
+
+let sessionId=null //session?.user?.id
 
 DbConnect()
-
-let tokenId
 
 async function generateUniqueUsername() {
     let oda_username;
@@ -23,6 +36,19 @@ async function generateUniqueUsername() {
     return oda_username;
 }
 
+async function generateUniqueProjectCode(collection,prefix) {
+  let code;
+  let random;
+  do {
+      random = Math.floor(Math.random() * (999999 - 100000)) + 100000;
+      code = random+prefix;
+  } while (await collection.findOne({ code }));
+
+  return code;
+}
+
+
+//...................................................................................
 
 export default async function NewMissionODAMember(value) {
     let responseData={
@@ -35,10 +61,10 @@ export default async function NewMissionODAMember(value) {
         const validate=await newMissionODAValidation(value)
 
         if (validate.error) {
-        console.log(validate.error);
-        responseData.message=validate?.error?.message     
+          console.log(validate.error);
+          responseData.message=validate?.error?.message     
 
-        return responseData
+          return responseData
         }
 
         let {
@@ -219,98 +245,6 @@ export default async function NewMissionODAMember(value) {
     }
 }
 
-// export const addODAMember=async(res,body)=>{
-
-//   let {mission,id,category,role,official}=body
-
-//   try {
-
-//       if (mission.length===24) {
-//           mission=await Mission.findById(mission)
-//       } else {
-//           mission=await Mission.findOne({code:upperCase(mission)})
-          
-//       }
-
-//       let saved
-//       let roleExist
-
-//       if (category==='Priest') {
-
-//           let userVerified=await Adult.findOne({_id:id,verified:true,__v:0})
-
-//           if (!userVerified) {
-//               return res.json({
-//                   success:false,
-//                   message:`Member's account is not active or verified.`
-//               })
-//           }
-//       }
-
-//       let memberExist=await ODA.findOne({levelId:mission._id,userId:id})
-
-//       if (memberExist) {
-//           return res.json({
-//               success:false,
-//               message:'Member is already registered'
-//           })
-//       }
-
-//       if (category==='Priest') {
-//           let roleMemberExist=await ODA.findOne({userId:id,role})
-
-//           if (roleMemberExist) {
-//               return res.json({
-//                   success:false,
-//                   message:`Member is already a ${role}`
-//               })
-//           }
-
-//           roleExist=await ODA.findOne({levelId:mission._id,role})
-
-//           if (roleExist) {
-              
-//               roleExist.userId=id || roleExist.userId,
-//               roleExist.updatedBy=tokenId
-
-//               await roleExist.save()
-
-//               return res.json({
-//                   success:true
-//               })
-//           }
-
-//       }
-
-//       saved=await ODA.create({
-//           userId:id,
-//           role,
-//           official,
-//           levelId:mission._id,
-//           level:'Mission',
-//           addedBy:tokenId,
-//           updatedBy:tokenId
-//       })
-
-//       if (saved) {
-          
-//           return res.json({
-//               success:true
-//           })
-//       }
-//       else{
-//           return res.json({
-//               success:false,
-//               message:'Invalid data'
-//           })
-//       }
-      
-//   } catch (error) {
-//       console.log('Error=> '+error);
-//       return res.json({message:'Server error occured',success:false})
-//   }
-// }
-
 export async function getODAMembers (Params){
 
     let responseData={
@@ -457,8 +391,8 @@ export async function getODADeaconsAcolyteMembers (mission){
         ? {}
         : {
             $or: [
-              { mission1: mission },
-              { mission2: mission },
+              { mission1: { $regex: mission, $options: 'i' } },
+              { mission2: { $regex: mission, $options: 'i' } },
             ],
         };
 
@@ -519,7 +453,7 @@ export async function getODADeaconsAcolyteMembers (mission){
     let dataODA = JSON.stringify(aggregatedDocuments);
     let dataMissions = JSON.stringify(Missions);
 
-    let data = {ODAMembers:JSON.parse(dataODA),Missions:JSON.parse(dataMissions)};
+    let data = {ODAMembers:JSON.parse(dataODA),Missions:mission==='All' ? JSON.parse(dataMissions) : []};
     responseData.data=data
 
     return responseData
@@ -797,8 +731,13 @@ export async function NewMissionODAOfficialMember(value) {
   }
 }
 
+//......................................................................................
+
 export async function ODALogin(username, password, req) {
   try {
+    let a=await getODADeaconsAcolyteMembers('All')
+
+    console.log(a.data.ODAMembers);
     if (!username || !password) {
       return {
         message: 'Please enter username and password',
@@ -889,4 +828,1251 @@ export async function ODALogin(username, password, req) {
   }
 }
 
+
+//.................................................................................
+
+export const newODAMissionProject=async(value)=>{
+
+  let responseData={
+    message:'',
+    success:false
+  }
+
+  const validate=await newProjectValidation(value)
+
+  if (validate.error) {
+    console.log(validate.error);
+    responseData.message=validate?.error?.message     
+
+    return responseData
+  }
+
+  let {
+    name,
+    description,
+    mission,
+  }=validate.value
+
+  try {
+
+    const promises=[
+      generateUniqueProjectCode(ODAMissionProjects,'M'),
+      ODAMissionProjects.findOne({name,mission})
+    ]
+
+    const responses = await Promise.allSettled(promises);
+  
+    const data = responses.flatMap((response) =>
+      [response.value]
+    );
+
+    const code='P'+ data[0]
+
+    const nameExist=data[1]
+
+    if (nameExist) {
+      responseData.message='Project Exist'
+      responseData.success=false
+      return responseData
+    }
+
+    const project=await ODAMissionProjects.create({
+      code,
+      name,
+      description,
+      amount:0,
+      mission,
+      status:1,
+      addedBy:null,
+      updatedBy:null,
+      isDeleted:1
+    })
+
+    if (!project) {
+      responseData.message='Invalid data'
+      responseData.success=false
+      return responseData
+    } 
+
+    responseData.success=true
+    return responseData
+  } catch (error) {
+    responseData.message=error.message || 'Please try again later, an unknown error occurred'
+    responseData.success=false
+    return responseData
+  }
+
+}
+
+export async function getODAMissionProjects (Params){
+
+  let responseData={
+      message:'',
+      success:false,
+      data:[]
+  }
+
+  let searchParams=Params.searchParams
+  let status=Params.status
+  let mission=Params.mission
+  let limit=Params.pageLimit
+  let page=Params.page
+
+  try {
+
+    // await ODAMissionProjects.deleteMany()
+
+    const matchQuery =
+    searchParams === ''
+        ? {}
+        : {
+            $or: [
+              { name: { $regex: searchParams, $options: 'i' } },
+              { code: { $regex: searchParams, $options: 'i' } },
+            ],
+        };
+    
+    const matchQueryRole =
+      status === 'All'
+        ? {}
+        : {status};
+    
+
+    const matchQueryMission =
+      mission === 'All'
+      ? {}
+      : 
+      { mission }
+
+
+    let pipeline=[
+      {
+        $match:{...matchQuery, ...matchQueryMission, ...matchQueryRole}
+      },
+      {
+        $lookup: {
+          from: 'misxions',
+          localField: 'mission',
+          foreignField: 'code',
+          as: 'mission',
+        },
+      },
+      {
+        $unwind: { path: '$mission', preserveNullAndEmptyArrays: true },
+      },
+      // {
+      //   $lookup: {
+      //     from: 'doamixionprojektkontribiusions',
+      //     localField: 'code',
+      //     foreignField: 'project',
+      //     as: 'contributions',
+      //   },
+      // },
+      // {
+      //   $unwind: { path: '$contributions', preserveNullAndEmptyArrays: true },
+      // },
+      {
+        $sort: {
+          createdAt: -1,
+        },
+      },
+      {
+        $group: {
+          _id: null,
+          pageCount: { $sum: 1 },
+          documents: {
+            $push: '$$ROOT',
+          },
+        },
+      },
+      {
+        $unwind: '$documents',
+      },
+      {
+        $skip:page * limit
+      },
+      {
+        $limit:limit
+      },
+      
+      {
+          $project:{
+            _id: 0,
+            documents:{
+              status:1,
+              description:1,
+              name:1,
+              amount:1,
+              code:1,
+              mission:{
+                code:1,name:1
+              },
+              
+            },
+            pageCount: 1,
+          }
+      }
+
+    ]
+
+    let aggregatedDocuments =await ODAMissionProjects.aggregate(pipeline)
+
+    let data = JSON.stringify(aggregatedDocuments);
+
+    data = JSON.parse(data);
+    responseData.data=data
+
+    return responseData
+      
+  } catch (error) {
+      console.log(error);
+
+      responseData.message=error.message || 'Please try again later, an unknown error occurred'
+      responseData.success=false
+      return responseData
+  }
+
+
+}
+
+export async function getOneODAMissionProjects (value){
+
+  let responseData={
+      message:'',
+      success:false,
+      data:[]
+  }
+
+  try {
+
+    // await ODAMissionProjects.deleteMany()
+
+
+    let pipeline=[
+      {
+        $match:{code: { $regex: value.code, $options: 'i' }, mission: { $regex: value.mission, $options: 'i' }}
+      },
+      {
+          $project:{
+            status: 1,
+            name:1
+          }
+      },
+      {
+        $project:{
+          _id: 0,
+        }
+    }
+
+    ]
+
+    let aggregatedDocuments =await ODAMissionProjects.aggregate(pipeline)
+
+    let data = JSON.stringify(aggregatedDocuments);
+
+    data = JSON.parse(data);
+    responseData.data=data
+
+    return responseData
+      
+  } catch (error) {
+      console.log(error);
+
+      responseData.message=error.message || 'Please try again later, an unknown error occurred'
+      responseData.success=false
+      return responseData
+  }
+
+
+}
+
+export const editODAMissionProject=async(value,status=false)=>{
+
+    let responseData={
+      message:'',
+      success:false
+    }
+
+    let code=value.code
+    let validate
+
+    if (!status) {
+      let toBeValidatedData={
+        name:value.name,
+        description:value.description,
+        mission:value.mission,
+      }
+  
+      validate=await newProjectValidation(toBeValidatedData)
+  
+      if (validate.error) {
+        console.log(validate.error);
+        responseData.message=validate?.error?.message     
+  
+        return responseData
+      }
+  
+    }
+
+    let name
+    let description
+
+    if (!status) {
+      name=validate?.value.name
+      description=validate?.value.description
+    }
+    
+    try {
+
+      let filter={code}
+      let update
+
+      if (!status) {
+        update = {
+          name,
+          description,
+        };
+      } else {
+        update = {
+          status:value.status
+        };
+      }
+
+      const updated=await ODAMissionProjects.findOneAndUpdate(filter, update, {
+        upsert: false, // Creates a new document when no document matches the query criteria
+        new: true, // Returns the updated document
+        runValidators: true // Applies Mongoose validators to the update operation
+      })
+      
+      if (!updated) {
+        responseData.message='Invalid data'
+        responseData.success=false
+        return responseData
+      } 
+
+      responseData.success=true
+      return responseData
+    } catch (error) {
+      responseData.message=error.message || 'Please try again later, an unknown error occurred'
+      responseData.success=false
+      return responseData
+    }
+
+}
+
+//..........................................................................................
+
+export const newODAMissionProjectContribution=async(value)=>{
+
+  let responseData={
+    message:'',
+    success:false
+  }
+
+  let {
+    code,
+    oda_username,
+    amount,
+  }=value
+
+  if (!code || !oda_username || !amount) {
+    console.log(code, oda_username, amount);
+    responseData.message='All fields are required'    
+    return responseData
+  }
+
+  if (isNaN(amount) || !parseInt(amount)>0 ) {
+    responseData.message='Invalid amount'    
+    return responseData
+  }
+
+  try {
+    
+    let filter={project:code.toUpperCase(), oda_username:oda_username.toUpperCase()}
+    let filter1={code:code.toUpperCase()}
+    let update={
+      $inc: { amount:parseInt(amount) },
+      updatedBy:sessionId,
+      isDeleted:1
+    }
+    let update1={
+      $inc: { amount:parseInt(amount) },
+    }
+
+    let promises=[
+      ODAMissionProjectsContribution.findOneAndUpdate(filter, update, {
+        upsert: true, 
+        new: false, 
+        runValidators: true 
+      }),
+      ODAMissionProjects.findOneAndUpdate(filter1, update1, {
+        upsert: false, 
+        new: false, 
+        runValidators: true 
+      }),
+      ODAMissionProjectsContributionDetails.create({
+        project:code.toUpperCase(),
+        oda_username,
+        amount:parseInt(amount),
+        addedBy:sessionId,
+        isDeleted:1
+      })
+    ]
+
+    let promise=await Promise.allSettled(promises)
+
+    if (!promise) {
+      responseData.message='Invalid data'
+      responseData.success=false
+      return responseData
+    } 
+
+    responseData.success=true
+    return responseData
+  } catch (error) {
+    responseData.message=error.message || 'Please try again later, an unknown error occurred'
+    responseData.success=false
+    return responseData
+  }
+
+}
+
+export async function getODAMissionProjectsContributions (Params){
+
+  let responseData={
+      message:'',
+      success:false,
+      data:[]
+  }
+
+  let searchParams=Params.searchParams
+  let project=Params.project
+  let limit=Params.pageLimit
+  let page=Params.page
+
+  try {
+
+    // await ODAMissionProjects.deleteMany()
+
+    const matchQuery =
+    searchParams === ''
+        ? {}
+        : {
+            oda_username: { $regex: searchParams, $options: 'i' },
+        };
+    
+    let pipeline=[
+      {
+        $match:{project: { $regex: project, $options: 'i' }, ...matchQuery}
+      },
+      {
+        $lookup: {
+          from: 'misxionadomemdas',
+          localField: 'oda_username',
+          foreignField: 'oda_username',
+          as: 'ODAMembers',
+        },
+      },
+      {
+        $unwind: { path: '$ODAMembers', preserveNullAndEmptyArrays: true },
+      },
+      {
+        $sort: {
+          updatedAt: -1,
+        },
+      },
+      {
+        $group: {
+          _id: null,
+          pageCount: { $sum: 1 },
+          documents: {
+            $push: '$$ROOT',
+          },
+        },
+      },
+      {
+        $unwind: '$documents',
+      },
+      {
+        $skip:page * limit
+      },
+      {
+        $limit:limit
+      },
+      
+      {
+          $project:{
+            _id: 0,
+            documents:{
+              amount:1,
+              ODAMembers:{
+                first_name:1,
+                last_name:1,
+                middle_names:1,
+                oda_username:1,
+              },
+            },
+            pageCount: 1,
+          }
+      }
+
+    ]
+
+    let aggregatedDocuments =await ODAMissionProjectsContribution.aggregate(pipeline)
+
+    let data = JSON.stringify(aggregatedDocuments);
+
+    data = JSON.parse(data);
+    responseData.data=data
+
+    return responseData
+      
+  } catch (error) {
+      console.log(error);
+
+      responseData.message=error.message || 'Please try again later, an unknown error occurred'
+      responseData.success=false
+      return responseData
+  }
+
+
+}
+
+export async function getODAMissionProjectsContributionsDetails (Params){
+
+  let responseData={
+      message:'',
+      success:false,
+      data:[]
+  }
+
+  let oda_username=Params.searchParams
+  let project=Params.project
+  let limit=Params.pageLimit
+  let page=Params.page
+
+  try {
+
+    // await ODAMissionProjects.deleteMany()
+
+    
+    let pipeline=[
+      {
+        $match:{project: { $regex: project, $options: 'i' }, oda_username: { $regex: oda_username, $options: 'i' }}
+      },
+      {
+        $lookup: {
+          from: 'misxionadomemdas',
+          localField: 'oda_username',
+          foreignField: 'oda_username',
+          as: 'ODAMembers',
+        },
+      },
+      {
+        $unwind: { path: '$ODAMembers', preserveNullAndEmptyArrays: true },
+      },
+      {
+        $sort: {
+          updatedAt: -1,
+        },
+      },
+      {
+        $group: {
+          _id: null,
+          pageCount: { $sum: 1 },
+          documents: {
+            $push: '$$ROOT',
+          },
+        },
+      },
+      {
+        $unwind: '$documents',
+      },
+      {
+        $skip:page * limit
+      },
+      {
+        $limit:limit
+      },
+      
+      {
+          $project:{
+            _id: 0,
+            documents:{
+              amount:1,
+              createdAt:1,
+              ODAMembers:{
+                first_name:1,
+                last_name:1,
+                middle_names:1,
+                oda_username:1,
+              },
+            },
+            pageCount: 1,
+          }
+      }
+
+    ]
+
+    let aggregatedDocuments =await ODAMissionProjectsContributionDetails.aggregate(pipeline)
+
+    let data = JSON.stringify(aggregatedDocuments);
+
+    data = JSON.parse(data);
+    responseData.data=data
+
+    return responseData
+      
+  } catch (error) {
+      console.log(error);
+
+      responseData.message=error.message || 'Please try again later, an unknown error occurred'
+      responseData.success=false
+      return responseData
+  }
+
+
+}
+
+
+//........................................................................................
+
+export const newODAMissionContributionName=async(value)=>{
+
+  let responseData={
+    message:'',
+    success:false
+  }
+
+  const validate=await newProjectValidation(value)
+
+  if (validate.error) {
+    console.log(validate.error);
+    responseData.message=validate?.error?.message     
+
+    return responseData
+  }
+
+  let {
+    name,
+    description,
+    mission,
+  }=validate.value
+
+  try {
+
+    const promises=[
+      generateUniqueProjectCode(ODAMissionContributionName,'M'),
+      ODAMissionContributionName.findOne({name,mission})
+    ]
+
+    const responses = await Promise.allSettled(promises);
+  
+    const data = responses.flatMap((response) =>
+      [response.value]
+    );
+
+    const code='C'+ data[0]
+
+    const nameExist=data[1]
+
+    if (nameExist) {
+      responseData.message='Contribution Exist'
+      responseData.success=false
+      return responseData
+    }
+
+    const contribution=await ODAMissionContributionName.create({
+      code,
+      name,
+      description,
+      amount:0,
+      mission,
+      status:1,
+      addedBy:null,
+      updatedBy:null,
+      isDeleted:1
+    })
+
+    if (!contribution) {
+      responseData.message='Invalid data'
+      responseData.success=false
+      return responseData
+    } 
+
+    responseData.success=true
+    return responseData
+  } catch (error) {
+    responseData.message=error.message || 'Please try again later, an unknown error occurred'
+    responseData.success=false
+    return responseData
+  }
+
+}
+
+export const newODAMissionContribution=async(value)=>{
+
+  let responseData={
+    message:'',
+    success:false
+  }
+
+  let {
+    code,
+    oda_username,
+    amount,
+  }=value
+
+  if (!code || !oda_username || !amount) {
+    console.log(code, oda_username, amount);
+    responseData.message='All fields are required'    
+    return responseData
+  }
+
+  if (isNaN(amount) || !parseInt(amount)>0 ) {
+    responseData.message='Invalid amount'    
+    return responseData
+  }
+
+  try {
+
+    let filter={contribution:code.toUpperCase(), oda_username:oda_username.toUpperCase()}
+    let filter1={code:code.toUpperCase()}
+    let update={
+      $inc: { amount:parseInt(amount) },
+      updatedBy:sessionId,
+      isDeleted:1
+    }
+    let update1={
+      $inc: { amount:parseInt(amount) },
+    }
+
+    let promises=[
+      ODAMissionContribution.findOneAndUpdate(filter, update, {
+        upsert: true, 
+        new: false, 
+        runValidators: true 
+      }),
+      ODAMissionContributionName.findOneAndUpdate(filter1, update1, {
+        upsert: false, 
+        new: false, 
+        runValidators: true 
+      }),
+      ODAMissionContributionDetails.create({
+        contribution:code.toUpperCase(),
+        oda_username,
+        amount:parseInt(amount),
+        addedBy:sessionId,
+        isDeleted:1
+      })
+    ]
+
+    let promise=await Promise.allSettled(promises)
+
+    // let projectContribution=await ODAMissionProjectsContribution.findOne({project: { $regex: code, $options: 'i' }, oda_username: { $regex: oda_username, $options: 'i' }})
+
+    // if (projectContribution) {
+    //   projectContribution.amount = projectContribution.amount + parseInt(amount) || projectContribution.amount
+    //   projectContribution=await projectContribution.save()
+    // } else {
+    //   projectContribution=await ODAMissionProjectsContribution.create({
+    //     project:code,
+    //     oda_username,
+    //     amount:parseInt(amount),
+    //     updatedBy:sessionId,
+    //     isDeleted:1
+    //   })
+    // }
+
+    if (!promise) {
+      responseData.message='Invalid data'
+      responseData.success=false
+      return responseData
+    } 
+
+    responseData.success=true
+    return responseData
+  } catch (error) {
+    responseData.message=error.message || 'Please try again later, an unknown error occurred'
+    responseData.success=false
+    return responseData
+  }
+
+}
+
+export async function getODAMissionContributionNames (Params){
+
+  let responseData={
+      message:'',
+      success:false,
+      data:[]
+  }
+
+  let searchParams=Params.searchParams
+  let status=Params.status
+  let me=Params.me
+  let mission=Params.mission
+  let limit=Params.pageLimit
+  let page=Params.page
+
+  try {
+
+    // await ODAMissionProjects.deleteMany()
+
+    console.log(me);
+
+    const matchQuery =
+    searchParams === ''
+        ? {}
+        : {
+            $or: [
+              { name: { $regex: searchParams, $options: 'i' } },
+              { code: { $regex: searchParams, $options: 'i' } },
+            ],
+        };
+    
+    const matchQueryRole =
+      status === 'All'
+        ? {}
+        : {status};
+    
+
+    const matchQueryMission =
+      mission === 'All'
+      ? {}
+      : 
+      { mission }
+
+
+    let pipeline=[
+      {
+        $match:{...matchQuery, ...matchQueryMission, ...matchQueryRole}
+      },
+      {
+        $lookup: {
+          from: 'misxions',
+          localField: 'mission',
+          foreignField: 'code',
+          as: 'mission',
+        },
+      },
+      {
+        $unwind: { path: '$mission', preserveNullAndEmptyArrays: true },
+      },
+      // {
+      //   $lookup: {
+      //     from: 'doamixionprojektkontribiusions',
+      //     localField: 'code',
+      //     foreignField: 'project',
+      //     as: 'contributions',
+      //   },
+      // },
+      // {
+      //   $unwind: { path: '$contributions', preserveNullAndEmptyArrays: true },
+      // },
+      {
+        $sort: {
+          createdAt: -1,
+        },
+      },
+      {
+        $group: {
+          _id: null,
+          pageCount: { $sum: 1 },
+          documents: {
+            $push: '$$ROOT',
+          },
+        },
+      },
+      {
+        $unwind: '$documents',
+      },
+      {
+        $skip:page * limit
+      },
+      {
+        $limit:limit
+      },
+      
+      {
+          $project:{
+            _id: 0,
+            documents:{
+              status:1,
+              description:1,
+              name:1,
+              amount:1,
+              code:1,
+              mission:{
+                code:1,name:1
+              },
+              
+            },
+            pageCount: 1,
+          }
+      }
+
+    ]
+
+    let aggregatedDocuments =await ODAMissionContributionName.aggregate(pipeline)
+
+    let myContribution=[]
+
+    await Promise.allSettled(
+      aggregatedDocuments?.map(async({documents})=>{
+
+        let collections=await ODAMissionContribution.findOne({contribution:documents?.code,oda_username:me})
+
+        if (collections) {
+          myContribution.push(collections.amount)
+        }else{
+          myContribution.push(0)
+        }
+
+      })
+    )
+
+    console.log(myContribution);
+
+    let data = JSON.stringify(aggregatedDocuments);
+    myContribution = JSON.stringify(myContribution);
+
+    data = JSON.parse(data);
+    myContribution = JSON.parse(myContribution);
+    responseData.data={data,myContribution}
+
+    return responseData
+      
+  } catch (error) {
+      console.log(error);
+
+      responseData.message=error.message || 'Please try again later, an unknown error occurred'
+      responseData.success=false
+      return responseData
+  }
+
+
+}
+
+export async function getOneODAMissionContributionName (value){
+
+  let responseData={
+      message:'',
+      success:false,
+      data:[]
+  }
+
+  try {
+
+    // await ODAMissionProjects.deleteMany()
+
+
+    let pipeline=[
+      {
+        $match:{code: { $regex: value.code, $options: 'i' }, mission: { $regex: value.mission, $options: 'i' }}
+      },
+      {
+          $project:{
+            status: 1,
+            name:1
+          }
+      },
+      {
+        $project:{
+          _id: 0,
+        }
+    }
+
+    ]
+
+    let aggregatedDocuments =await ODAMissionContributionName.aggregate(pipeline)
+
+    let data = JSON.stringify(aggregatedDocuments);
+
+    data = JSON.parse(data);
+    responseData.data=data
+
+    return responseData
+      
+  } catch (error) {
+      console.log(error);
+
+      responseData.message=error.message || 'Please try again later, an unknown error occurred'
+      responseData.success=false
+      return responseData
+  }
+
+
+}
+
+export const editODAMissionContributionName=async(value,status=false)=>{
+
+    let responseData={
+      message:'',
+      success:false
+    }
+
+    let code=value.code
+    let validate
+
+    if (!status) {
+      let toBeValidatedData={
+        name:value.name,
+        description:value.description,
+        mission:value.mission,
+      }
+  
+      validate=await newProjectValidation(toBeValidatedData)
+  
+      if (validate.error) {
+        console.log(validate.error);
+        responseData.message=validate?.error?.message     
+  
+        return responseData
+      }
+  
+    }
+
+    let name
+    let description
+
+    if (!status) {
+      name=validate?.value.name
+      description=validate?.value.description
+    }
+    
+    try {
+
+      let filter={code}
+      let update
+
+      if (!status) {
+        update = {
+          name,
+          description,
+        };
+      } else {
+        update = {
+          status:value.status
+        };
+      }
+
+      const updated=await ODAMissionContributionName.findOneAndUpdate(filter, update, {
+        upsert: false, // Creates a new document when no document matches the query criteria
+        new: true, // Returns the updated document
+        runValidators: true // Applies Mongoose validators to the update operation
+      })
+      
+      if (!updated) {
+        responseData.message='Invalid data'
+        responseData.success=false
+        return responseData
+      } 
+
+      responseData.success=true
+      return responseData
+    } catch (error) {
+      responseData.message=error.message || 'Please try again later, an unknown error occurred'
+      responseData.success=false
+      return responseData
+    }
+
+}
+
+export async function getODAMissionContributions (Params){
+
+  let responseData={
+      message:'',
+      success:false,
+      data:[]
+  }
+
+  let searchParams=Params.searchParams
+  let project=Params.project
+  let limit=Params.pageLimit
+  let page=Params.page
+
+  try {
+
+    // await ODAMissionProjects.deleteMany()
+
+    const matchQuery =
+    searchParams === ''
+        ? {}
+        : {
+            oda_username: { $regex: searchParams, $options: 'i' },
+        };
+    
+    let pipeline=[
+      {
+        $match:{contribution: { $regex: project, $options: 'i' }, ...matchQuery}
+      },
+      {
+        $lookup: {
+          from: 'misxionadomemdas',
+          localField: 'oda_username',
+          foreignField: 'oda_username',
+          as: 'ODAMembers',
+        },
+      },
+      {
+        $unwind: { path: '$ODAMembers', preserveNullAndEmptyArrays: true },
+      },
+      {
+        $sort: {
+          updatedAt: -1,
+        },
+      },
+      {
+        $group: {
+          _id: null,
+          pageCount: { $sum: 1 },
+          documents: {
+            $push: '$$ROOT',
+          },
+        },
+      },
+      {
+        $unwind: '$documents',
+      },
+      {
+        $skip:page * limit
+      },
+      {
+        $limit:limit
+      },
+      
+      {
+          $project:{
+            _id: 0,
+            documents:{
+              amount:1,
+              ODAMembers:{
+                first_name:1,
+                last_name:1,
+                middle_names:1,
+                oda_username:1,
+              },
+            },
+            pageCount: 1,
+          }
+      }
+
+    ]
+
+    let aggregatedDocuments =await ODAMissionContribution.aggregate(pipeline)
+
+    let data = JSON.stringify(aggregatedDocuments);
+
+    data = JSON.parse(data);
+    responseData.data=data
+
+    return responseData
+      
+  } catch (error) {
+      console.log(error);
+
+      responseData.message=error.message || 'Please try again later, an unknown error occurred'
+      responseData.success=false
+      return responseData
+  }
+
+
+}
+
+export async function getODAMissionContributionsDetails (Params){
+
+  let responseData={
+      message:'',
+      success:false,
+      data:[]
+  }
+
+  let oda_username=Params.searchParams
+  let project=Params.project
+  let limit=Params.pageLimit
+  let page=Params.page
+
+  try {
+
+    // await ODAMissionProjects.deleteMany()
+
+    
+    let pipeline=[
+      {
+        $match:{contribution: { $regex: project, $options: 'i' }, oda_username: { $regex: oda_username, $options: 'i' }}
+      },
+      {
+        $lookup: {
+          from: 'misxionadomemdas',
+          localField: 'oda_username',
+          foreignField: 'oda_username',
+          as: 'ODAMembers',
+        },
+      },
+      {
+        $unwind: { path: '$ODAMembers', preserveNullAndEmptyArrays: true },
+      },
+      {
+        $sort: {
+          updatedAt: -1,
+        },
+      },
+      {
+        $group: {
+          _id: null,
+          pageCount: { $sum: 1 },
+          documents: {
+            $push: '$$ROOT',
+          },
+        },
+      },
+      {
+        $unwind: '$documents',
+      },
+      {
+        $skip:page * limit
+      },
+      {
+        $limit:limit
+      },
+      
+      {
+          $project:{
+            _id: 0,
+            documents:{
+              amount:1,
+              createdAt:1,
+              ODAMembers:{
+                first_name:1,
+                last_name:1,
+                middle_names:1,
+                oda_username:1,
+              },
+            },
+            pageCount: 1,
+          }
+      }
+
+    ]
+
+    let aggregatedDocuments =await ODAMissionContributionDetails.aggregate(pipeline)
+
+    let data = JSON.stringify(aggregatedDocuments);
+
+    data = JSON.parse(data);
+    responseData.data=data
+
+    return responseData
+      
+  } catch (error) {
+      console.log(error);
+
+      responseData.message=error.message || 'Please try again later, an unknown error occurred'
+      responseData.success=false
+      return responseData
+  }
+
+
+}
   

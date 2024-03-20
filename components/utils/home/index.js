@@ -7,13 +7,21 @@ import { AshWenesday } from "../resources/calendar";
 import React from "react";
 import NavbarB4Login from "../header/headerB4Login";
 
- 
 export default function HomePage({session}) {
 
   const date=new Date()
 
-  const TABLE_ROWS = AshWenesday(date.getFullYear())
+  const [TABLE_ROWS, setTABLE_ROWS]=React.useState([])
   const today = new Date().toISOString().split('T')[0];
+
+  React.useEffect(()=>{
+    getTables()
+  },[])
+
+  const getTables=async()=>{
+    const table_ROWS =await AshWenesday(date.getFullYear())
+    setTABLE_ROWS(table_ROWS)
+  }
 
   const yearsAgo=(date)=>{
 
@@ -26,7 +34,6 @@ export default function HomePage({session}) {
 
     return textDuration
     
-    
   }
 
   const getDate=(date)=>{
@@ -34,23 +41,19 @@ export default function HomePage({session}) {
     const formattedDate = format(currentDate, 'EEEE, MMMM d, yyyy');
 
     return formattedDate
-
   }
 
   const saintToday=()=>{
 
-
-    const todayObject = TABLE_ROWS.flatMap(obj => obj.details).find(detail => detail.date === today);
+    const todayObject = TABLE_ROWS?.flatMap(obj => obj.details).find(detail => detail.date === today);
 
     return todayObject
-
-    
   }
 
 
   const commingFeast=(value)=>{
 
-    let todayObject = TABLE_ROWS.flatMap(obj => obj.details).find(detail => detail.date === today);
+    let todayObject = TABLE_ROWS?.flatMap(obj => obj.details).find(detail => detail.date === today);
 
     let nextDate=today
 
@@ -59,7 +62,7 @@ export default function HomePage({session}) {
       const nextDateString = format(nextDate, 'yyyy-MM-dd');
       
     //   // Find the next object with the next date
-      let nextObject = TABLE_ROWS.flatMap(obj => obj.details).find(detail => detail.date === nextDateString);
+      let nextObject = TABLE_ROWS?.flatMap(obj => obj.details).find(detail => detail.date === nextDateString);
 
       // console.log(todayObject);
       
