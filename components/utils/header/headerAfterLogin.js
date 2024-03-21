@@ -204,18 +204,12 @@ const SideNavitems=[
             {
               title:'Contributions',
               child:[
-                {
-                  title:'My Contributions',
-                  link:'/lmacm/src/oda/contributions/my-contributions'
-                },
+                
                 {
                   title:'Available Contributions',
                   link:'/lmacm/src/arch-dioces/contributions/available-contributions'
                 },
-                {
-                  title:'Ongoing Contributions',
-                  link:'/lmacm/src/arch-dioces/contributions/ongoing-contributions'
-                },
+                
                 
               ]
               
@@ -486,7 +480,6 @@ const SideNavitems=[
         
     ]
   },
-  
 
   {
     title:'O.D.A',
@@ -542,8 +535,6 @@ const SideNavitems=[
                     title:'Available Projects',
                     link:'/lmacm/src/oda/projects/available-projects'
                   },
-                  
-                  
                 ]
                 
               },
@@ -551,18 +542,9 @@ const SideNavitems=[
                 title:'Contributions',
                 child:[
                   {
-                    title:'My Contributions',
-                    link:'/lmacm/src/oda/contributions/my-contributions'
-                  },
-                  {
                     title:'Available Contributions',
                     link:'/lmacm/src/oda/contributions/available-contributions'
                   },
-                  {
-                    title:'Ongoing Contributions',
-                    link:'/lmacm/src/oda/contributions/ongoing-contributions'
-                  },
-                  
                 ]
                 
               },

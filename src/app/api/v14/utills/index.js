@@ -63,11 +63,7 @@ export async function sendEmail(subject,message,send_to){
         html:message
     }
 
-    transporter.sendMail(options,function(err){
-        if (err) {
-            console.log(err);
-        }
-    })
+    await transporter.sendMail(options)
 
     // const client = new SMTPClient({
     //     user: process.env.EMAIL_USER,
@@ -140,8 +136,8 @@ export async function newMissionODAValidation (data){
         contact: Joi.number().integer().allow('').optional(),
         middle_names: Joi.string().min(3).max(30).allow('').optional(),
         mission: Joi.string().trim().min(7).max(10).required(),
+        session: Joi.string().trim().min(6).max(8).required(),
         email: Joi.string().trim().email({ minDomainSegments: 2, tlds: { allow: ['com', 'net'] } }).allow('').optional(),
-        missionRegistered: Joi.string().trim().required(),
         category: Joi.string().trim().required(),
         username: Joi.string().allow('').optional(),
     });

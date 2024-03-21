@@ -9,7 +9,7 @@ export default function ODANewMemberPage({session}) {
     return (
         <>
         <NavbarAfterLogin session={session}/>
-        <ODANewMemberHome />
+        <ODANewMemberHome session={session}/>
         <Footer />
         </>
     )

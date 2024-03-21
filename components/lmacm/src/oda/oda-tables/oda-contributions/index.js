@@ -4,7 +4,7 @@ import { editODAMissionContributionName, editODAMissionProject, getODAMembers, g
 import {
   MagnifyingGlassIcon,
 } from "@heroicons/react/24/outline";
-import { PencilIcon, UserPlusIcon, ChevronUpDownIcon, EyeIcon, ArrowsPointingOutIcon, ArrowLongRightIcon, ArrowRightEndOnRectangleIcon, ArrowRightCircleIcon, ForwardIcon, PauseCircleIcon, LinkIcon, ArchiveBoxIcon, PlusCircleIcon } from "@heroicons/react/24/solid";
+import { PencilIcon, UserPlusIcon, ChevronUpDownIcon, EyeIcon, ArrowsPointingOutIcon, ArrowLongRightIcon, ArrowRightEndOnRectangleIcon, ArrowRightCircleIcon, ForwardIcon, PauseCircleIcon, LinkIcon, ArchiveBoxIcon, PlusCircleIcon, TrashIcon } from "@heroicons/react/24/solid";
 
 import {
   Card,
@@ -32,6 +32,7 @@ import { useRouter } from "next/navigation";
 import toast, { ToastBar, Toaster} from 'react-hot-toast'
 import React from 'react'
 import pluralize from 'pluralize'
+import { DateOnly } from "../../../../../utils";
 
 export default function ODAProjectsTable({propData,session}) {
 
@@ -41,13 +42,17 @@ export default function ODAProjectsTable({propData,session}) {
 
   const Dialog_Table_Head=["Date","Amount","Added_By"]
 
+  const page1=React.useRef(1)
+  const page=React.useRef(1)
+  const pageLimit=React.useRef(30)
+  const pageLimit1=React.useRef(5)
 
   let toastId
 
   const [TABLE_ROWS, setTABLE_ROWS] = React.useState([]);
   const [MyContribution, setMyContribution] = React.useState([]);
-  const [Data, setData] = React.useState({searchParams:'',status:'All',mission:'All',page:'',pageLimit:'',me:'757283'});
-  const [Data1, setData1] = React.useState({searchParams:'757283',project:'',page:'',pageLimit:''});
+  const [Data, setData] = React.useState({searchParams:'',status:'All',mission:'All',page:'',pageLimit:'',me:'211009'});
+  const [Data1, setData1] = React.useState({searchParams:'211009',project:'',page:'',pageLimit:pageLimit1.current});
   const [PageCount,setPageCount]=React.useState(0)
   const [ProjectsFound,setProjectsFound]=React.useState(0)
   const [OneContribution, setOneContribution] = React.useState();
@@ -57,12 +62,6 @@ export default function ODAProjectsTable({propData,session}) {
 
   const [open1, setOpen1] = React.useState(false);
   const handleOpen1 = () => setOpen1((cur) => !cur);
-
-
-  const page1=React.useRef(1)
-  const page=React.useRef(1)
-  const pageLimit=React.useRef(30)
-  const pageLimit1=React.useRef(5)
 
 
   React.useEffect(() => {
@@ -190,7 +189,7 @@ export default function ODAProjectsTable({propData,session}) {
       return (
         <>
           <Tooltip content="Mark Completed">
-            <IconButton variant="text" color="red" onClick={()=>{editContributionStatus(code,2)}}>
+            <IconButton variant="text" color="black" onClick={()=>{editContributionStatus(code,2)}}>
               <ArchiveBoxIcon className="h-5 w-5" />
             </IconButton>
           </Tooltip>
@@ -227,6 +226,7 @@ export default function ODAProjectsTable({propData,session}) {
 
     setDialog_TABLE_ROWS(response.data)
   }
+
 
     return (
         <>
@@ -296,11 +296,11 @@ export default function ODAProjectsTable({propData,session}) {
                       {Dialog_Table_Head.map((head, index) => (
                         <th
                           key={head}
-                          className="cursor-pointer border-y border-blue-gray-100 bg-blue-gray-50/50 p-3 transition-colors hover:bg-blue-gray-50"
+                          className="cursor-pointer border-y border-blue-gray-100 bg-blue-gray-100 p-3 transition-colors hover:bg-blue-gray-50"
                         >
                           <Typography
                             variant="small"
-                            color="blue-gray"
+                            color="black"
                             className="flex items-center justify-between gap-2 fw-bold leading-none opacity-100"
                           >
                             {head}{" "}
@@ -366,7 +366,7 @@ export default function ODAProjectsTable({propData,session}) {
                 </table>
               </CardBody>
               <CardFooter className="flex items-center w-full flex-wrap justify-between border-t border-blue-gray-50 p-2">
-                <Typography variant="small" color="purple" className="font-normal">
+                <Typography variant="small" color="black" className="font-normal">
                   Page {page1.current} of {PageCount1}
                 </Typography>
                 <div className="flex gap-2">
@@ -412,11 +412,12 @@ export default function ODAProjectsTable({propData,session}) {
                   label="Search"
                   icon={<MagnifyingGlassIcon className="h-5 w-5" />}
                   onChange={searchData}
+                  className="form-control w-full"
                 />
               </div>
               
             </div>
-            <Typography color="gray" className="mt-3 fw-bold text-end me-3">
+            <Typography color="black" className="mt-3 fw-bold text-end me-3">
                 Total Projects : <span className="text-danger">{ProjectsFound ? ProjectsFound.toLocaleString() : 0}</span>
             </Typography>
 
@@ -428,11 +429,11 @@ export default function ODAProjectsTable({propData,session}) {
                   {propData.TABLE_HEAD.map((head, index) => (
                     <th
                       key={head}
-                      className="cursor-pointer border-y border-blue-gray-100 bg-blue-gray-50/50 p-4 transition-colors hover:bg-blue-gray-50"
+                      className="cursor-pointer  border-y border-blue-gray-100 bg-blue-gray-100 p-4 transition-colors hover:bg-blue-gray-50"
                     >
                       <Typography
                         variant="small"
-                        color="blue-gray"
+                        color="black"
                         className="flex items-center justify-between gap-2 fw-bold leading-none opacity-100"
                       >
                         {head}{" "}
@@ -448,9 +449,7 @@ export default function ODAProjectsTable({propData,session}) {
                 {TABLE_ROWS?.map(
                   ({documents}, index) => {
                     const isLast = index === TABLE_ROWS.length - 1;
-                    const classes = isLast
-                      ? "p-4"
-                      : "p-4 border-b border-blue-gray-50";
+                    const classes = isLast ? "p-4" :"p-4 border-b border-blue-gray-100 ";
     
                     return (
                       <tr key={index}>
@@ -460,14 +459,30 @@ export default function ODAProjectsTable({propData,session}) {
                             <div className="flex flex-col">
                               <Typography
                                 variant="small"
-                                color="blue-gray"
+                                color="black"
+                                className="font-normal"
+                              >
+                                {index + 1}
+                              </Typography>
+                              
+                              
+                            </div>
+                          </div>
+                        </td>
+                        <td className={classes}>
+                          <div className="flex items-center gap-3">
+                            {/* <Avatar src={img} alt={name} size="sm" /> */}
+                            <div className="flex flex-col">
+                              <Typography
+                                variant="small"
+                                color="black"
                                 className="font-normal"
                               >
                                 {documents?.code}
                               </Typography>
                               <Typography
                                 variant="small"
-                                color="blue-gray"
+                                color="black"
                                 className="font-normal"
                               >
                                 {documents?.name} 
@@ -480,7 +495,7 @@ export default function ODAProjectsTable({propData,session}) {
                           <div className="flex flex-col">
                             <Typography
                               variant="small"
-                              color="blue-gray"
+                              color="black"
                               className="font-normal"
                             >
                               {documents?.description}
@@ -493,7 +508,7 @@ export default function ODAProjectsTable({propData,session}) {
                           <div className="flex flex-col">
                             <Typography
                               variant="small"
-                              color="blue-gray"
+                              color="black"
                               className="font-normal"
                             >
                               {documents?.amount?.toLocaleString()}
@@ -505,17 +520,18 @@ export default function ODAProjectsTable({propData,session}) {
                         <td className={classes}>
                           <Typography
                             variant="small"
-                            color="blue-gray"
+                            color="black"
                             className="font-normal"
                           >
                             {documents?.mission?.code} {documents?.mission?.name}
                           </Typography>
                           
                         </td>
+
                         <td className={classes}>
                           <Typography
                             variant="small"
-                            color="blue-gray"
+                            color="black"
                             className="font-normal"
                           >
                             {MyContribution[index]?.toLocaleString()} {MyContribution[index] > 0 && <>
@@ -560,8 +576,7 @@ export default function ODAProjectsTable({propData,session}) {
                             )
                           }
                           
-                          {returnTooltip(documents?.code,documents?.status)}
-
+                          {documents?.amount > 0 && returnTooltip(documents?.code,documents?.status)}
                       
                           <Tooltip content="View Payments">
                               <a href={`/lmacm/src/oda/contributions/available-contributions/payments?id=${documents?.code?.toLocaleLowerCase()}&level=${documents?.mission.code?.toLocaleLowerCase()}`}>
@@ -570,8 +585,16 @@ export default function ODAProjectsTable({propData,session}) {
                                 </IconButton>
                               </a>
                           </Tooltip>
-                           
-                          
+
+                          {
+                            !documents?.amount > 0 && (
+                              <Tooltip content="Delete Contribution">
+                                <IconButton variant="text" color="red">
+                                  <TrashIcon className="h-5 w-5" />
+                                </IconButton>
+                              </Tooltip>
+                            )
+                          }
                           
                         </td>
                       </tr>
@@ -581,8 +604,8 @@ export default function ODAProjectsTable({propData,session}) {
               </tbody>
             </table>
           </CardBody>
-          <CardFooter className="flex items-center justify-between border-t border-blue-gray-50 p-4">
-            <Typography variant="small" color="blue-gray" className="font-normal">
+          <CardFooter className="flex items-center justify-between border-t border-blue-gray-100 p-4">
+            <Typography variant="small" color="black" className="font-normal">
               Page {page.current} of {PageCount}
             </Typography>
             <div className="flex gap-2">

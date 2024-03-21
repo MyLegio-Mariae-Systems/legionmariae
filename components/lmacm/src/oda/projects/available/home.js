@@ -29,7 +29,7 @@ import React from 'react'
     
   ];
    
-  const TABLE_HEAD = ["Project", "Description", "Contribution", "Mission","Status", ""];
+  const TABLE_HEAD = ["No.", "Project", "Description", "Total_Amount", "Mission", "My_Amount", "Status", ""];
    
   
    
@@ -53,11 +53,11 @@ export default function ODAAllProjectsHome({session}) {
       searchParams:'',
       mission:'All',
       page:0,
-      pageLimit:30
+      pageLimit:30,
+      me:'211009'
     }
 
     const response=await getODAMissionProjects(data)
-
     setTABLE_ROWS(response.data)
 
   }
@@ -76,7 +76,7 @@ export default function ODAAllProjectsHome({session}) {
 
   return (
     <>
-      <ODAProjectsTable propData={data}/>
+      <ODAProjectsTable propData={data} session={session}/>
     </>
   )
 }

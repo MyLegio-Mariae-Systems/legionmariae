@@ -22,7 +22,7 @@ import React from 'react'
     
   ];
    
-  const TABLE_HEAD = ["Contribution", "Description", "Total_Amount", "Mission","My_Amount", "Status", ""];
+  const TABLE_HEAD = ["No.","Contribution", "Description", "Total_Amount", "Mission","My_Amount", "Status", ""];
    
   
    
@@ -48,12 +48,10 @@ export default function ODAAllContributionsHome({session}) {
       page:0,
       pageLimit:30,
       // me:session?.user.id
-      me:757283
+      me:'211009'
     }
 
     const response=await getODAMissionContributionNames(data)
-
-    console.log(response.data);
 
     setTABLE_ROWS(response.data)
 

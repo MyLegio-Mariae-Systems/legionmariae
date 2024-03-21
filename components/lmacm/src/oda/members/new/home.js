@@ -15,13 +15,13 @@ import {
 import React from 'react'
 import toast, { Toaster } from "react-hot-toast";
  
-export default function ODANewMemberHome() {
+export default function ODANewMemberHome({session}) {
 
   let toastId
 
   const [missionRegistered, setmissionRegistered]=React.useState(true)
   const [isDeacon, setisDeacon]=React.useState(false)
-  const [FormData, setFormData] = React.useState({missionRegistered:'true',middle_names:''});
+  const [FormData, setFormData] = React.useState({middle_names:'', mission:session?.user.level_code, session:session?.user.id});
   const [ArchDioces, setArchDioces] = React.useState([]);
   const [Dioces, setDioces] = React.useState([]);
   const [Mission, setMission] = React.useState([]);
@@ -34,7 +34,6 @@ export default function ODANewMemberHome() {
     getArchDioces()
 
   },[])
-
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -57,9 +56,9 @@ export default function ODANewMemberHome() {
 
     if(
       !FormData.first_name || 
-      !FormData.contact || 
+      !FormData.mission || 
       !FormData.last_name ||
-      !FormData.email
+      !FormData.category
       )
     {
       toast.error('Please fill in all required fields')
@@ -67,19 +66,25 @@ export default function ODANewMemberHome() {
       return false
     }
 
-    if(
-        !FormData.email.match(
-        /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+    if (FormData?.email && isDeacon) {
+      if(!FormData.email.match(
+        /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)
         )
-      ){
+      {
         toast.error('Please enter a valid email address')
         return false
       }
+      
+    }
 
+
+    if (FormData?.contact && isDeacon) {
       if(isNaN(FormData?.contact) || FormData?.contact.length !==10){
         toast.error('Please enter a valid contact number')
         return false
       }
+    }
+      
 
       return true
   }
@@ -354,8 +359,7 @@ export default function ODANewMemberHome() {
         
 
         {
-          !missionRegistered && (
-            isDeacon && (
+          isDeacon && (
             <div className="flex w-full flex-col gap-2 mb-2 ">
               <Alert  icon={<IconOutlined />}>
                 <Typography className="font-medium">
@@ -364,366 +368,253 @@ export default function ODANewMemberHome() {
               </Alert>
             </div>
           )
-          )
         }
 
-        <Typography variant="h6" color="blue-gray" className="-mb-3">
-          Registered in Mission?
-        </Typography>
-        <select
-          size="lg"
-          className=" form-select !border-t-blue-gray-200 focus:!border-t-gray-900 mb-2"
-          onChange={(e)=>{setmissionRegistered(!missionRegistered); handleInputChange(e)}}
-          name="missionRegistered"
-        >
-          <option value={true}>Yes</option>
-          <option value={false}>No</option>
-        </select>
-        
+        <form className="mt-8 mb-2 w-80 max-w-screen-lg sm:w-96 " onSubmit={newMember}>
+          <div className="mb-1 flex flex-col gap-6">
 
-        {
-          missionRegistered ? (
-
-            <>
-            <form className="mt-8 mb-2 w-80 max-w-screen-lg sm:w-96" onSubmit={newMember}>
-              <div className="mb-1 flex flex-col gap-6">
-
-              <Typography variant="h6" color="blue-gray" className="-mb-3">
-                Choose Category
-              </Typography>
-              <select
-                size="lg"
-                className=" form-select !border-t-blue-gray-200 focus:!border-t-gray-900 mb-2"
-                name='category'
-                required
-                onChange={handleInputChange}
-                
-              >
-                <option></option>
-                <option>Deacon</option>
-                <option>Acolyte</option>
-              </select>
-              <Typography
-              variant="small"
-              color="gray"
-              className=" flex items-center gap-1 font-normal"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 24 24"
-                  fill="currentColor"
-                  className="-mt-px h-4 w-4 text-danger"
-
-                >
-                  <path
-                    fillRule="evenodd"
-                    d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12zm8.706-1.442c1.146-.573 2.437.463 2.126 1.706l-.709 2.836.042-.02a.75.75 0 01.67 1.34l-.04.022c-1.147.573-2.438-.463-2.127-1.706l.71-2.836-.042.02a.75.75 0 11-.671-1.34l.041-.022zM12 9a.75.75 0 100-1.5.75.75 0 000 1.5z"
-                    clipRule="evenodd"
-                  />
-                </svg>
-                This field is required
-              </Typography>
-
-              <Typography variant="h6" color="blue-gray" className="-mb-3">
-                Member Username
-              </Typography>
-              <input
-                size="lg"
-                placeholder="M012345678"
-                className="form-control !border-t-blue-gray-200 focus:!border-t-gray-900 mb-2"
-                labelProps={{
-                  className: "before:content-none after:content-none",
-                }}
-                name='username'
-                required
-                onChange={handleInputChange}
-                minLength={10}
-                inputProps={{
-                  autoComplete: "off",
-                }}
-              />
-              <Typography
-              variant="small"
-              color="gray"
-              className=" flex items-center gap-1 font-normal"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 24 24"
-                  fill="currentColor"
-                  className="-mt-px h-4 w-4 text-danger"
-
-                >
-                  <path
-                    fillRule="evenodd"
-                    d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12zm8.706-1.442c1.146-.573 2.437.463 2.126 1.706l-.709 2.836.042-.02a.75.75 0 01.67 1.34l-.04.022c-1.147.573-2.438-.463-2.127-1.706l.71-2.836-.042.02a.75.75 0 11-.671-1.34l.041-.022zM12 9a.75.75 0 100-1.5.75.75 0 000 1.5z"
-                    clipRule="evenodd"
-                  />
-                </svg>
-                This field is required
-              </Typography>
-                
-              </div>
-
-              <Button className="mt-6" fullWidth type='submit'>
-                Register
-              </Button>
+          <Typography variant="h6" color="blue-gray" className="-mb-3">
+            Choose Category
+          </Typography>
+          <select
+            size="lg"
+            className=" form-select !border-t-blue-gray-200 focus:!border-t-gray-900 mb-2"
+            name='category'
+            required
+            onChange={handleInputChange}
             
-            </form>
-            </>
+          >
+            <option></option>
+            <option>Deacon</option>
+            <option>Acolyte</option>
+          </select>
+          <Typography
+          variant="small"
+          color="gray"
+          className=" flex items-center gap-1 font-normal"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="currentColor"
+              className="-mt-px h-4 w-4 text-danger"
 
-          ):(
-            <>
-            <form className="mt-8 mb-2 w-80 max-w-screen-lg sm:w-96 " onSubmit={newMember}>
-              <div className="mb-1 flex flex-col gap-6">
-
-              <Typography variant="h6" color="blue-gray" className="-mb-3">
-                Choose Category
-              </Typography>
-              <select
-                size="lg"
-                className=" form-select !border-t-blue-gray-200 focus:!border-t-gray-900 mb-2"
-                name='category'
-                required
-                onChange={handleInputChange}
-                
-              >
-                <option></option>
-                <option>Deacon</option>
-                <option>Acolyte</option>
-              </select>
-              <Typography
-              variant="small"
-              color="gray"
-              className=" flex items-center gap-1 font-normal"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 24 24"
-                  fill="currentColor"
-                  className="-mt-px h-4 w-4 text-danger"
-
-                >
-                  <path
-                    fillRule="evenodd"
-                    d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12zm8.706-1.442c1.146-.573 2.437.463 2.126 1.706l-.709 2.836.042-.02a.75.75 0 01.67 1.34l-.04.022c-1.147.573-2.438-.463-2.127-1.706l.71-2.836-.042.02a.75.75 0 11-.671-1.34l.041-.022zM12 9a.75.75 0 100-1.5.75.75 0 000 1.5z"
-                    clipRule="evenodd"
-                  />
-                </svg>
-                This field is required
-              </Typography>
-
-                <Typography variant="h6" color="blue-gray" className="-mb-3">
-                  First Name
-                </Typography>
-                <input
-                  size="lg"
-                  placeholder="Simeo"
-                  className=" !border-t-blue-gray-200 focus:!border-t-gray-900 mb-2 form-control"
-                  labelProps={{
-                    className: "before:content-none after:content-none",
-                  }}
-                  name='first_name'
-                  required
-                  onChange={handleInputChange}
-                  minLength={3}
-                  inputProps={{
-                    autoComplete: "off",
-                  }}
-                />
-                <Typography
-                variant="small"
-                color="gray"
-                className=" flex items-center gap-1 font-normal"
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 24 24"
-                    fill="currentColor"
-                    className="-mt-px h-4 w-4 text-danger"
-
-                  >
-                    <path
-                      fillRule="evenodd"
-                      d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12zm8.706-1.442c1.146-.573 2.437.463 2.126 1.706l-.709 2.836.042-.02a.75.75 0 01.67 1.34l-.04.022c-1.147.573-2.438-.463-2.127-1.706l.71-2.836-.042.02a.75.75 0 11-.671-1.34l.041-.022zM12 9a.75.75 0 100-1.5.75.75 0 000 1.5z"
-                      clipRule="evenodd"
-                    />
-                  </svg>
-                  This field is required
-                </Typography>
-
-                <Typography variant="h6" color="blue-gray" className="-mb-3">
-                  Middle Names
-                </Typography>
-                <input
-                  size="lg"
-                  placeholder="Simeo"
-                  className=" !border-t-blue-gray-200 focus:!border-t-gray-900 mb-2 form-control"
-                  labelProps={{
-                    className: "before:content-none after:content-none",
-                  }}
-                  name='middle_names'
-                  onChange={handleInputChange}
-                  minLength={3}
-                  inputProps={{
-                    autoComplete: "off",
-                  }}
-                />
-
-
-                <Typography variant="h6" color="blue-gray" className="-mb-3">
-                  Last Name
-                </Typography>
-                <input
-                  size="lg"
-                  placeholder="Hosea"
-                  className="form-control !border-t-blue-gray-200 focus:!border-t-gray-900 mb-2"
-                  name='last_name'
-                  labelProps={{
-                    className: "before:content-none after:content-none",
-                  }}
-                  required
-                  onChange={handleInputChange}
-                  minLength={3}
-                />
-                <Typography
-                variant="small"
-                color="gray"
-                className=" flex items-center gap-1 font-normal"
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 24 24"
-                    fill="currentColor"
-                    className="-mt-px h-4 w-4 text-danger"
-
-                  >
-                    <path
-                      fillRule="evenodd"
-                      d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12zm8.706-1.442c1.146-.573 2.437.463 2.126 1.706l-.709 2.836.042-.02a.75.75 0 01.67 1.34l-.04.022c-1.147.573-2.438-.463-2.127-1.706l.71-2.836-.042.02a.75.75 0 11-.671-1.34l.041-.022zM12 9a.75.75 0 100-1.5.75.75 0 000 1.5z"
-                      clipRule="evenodd"
-                    />
-                  </svg>
-                  This field is required
-                </Typography>
-
-
-                <Typography variant="h6" color="blue-gray" className="-mb-3">
-                  Email Address
-                </Typography>
-                <input
-                  type="email"
-                  size="lg"
-                  name='email'
-                  placeholder="a working email address"
-                  className="form-control !border-t-blue-gray-200 focus:!border-t-gray-900 mb-2"
-                  labelProps={{
-                    className: "before:content-none after:content-none",
-                  }}
-                  required={isDeacon}
-                  onChange={handleInputChange}
-                  minLength={11}
-                />
-                {
-                  isDeacon && (
-                  <Typography
-                    variant="small"
-                    color="gray"
-                    className=" flex items-center gap-1 font-normal"
-                    >
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 24 24"
-                        fill="currentColor"
-                        className="-mt-px h-4 w-4 text-danger"
-
-                      >
-                        <path
-                          fillRule="evenodd"
-                          d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12zm8.706-1.442c1.146-.573 2.437.463 2.126 1.706l-.709 2.836.042-.02a.75.75 0 01.67 1.34l-.04.022c-1.147.573-2.438-.463-2.127-1.706l.71-2.836-.042.02a.75.75 0 11-.671-1.34l.041-.022zM12 9a.75.75 0 100-1.5.75.75 0 000 1.5z"
-                          clipRule="evenodd"
-                        />
-                      </svg>
-                      This field is required
-                    </Typography>
-                  )
-                }
-
-                <Typography variant="h6" color="blue-gray" className="-mb-3">
-                  Contact Number
-                </Typography>
-
-                <input
-                  type="tel"
-                  size="lg"
-                  name='contact'
-                  placeholder="0712345678"
-                  className="form-control !border-t-blue-gray-200 focus:!border-t-gray-900 mb-2"
-                  labelProps={{
-                    className: "before:content-none after:content-none",
-                  }}
-                  required={isDeacon}
-                  onChange={handleInputChange}
-                  maxLength={10}
-                />
-                {
-                  isDeacon && (
-                  <Typography
-                    variant="small"
-                    color="gray"
-                    className=" flex items-center gap-1 font-normal"
-                    >
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 24 24"
-                        fill="currentColor"
-                        className="-mt-px h-4 w-4 text-danger"
-
-                      >
-                        <path
-                          fillRule="evenodd"
-                          d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12zm8.706-1.442c1.146-.573 2.437.463 2.126 1.706l-.709 2.836.042-.02a.75.75 0 01.67 1.34l-.04.022c-1.147.573-2.438-.463-2.127-1.706l.71-2.836-.042.02a.75.75 0 11-.671-1.34l.041-.022zM12 9a.75.75 0 100-1.5.75.75 0 000 1.5z"
-                          clipRule="evenodd"
-                        />
-                      </svg>
-                      This field is required
-                    </Typography>
-                  )
-                }
-                
-               
-              </div>
-
-              <Checkbox
-                label={
-                  <Typography
-                    variant="small"
-                    color="gray"
-                    className="flex items-center font-normal"
-
-                  >
-                    Member agrees with the
-                    <a
-                      href="#"
-                      className="font-medium transition-colors hover:text-gray-900 "
-                    >
-                      &nbsp;Terms and Conditions
-                    </a>
-                  </Typography>
-                }
-                containerProps={{ className: "-ml-2.5" }}
-                required
+            >
+              <path
+                fillRule="evenodd"
+                d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12zm8.706-1.442c1.146-.573 2.437.463 2.126 1.706l-.709 2.836.042-.02a.75.75 0 01.67 1.34l-.04.022c-1.147.573-2.438-.463-2.127-1.706l.71-2.836-.042.02a.75.75 0 11-.671-1.34l.041-.022zM12 9a.75.75 0 100-1.5.75.75 0 000 1.5z"
+                clipRule="evenodd"
               />
-              <Button className="mt-6" fullWidth type='submit'>
-                Register
-              </Button>
-              
-            </form>
-            </>
-          )
-        }
+            </svg>
+            This field is required
+          </Typography>
 
-        
+            <Typography variant="h6" color="blue-gray" className="-mb-3">
+              First Name
+            </Typography>
+            <input
+              size="lg"
+              placeholder="Simeo"
+              className=" !border-t-blue-gray-200 focus:!border-t-gray-900 mb-2 form-control"
+              labelProps={{
+                className: "before:content-none after:content-none",
+              }}
+              name='first_name'
+              required
+              onChange={handleInputChange}
+              minLength={3}
+              inputProps={{
+                autoComplete: "off",
+              }}
+            />
+            <Typography
+            variant="small"
+            color="gray"
+            className=" flex items-center gap-1 font-normal"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+                className="-mt-px h-4 w-4 text-danger"
+
+              >
+                <path
+                  fillRule="evenodd"
+                  d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12zm8.706-1.442c1.146-.573 2.437.463 2.126 1.706l-.709 2.836.042-.02a.75.75 0 01.67 1.34l-.04.022c-1.147.573-2.438-.463-2.127-1.706l.71-2.836-.042.02a.75.75 0 11-.671-1.34l.041-.022zM12 9a.75.75 0 100-1.5.75.75 0 000 1.5z"
+                  clipRule="evenodd"
+                />
+              </svg>
+              This field is required
+            </Typography>
+
+            <Typography variant="h6" color="blue-gray" className="-mb-3">
+              Middle Names
+            </Typography>
+            <input
+              size="lg"
+              placeholder="Simeo"
+              className=" !border-t-blue-gray-200 focus:!border-t-gray-900 mb-2 form-control"
+              labelProps={{
+                className: "before:content-none after:content-none",
+              }}
+              name='middle_names'
+              onChange={handleInputChange}
+              minLength={3}
+              inputProps={{
+                autoComplete: "off",
+              }}
+            />
+
+
+            <Typography variant="h6" color="blue-gray" className="-mb-3">
+              Last Name
+            </Typography>
+            <input
+              size="lg"
+              placeholder="Hosea"
+              className="form-control !border-t-blue-gray-200 focus:!border-t-gray-900 mb-2"
+              name='last_name'
+              labelProps={{
+                className: "before:content-none after:content-none",
+              }}
+              required
+              onChange={handleInputChange}
+              minLength={3}
+            />
+            <Typography
+            variant="small"
+            color="gray"
+            className=" flex items-center gap-1 font-normal"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+                className="-mt-px h-4 w-4 text-danger"
+
+              >
+                <path
+                  fillRule="evenodd"
+                  d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12zm8.706-1.442c1.146-.573 2.437.463 2.126 1.706l-.709 2.836.042-.02a.75.75 0 01.67 1.34l-.04.022c-1.147.573-2.438-.463-2.127-1.706l.71-2.836-.042.02a.75.75 0 11-.671-1.34l.041-.022zM12 9a.75.75 0 100-1.5.75.75 0 000 1.5z"
+                  clipRule="evenodd"
+                />
+              </svg>
+              This field is required
+            </Typography>
+
+
+            <Typography variant="h6" color="blue-gray" className="-mb-3">
+              Email Address
+            </Typography>
+            <input
+              type="email"
+              size="lg"
+              name='email'
+              placeholder="a working email address"
+              className="form-control !border-t-blue-gray-200 focus:!border-t-gray-900 mb-2"
+              labelProps={{
+                className: "before:content-none after:content-none",
+              }}
+              required={isDeacon}
+              onChange={handleInputChange}
+              minLength={11}
+            />
+            {
+              isDeacon && (
+              <Typography
+                variant="small"
+                color="gray"
+                className=" flex items-center gap-1 font-normal"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    fill="currentColor"
+                    className="-mt-px h-4 w-4 text-danger"
+
+                  >
+                    <path
+                      fillRule="evenodd"
+                      d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12zm8.706-1.442c1.146-.573 2.437.463 2.126 1.706l-.709 2.836.042-.02a.75.75 0 01.67 1.34l-.04.022c-1.147.573-2.438-.463-2.127-1.706l.71-2.836-.042.02a.75.75 0 11-.671-1.34l.041-.022zM12 9a.75.75 0 100-1.5.75.75 0 000 1.5z"
+                      clipRule="evenodd"
+                    />
+                  </svg>
+                  This field is required
+                </Typography>
+              )
+            }
+
+            <Typography variant="h6" color="blue-gray" className="-mb-3">
+              Contact Number
+            </Typography>
+
+            <input
+              type="tel"
+              size="lg"
+              name='contact'
+              placeholder="0712345678"
+              className="form-control !border-t-blue-gray-200 focus:!border-t-gray-900 mb-2"
+              labelProps={{
+                className: "before:content-none after:content-none",
+              }}
+              required={isDeacon}
+              onChange={handleInputChange}
+              maxLength={10}
+            />
+            {
+              isDeacon && (
+              <Typography
+                variant="small"
+                color="gray"
+                className=" flex items-center gap-1 font-normal"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    fill="currentColor"
+                    className="-mt-px h-4 w-4 text-danger"
+
+                  >
+                    <path
+                      fillRule="evenodd"
+                      d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12zm8.706-1.442c1.146-.573 2.437.463 2.126 1.706l-.709 2.836.042-.02a.75.75 0 01.67 1.34l-.04.022c-1.147.573-2.438-.463-2.127-1.706l.71-2.836-.042.02a.75.75 0 11-.671-1.34l.041-.022zM12 9a.75.75 0 100-1.5.75.75 0 000 1.5z"
+                      clipRule="evenodd"
+                    />
+                  </svg>
+                  This field is required
+                </Typography>
+              )
+            }
+            
+            
+          </div>
+
+          <Checkbox
+            label={
+              <Typography
+                variant="small"
+                color="gray"
+                className="flex items-center font-normal"
+
+              >
+                Member agrees with the
+                <a
+                  href="#"
+                  className="font-medium transition-colors hover:text-gray-900 "
+                >
+                  &nbsp;Terms and Conditions
+                </a>
+              </Typography>
+            }
+            containerProps={{ className: "-ml-2.5" }}
+            required
+          />
+          <Button className="mt-6" fullWidth type='submit'>
+            Register
+          </Button>
+          
+        </form>
         
       </Card>
     </div>
