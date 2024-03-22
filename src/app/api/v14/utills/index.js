@@ -25,15 +25,13 @@ export default async function DbConnect(){
     try {
 
         if(conn.isConnected){
-            // await sendEmail('LMACM Email Testing','I am testing email function','btgavygarvey@gmail.com')
             console.log("DB connected");
             return
         } 
         mongoose.set('strictQuery', false);
         if(conn.DB_URL) db=await connect(conn.DB_URL)
-        conn.isConnected=db.connections[0].readyState
-            // await sendEmail('LMACM Email Testing','I am testing email function','btgavygarvey@gmail.com')
-            console.log("DB connected");
+        conn.isConnected=db?.connections[0]?.readyState
+        console.log("DB connected");
     } catch (error) {
         console.log("MongoDB error ", error);
     }

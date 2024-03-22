@@ -24,7 +24,12 @@ import {
 } from "@heroicons/react/24/outline";
 
 import { CheckCircleIcon, ClockIcon, DocumentArrowUpIcon, DocumentDuplicateIcon, DocumentMinusIcon, DocumentPlusIcon, DocumentTextIcon, UserGroupIcon, UserPlusIcon } from "@heroicons/react/24/solid";
-import AnimatedNumbers from "react-animated-numbers";
+import dynamic from 'next/dynamic'
+
+const AnimatedNumbers = dynamic(() => import("react-animated-numbers"), {
+    ssr: false
+})
+
 
 export function ODADashboardHome() {
 
