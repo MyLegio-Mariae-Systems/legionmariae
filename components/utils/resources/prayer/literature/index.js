@@ -616,7 +616,7 @@ export function LuoRandomPrayers() {
                 <div className='m-1 ps-2'>
                     <p>
                         E nying Wuon, gi Wuowi, gi Chuny Matakatifu. Amen.<br></br>
-                        A chuny matakatifu bi, donj e chunya lere, punja rieko mar ng'eyo wach Nyasaye. Kendo mia teko mar makogi maber. Nikech Kristus Ruodhwa. Amen.
+                        A chuny matakatifu bi, donj e chunya lere, punja rieko mar ng&apos;eyo wach Nyasaye. Kendo mia teko mar makogi maber. Nikech Kristus Ruodhwa. Amen.
                     </p>
                 </div>
                 
@@ -628,8 +628,8 @@ export function LuoRandomPrayers() {
                 </div>
                 <div className='m-1 ps-2'>
                     <p>
-                        Nyasacha, alami amiyi chunya, akwayi chieng' ma tinende mondo odoki maber ni chunya kendo maber ni ringra. Amen.<br></br>
-                        Nyasacha, agombo nwang'o induljensia duto m'anyalo nwang'o kuom lemona kendo kuom tichna ma tinende. Amen.
+                        Nyasacha, alami amiyi chunya, akwayi chieng&apos; ma tinende mondo odoki maber ni chunya kendo maber ni ringra. Amen.<br></br>
+                        Nyasacha, agombo nwang&apos;o induljensia duto m&apos;anyalo nwang&apos;o kuom lemona kendo kuom tichna ma tinende. Amen.
                     </p>
                 </div>
                 
@@ -651,13 +651,13 @@ export function LuoRandomPrayers() {
                         Nodak Kuomwa.<br></br>
                         &nbsp;&nbsp;&nbsp;<em><b>Misawa Maria...</b></em><br></br>
                         Ikwanwae min Nyasaye Matakatifu,<br></br>
-                        Mondo wadok jomowinjore nwang'o gik ma Kristus nochikowa.
+                        Mondo wadok jomowinjore nwang&apos;o gik ma Kristus nochikowa.
 
                     </p>
                     <p>
                         <em><b>Walem</b></em><br></br>
-                        Wakwayi Ruodhwa, mondo ilung' nemani e chunywa; kendo kaka Malaika nohulonwa timruok dhano mar Kristus Wuodi,
-                        mondo kamano nikech sandne gi musalape, wachop e duong' mar chier. Nikech Kristus nogo Ruodhwa. Amen.
+                        Wakwayi Ruodhwa, mondo ilung&apos; nemani e chunywa; kendo kaka Malaika nohulonwa timruok dhano mar Kristus Wuodi,
+                        mondo kamano nikech sandne gi musalape, wachop e duong&apos; mar chier. Nikech Kristus nogo Ruodhwa. Amen.
                     </p>
                 </div>
                 
@@ -669,11 +669,11 @@ export function LuoRandomPrayers() {
                 </div>
                 <div className='m-1 ps-2'>
                     <p>
-                        Ayie, Nyasacha, In ka alami, aheri gi chunya duto. Agoyoni erokamano nimar in emanichweya, in emaniwara gi Wuodi m'ihero ahinya,
+                        Ayie, Nyasacha, In ka alami, aheri gi chunya duto. Agoyoni erokamano nimar in emanichweya, in emaniwara gi Wuodi m&apos;ihero ahinya,
                         niloka jakristus kendo agoyoni erokamano kuom nema duto mimiya. Kendo agoyoni erokamano nimar irita otieno.<br></br>
                         Amiyi chunya, gi ringra, gi parona, gi wachna, gi tichna, gi chnruokna matinde. Ariwogi kanyakla achiel gi sand Jesus Kristus, Ruodhwa.
                         Amiyi mago duto mapwoyigo kendo machuligo marichona. Adagi chuth ketho tinde to miya nemani nimar ok anyal timo gimoro
-                        k'aonge gi nemani.
+                        k&apos;aonge gi nemani.
                     </p>
                 </div>
                 
@@ -712,7 +712,7 @@ export function LuoRandomPrayers() {
                 <div className='m-1 ps-2'>
                     <p>
                         Ayie Nyasaye Wuon manyalo gikmoko duto jachwech polo gi piny. Gi Jesus Kristus Wuode ma miderma, Ruodhwa. Manomak
-                        ichne kuom Chuny Matakatifu; Bikira Maria ema nonywole. Manosande kuom Pontius Pilato, manogure e musalaba, manotho. Manoyike, nolor e limbo, chieng' mar adek
+                        ichne kuom Chuny Matakatifu; Bikira Maria ema nonywole. Manosande kuom Pontius Pilato, manogure e musalaba, manotho. Manoyike, nolor e limbo, chieng&apos; mar adek
                         nochier kuom jomotho. Nodum odhi epolo, obet e lwedo ma kor achwich mar Nyasaye Wuon manyalo gikmoko duto.
                         Kama noaye koduogi yalo jomangima gi jomotho.<br></br>
                         Ayie Chuny Matakatifu, Eklesia Makatholik Matakatifu; riwruok mar jotakatifu, golo mar maricho, chier mar ringruok, gi ngima maokrum. Amen.
@@ -740,8 +740,8 @@ export function LuoRandomPrayers() {
                 </div>
                 <div className='m-1 ps-2'>
                     <p>
-                        Nyasacha ageno kuomi chuth nikech Jesus Kristus. Inimia nemani e pinyka, gi ngima maokrum i polo k'amako buchi, nimar
-                        in emanichikowa, in eber ahinya, in minyalo gikmoko duto, in m'ichopo wachni. Amen
+                        Nyasacha ageno kuomi chuth nikech Jesus Kristus. Inimia nemani e pinyka, gi ngima maokrum i polo k&apos;amako buchi, nimar
+                        in emanichikowa, in eber ahinya, in minyalo gikmoko duto, in m&apos;ichopo wachni. Amen
                     </p>
                 </div>
                 
@@ -767,7 +767,7 @@ export function LuoRandomPrayers() {
                 <div className='m-1 ps-2'>
                     <p>
                         Nyasacha akwero marichona gi chunya duto nimar giyanyi kendo gikwinyi. Ajok gi marichona kendo akwerogi nimar aheroi gi nemani, achikora kodi
-                        kwero marichona, timo tim mabeyo, adwaro tho moloyo timo marach maduong' kata achiel. Amen.
+                        kwero marichona, timo tim mabeyo, adwaro tho moloyo timo marach maduong&apos; kata achiel. Amen.
                     </p>
                 </div>
                 
@@ -779,11 +779,11 @@ export function LuoRandomPrayers() {
                 </div>
                 <div className='m-1 ps-2'>
                     <p>
-                        Par Bikira Maria, moher ahinya ka nyakanene podi k'wawinjo ka nituono ng'a m'oringo obiro kuomi, mondo irite, m'okwayi
-                        mondo ikonye, m'odwari mondo ikwane. Em'omiyo ageno kuomi abiro kuomi. Achung' i nyimi k'akwero marichona. A min Jesus
-                        kik ituona gik m'akwayo, to mondo iwinja gi ng'wononi, iyie lemona. Amen.<br></br>
+                        Par Bikira Maria, moher ahinya ka nyakanene podi k&apos;wawinjo ka nituono ng&apos;a m&apos;oringo obiro kuomi, mondo irite, m&apos;okwayi
+                        mondo ikonye, m&apos;odwari mondo ikwane. Em&apos;omiyo ageno kuomi abiro kuomi. Achung&apos; i nyimi k&apos;akwero marichona. A min Jesus
+                        kik ituona gik m&apos;akwayo, to mondo iwinja gi ng&apos;wononi, iyie lemona. Amen.<br></br>
                         A maria manochwe ka onge marach mar kodhi.<br></br>
-                        Ikwanwae wan m'waringo kuomi.
+                        Ikwanwae wan m&apos;waringo kuomi.
 
                     </p>
                 </div>
@@ -798,7 +798,7 @@ export function LuoRandomPrayers() {
                     <p>
                         A Nyasaye maokrum jachwech gikmoko duto, mondo ipar ka chuny jokafiri gin twich lweti. In emanichweyogi ka kiti, ipar Jesus Kristus
                         Wuodi manosandi malit, manotho mondo gikwo. Kik iyie jokafiri ochaye, to yie lemo ma Eklisia, Chiege Matakatifu ogoloni.
-                        Ipar ng'wononi. A Nyasaye wiyi mondo owil ka ok giyie, migi nema mondo giyie ka Nyasaye, Jesus Kristus, Wuodi manioro e piny mondo okwowa,
+                        Ipar ng&apos;wononi. A Nyasaye wiyi mondo owil ka ok giyie, migi nema mondo giyie ka Nyasaye, Jesus Kristus, Wuodi manioro e piny mondo okwowa,
                         omiwa ngima, ochierwa, kendo manowarowa e mach maoktho. Humbe obedie higini gi higini. Amen.
                     </p>
                 </div>
@@ -811,7 +811,7 @@ export function LuoRandomPrayers() {
                 </div>
                 <div className='m-1 ps-2'>
                     <p>
-                        Nyasachwa, imiwa hapi kodi chiembwa bende m'wabiro nwang'o kuom ng'wononi. Nikech Kristus Ruodhwa. Amen.
+                        Nyasachwa, imiwa hapi kodi chiembwa bende m&apos;wabiro nwang&apos;o kuom ng&apos;wononi. Nikech Kristus Ruodhwa. Amen.
                     </p>
                 </div>
                 
@@ -823,8 +823,8 @@ export function LuoRandomPrayers() {
                 </div>
                 <div className='m-1 ps-2'>
                     <p>
-                        Nyasachwa manyalo gikmoko duto, wagoyoni erokamano kuom chiemo duto m'imiyowa. Ng'a mobet kendo makwayo ji higini gi higini.
-                        Amen. Chuny jomoyie mondo oywe maber nikech ng'wono Nyasaye. Amen.
+                        Nyasachwa manyalo gikmoko duto, wagoyoni erokamano kuom chiemo duto m&apos;imiyowa. Ng&apos;a mobet kendo makwayo ji higini gi higini.
+                        Amen. Chuny jomoyie mondo oywe maber nikech ng&apos;wono Nyasaye. Amen.
                     </p>
                 </div>
                 
@@ -836,8 +836,8 @@ export function LuoRandomPrayers() {
                 </div>
                 <div className='m-1 ps-2'>
                     <p>
-                        Ayie Nyasacha, In ka alami, aheri gi chunya duto kendo agoyoni erokamano nimar in emanichweya, in emaniwara gi Wuodi m'ihero. Niloka jakristus
-                        kendo agoyoni erokamano kuom nema duto ma nimiya, kendo agoyoni erokamano nimar irita chieng' matinde. Amen.
+                        Ayie Nyasacha, In ka alami, aheri gi chunya duto kendo agoyoni erokamano nimar in emanichweya, in emaniwara gi Wuodi m&apos;ihero. Niloka jakristus
+                        kendo agoyoni erokamano kuom nema duto ma nimiya, kendo agoyoni erokamano nimar irita chieng&apos; matinde. Amen.
                     </p>
                 </div>
                 
@@ -850,15 +850,15 @@ export function LuoRandomPrayers() {
                 <div className='m-1 ps-2'>
                         <ol>
                             <li>Lam Nyasaye achiel kende, ihere ahinya.</li>
-                            <li>Kik ikuong'ri kayiem gi nying Nyasaye.</li>
-                            <li>Los chieng' Nyasaye.</li>
+                            <li>Kik ikuong&apos;ri kayiem gi nying Nyasaye.</li>
+                            <li>Los chieng&apos; Nyasaye.</li>
                             <li>Luor wuoru gi meru.</li>
                             <li>Kik ineki.</li>
                             <li>Kik iwuow.</li>
                             <li>Kik ikwal.</li>
                             <li>Kik ihang ni wadu, kik iriambne.</li>
-                            <li>Kik igomb chi ng'ato.</li>
-                            <li>Kik igomb gir ng'ato.</li>
+                            <li>Kik igomb chi ng&apos;ato.</li>
+                            <li>Kik igomb gir ng&apos;ato.</li>
                         </ol>
                 </div>
                 
@@ -870,12 +870,12 @@ export function LuoRandomPrayers() {
                 </div>
                 <div className='m-1 ps-2'>
                         <ol>
-                            <li>Los Dominika duto gi sewini madongo mowachi, k'iwinjo Missa kendo k'iweyo tich matek.</li>
-                            <li>Twe ndalo mar tweo, kik icham ring'o ndalo ma Eklesia okwerowa.</li>
-                            <li>Nwang' sakrament mar Pentensia ka pok itieko higa.</li>
-                            <li>Nwang' sakrament mar Ukarestia ndalo mar Paska ka pok itieko higa.</li>
-                            <li>Kony Jopadri k'ichiwonigi kuom gigi.</li>
-                            <li>Kik inywom nyotu kendo kik ited sap nyombo maduong' ndalo ma Eklesia okwerowa.</li>
+                            <li>Los Dominika duto gi sewini madongo mowachi, k&apos;iwinjo Missa kendo k&apos;iweyo tich matek.</li>
+                            <li>Twe ndalo mar tweo, kik icham ring&apos;o ndalo ma Eklesia okwerowa.</li>
+                            <li>Nwang&apos; sakrament mar Pentensia ka pok itieko higa.</li>
+                            <li>Nwang&apos; sakrament mar Ukarestia ndalo mar Paska ka pok itieko higa.</li>
+                            <li>Kony Jopadri k&apos;ichiwonigi kuom gigi.</li>
+                            <li>Kik inywom nyotu kendo kik ited sap nyombo maduong&apos; ndalo ma Eklesia okwerowa.</li>
                         </ol>
                 </div>
                 
@@ -887,7 +887,7 @@ export function LuoRandomPrayers() {
                 </div>
                 <div className='m-1 ps-2'>
                     <p>
-                        Duong' obedi ni Wuon, ni Wuowi, ni Chuny Matakatifu: Kaka nobet kar kwongo, kendo kawuono, kendo ndalo duto, higini gi higini. Amen
+                        Duong&apos; obedi ni Wuon, ni Wuowi, ni Chuny Matakatifu: Kaka nobet kar kwongo, kendo kawuono, kendo ndalo duto, higini gi higini. Amen
                     </p>
                 </div>
                 
@@ -899,7 +899,7 @@ export function LuoRandomPrayers() {
                 </div>
                 <div className='m-1 ps-2'>
                     <p>
-                        Nyasacha, akwayi yweyona m'adhi yweyogo mondo obedi maber ni chunya kendo maber ni ringra. 
+                        Nyasacha, akwayi yweyona m&apos;adhi yweyogo mondo obedi maber ni chunya kendo maber ni ringra. 
                         Bikira Maria Matakatifu, Malaika ma jaritna, gi jotakatifu duto mai polo, mondo urita otienoni gi kar thona. Amen<br />
                         Nying Jesus Kristus mondo opwoe ndalo duto! Higini gi higini. Amen
                     </p>
@@ -922,8 +922,8 @@ export function LuoPresdiumPrayers() {
                 <div className='m-1 ps-2'>
                     <p>
                         Maria Matakatifu,<br />
-                        Minwa m'wahero, nyiswa Wuodi Ruodhwa.<br />
-                        Bikira, Minwa m'wahero. Pakeuru Kerubim.<br />
+                        Minwa m&apos;wahero, nyiswa Wuodi Ruodhwa.<br />
+                        Bikira, Minwa m&apos;wahero. Pakeuru Kerubim.<br />
                         Werneuru Serafim. Pakeuru Minwa maler.
                     </p>
                 </div>
@@ -936,15 +936,15 @@ export function LuoPresdiumPrayers() {
                 </div>
                 <div className='m-1 ps-2'>
                     <p>
-                        A Chuny Matakatifu bi, ipong' chuny jogi moyie gi nemani. Mok ma herani e chunygi.
+                        A Chuny Matakatifu bi, ipong&apos; chuny jogi moyie gi nemani. Mok ma herani e chunygi.
                         Or chunyi nochwegi, nilok kit piny nodok manyien.
                     </p>
                     <p className="fw-bold text-primary text-center ">
                         <em>Walem</em>
                     </p>
                     <p>
-                        A Nyasaye m'osepong'o chuny jomoyie gi ler mar Chuny Matakatifu; miwa mondo gi Chuny Matakatifu nogo,
-                        wanwang' rieko modhi kare, mondo wamor gi hochne ndalo duto, nikech Kristus nogo Ruodhwa. Amen.
+                        A Nyasaye m&apos;osepong&apos;o chuny jomoyie gi ler mar Chuny Matakatifu; miwa mondo gi Chuny Matakatifu nogo,
+                        wanwang&apos; rieko modhi kare, mondo wamor gi hochne ndalo duto, nikech Kristus nogo Ruodhwa. Amen.
                     </p>
                     <p>
                         <span><span className="fw-bold">V: </span>A Ruoth heny dend dhoga,</span><br />
@@ -955,9 +955,9 @@ export function LuoPresdiumPrayers() {
                         <span><span className="fw-bold">R: </span>A Ruoth bi iromnwa.</span><br />
                         <span><span className="fw-bold">V: </span>Chuny ma Jahoyo bi itelnwa,</span><br />
                         <span><span className="fw-bold">R: </span>A Ruoth ret itelnwa.</span><br /><br />
-                        <span className="walem">Duong' obedie...</span><br /><br />
+                        <span className="walem">Duong&apos; obedie...</span><br /><br />
                         <span><span className="fw-bold">V: </span>Jesus igolnwa marichowa,</span><br />
-                        <span><span className="fw-bold">R: </span>Iwarwae kuom sand mach maoktho. Iter chuny ji duto i polo; to moloyo chuny ji madwaro ng'wononi.</span><br /><br />
+                        <span><span className="fw-bold">R: </span>Iwarwae kuom sand mach maoktho. Iter chuny ji duto i polo; to moloyo chuny ji madwaro ng&apos;wononi.</span><br /><br />
                         (<span className="walem text-danger">Ka itero midhierni mag Rosari kata Katena</span>)
 
                     </p>
@@ -971,20 +971,20 @@ export function LuoPresdiumPrayers() {
                 </div>
                 <div className='m-1 ps-2'>
                     <p>
-                        Wamosi ni misawa Ruoth manyako, min ng'wono, Maria in e ngimawa, long'owa, genowa, wamosi; kuomi em'waywakie wan nyithind Eva majodar.
-                        Kuomi em'wayweyoe ka waywak ka pi wang'wa chwer e aorani mar pi wang'. Ero jachwakwa mang'won ahinya go wang'i mamuolno kuomwa; inyiswa Jesus Nyathini mar iyi jahawi ka wuodhwa orumo.
-                        A Bikira Maria mamuol, mang'won, gi malong'o.
+                        Wamosi ni misawa Ruoth manyako, min ng&apos;wono, Maria in e ngimawa, long&apos;owa, genowa, wamosi; kuomi em&apos;waywakie wan nyithind Eva majodar.
+                        Kuomi em&apos;wayweyoe ka waywak ka pi wang&apos;wa chwer e aorani mar pi wang&apos;. Ero jachwakwa mang&apos;won ahinya go wang&apos;i mamuolno kuomwa; inyiswa Jesus Nyathini mar iyi jahawi ka wuodhwa orumo.
+                        A Bikira Maria mamuol, mang&apos;won, gi malong&apos;o.
                     </p>
                     <p>
                         <span><span className="fw-bold">V: </span>Ikwanwae Min Nyasaye Matakatifu,</span><br />
-                        <span><span className="fw-bold">R: </span>Mondo wadok jomowinjore nwang'o gik ma Kristus nochikowa.</span>
+                        <span><span className="fw-bold">R: </span>Mondo wadok jomowinjore nwang&apos;o gik ma Kristus nochikowa.</span>
                     </p>
                     <p className=" fw-bold text-primary text-center ">
                         <em>Walem</em>
                     </p>
                     <p>
-                        Nyasaye mane Wuode ma miderma onwang'onwa kworuok mochwere gi ngimane, gi thone kendo gi chierne. Omiyo wakwayi Ruoth, k'waparo midhierni duto mag Rosari mar Bikira Maria 
-                        Matakatifu. Nimondo watim gik mane gipuonjowa kendo wanwang' gik mane gichikowa, nikech Kristus nogo Ruodhwa. Amen.
+                        Nyasaye mane Wuode ma miderma onwang&apos;onwa kworuok mochwere gi ngimane, gi thone kendo gi chierne. Omiyo wakwayi Ruoth, k&apos;waparo midhierni duto mag Rosari mar Bikira Maria 
+                        Matakatifu. Nimondo watim gik mane gipuonjowa kendo wanwang&apos; gik mane gichikowa, nikech Kristus nogo Ruodhwa. Amen.
                     </p>
                     <p>
                         <span><span className="fw-bold">V: </span>Adundo Matakatifu ahinya mar Jesus,</span><br />
@@ -1001,41 +1001,41 @@ export function LuoPresdiumPrayers() {
 
                     </p>
                     <p className=" fw-bold text-primary text-center">
-                        <em><span className=" fw-bold text-primary">Katena Lejio Maria Antifon (<span className="text-dark">Chung' malo</span>)</span></em>
+                        <em><span className=" fw-bold text-primary">Katena Lejio Maria Antifon (<span className="text-dark">Chung&apos; malo</span>)</span></em>
                     </p>
                     <p>
-                        En ng'ama othinyore, kaka piny m'oyawore malong'o, ka dwe marieny, ka wang'chieng malich, k'oganda mose ikore ni lweny.<br />
+                        En ng&apos;ama othinyore, kaka piny m&apos;oyawore malong&apos;o, ka dwe marieny, ka wang&apos;chieng malich, k&apos;oganda mose ikore ni lweny.<br />
                         (<span className="text-danger"><em>Ranyisi mar musalaba</em></span>) 
-                        Chunya pwoyo Ruoth. Chunya n'osemor kod Nyasaye (<span className="text-danger"><em>ikulo wiyi matin</em> </span>) 
-                        Jawarna, nimar oseng'iyo tin mar misumbane. Neuru nyaka a kawuono, tienge duto noluonga ni jahawi; nimar ng'ama tek osetimona gik madongo.
-                        Nyinge Matakatifu; ng'wonone obet gi ji moluore, nyaka a tieng' kwerewa nyaka chopi tieng' nyikwawa.<br />
-                        Osetimo teko gi bade; jonyadhi mane sungore e chunygi, osekeyogi. Oseriembo Ruodhi e kombegi, oseting'o jomatindo malo. Jomane kech kayo, oseyieng'ogi gi gikmoko. 
-                        Jomoko noriembo ka gin nono, osekonyo Israel misumbane. K'aparo ng'wonone, kaka nosewacho ni kwerewa, Abraham, gi wan nyikwaye manyaka chieng'.<br /><br />
-                        <span className=""><em>Duong' obedie... </em>(<span className="text-danger"> <em>go chongi</em></span>)</span><br />
+                        Chunya pwoyo Ruoth. Chunya n&apos;osemor kod Nyasaye (<span className="text-danger"><em>ikulo wiyi matin</em> </span>) 
+                        Jawarna, nimar oseng&apos;iyo tin mar misumbane. Neuru nyaka a kawuono, tienge duto noluonga ni jahawi; nimar ng&apos;ama tek osetimona gik madongo.
+                        Nyinge Matakatifu; ng&apos;wonone obet gi ji moluore, nyaka a tieng&apos; kwerewa nyaka chopi tieng&apos; nyikwawa.<br />
+                        Osetimo teko gi bade; jonyadhi mane sungore e chunygi, osekeyogi. Oseriembo Ruodhi e kombegi, oseting&apos;o jomatindo malo. Jomane kech kayo, oseyieng&apos;ogi gi gikmoko. 
+                        Jomoko noriembo ka gin nono, osekonyo Israel misumbane. K&apos;aparo ng&apos;wonone, kaka nosewacho ni kwerewa, Abraham, gi wan nyikwaye manyaka chieng&apos;.<br /><br />
+                        <span className=""><em>Duong&apos; obedie... </em>(<span className="text-danger"> <em>go chongi</em></span>)</span><br />
 
                     </p>
                     <p className=" fw-bold text-primary text-center ">
-                        <em><span className=" fw-bold text-primary">Antifon (<span className="text-dark">Chung' malo</span>)</span></em>
+                        <em><span className=" fw-bold text-primary">Antifon (<span className="text-dark">Chung&apos; malo</span>)</span></em>
                     </p>
                     <p>
-                        En ng'ama othinyore, kaka piny m'oyawore malong'o, ka dwe marieny, ka wang'chieng malich, k'oganda mose ikore ni lweny.<br /><br />
+                        En ng&apos;ama othinyore, kaka piny m&apos;oyawore malong&apos;o, ka dwe marieny, ka wang&apos;chieng malich, k&apos;oganda mose ikore ni lweny.<br /><br />
                         <span><span className="fw-bold">V: </span>Maria manochwe ka onge marach mar kodhi,</span><br />
-                        <span><span className="fw-bold">R: </span>Ikwanwae wan m'waringo kuomi.</span><br />
+                        <span><span className="fw-bold">R: </span>Ikwanwae wan m&apos;waringo kuomi.</span><br />
 
                     </p>
                     <p className=" fw-bold text-primary text-center ">
                         <em>Walem</em>
                     </p>
                     <p>
-                        A Ruoth Jesus Kristus jakwanwa kuom Nyasaye Wuon, manemor k'oketo Bikira Maria Matakatifu janyuolne, nimondo obed minwa gi jachwakwa e polo. 
-                        Mi ji duto m'oringo obiro kuomi, ginwang' ka gimor gikmoko duto ma gikwayo, nikech kwach Bikira Maria Matakatifu. Amen.<br /><br />
+                        A Ruoth Jesus Kristus jakwanwa kuom Nyasaye Wuon, manemor k&apos;oketo Bikira Maria Matakatifu janyuolne, nimondo obed minwa gi jachwakwa e polo. 
+                        Mi ji duto m&apos;oringo obiro kuomi, ginwang&apos; ka gimor gikmoko duto ma gikwayo, nikech kwach Bikira Maria Matakatifu. Amen.<br /><br />
                         <span className=""><em>E nying Wuon...</em></span><br /><br />
                         (<span className="text-danger"> <em>go chongi</em></span>)
 
                     </p>
                     <p>
-                        Waringo wabiro iri, mondo iritwa; in Matakatifu janywol Nyasaye, kik icha lemowa k'wachandore, to warwa kuom marichowa ndalo duto.
-                        In Bikira Maria maduong' kendo ma jahawi. Ikwa Nyasaye mondo ochwe kodwa ndalo duto higini gi higini. Amen.<br /><br />
+                        Waringo wabiro iri, mondo iritwa; in Matakatifu janywol Nyasaye, kik icha lemowa k&apos;wachandore, to warwa kuom marichowa ndalo duto.
+                        In Bikira Maria maduong&apos; kendo ma jahawi. Ikwa Nyasaye mondo ochwe kodwa ndalo duto higini gi higini. Amen.<br /><br />
 
                         <span><span className="fw-bold">V: </span>Maria maonge marach,</span><br />
                         <span><span className="fw-bold">R: </span>Japognwa nema duto, ikwanwae.</span><br />
@@ -1056,13 +1056,13 @@ export function LuoPresdiumPrayers() {
                     <p>
                         A Ruoth wan jomatiyo ebwo bandech Maria, miwa yie makare kuomi, gi geno maok-orem kuom jonyuolni. Gikmoko ariyo manyalo loyo pinje duto:<br /><br />
                         <span className="text-primary"><em>Miwa yie motegno moriw gi hera</em></span>, ma nomiwa tiyo tije duto nikwop herani, gineni, kendo gitiyoni. Kwakwayo ni jowetewa, 
-                        <span className="text-primary"><em>miwa yie matek ka lwanda maok sudi</em> </span>, ma nomiwa dhil gi chandruok, kendo gi tich, kendo gi masiche m'wayudo e pinyka.<br />
+                        <span className="text-primary"><em>miwa yie matek ka lwanda maok sudi</em> </span>, ma nomiwa dhil gi chandruok, kendo gi tich, kendo gi masiche m&apos;wayudo e pinyka.<br />
                         <span className="text-primary"><em>miwa yie ma onge luoro</em> </span>, ma nomiwa chir mar chako kendo mar tiyo tije madongo, nikwop Nyasaye, kanyakla achiel gi kwayo ni chunje ji.<br />
-                        <span className="text-primary"><em>miwa yie manobedie lejionwa</em> </span>, ka siro mar mach motelonwa. K'wariwre kanyakla achiel, k'wakudho ma herani kuonde duto.<br />
+                        <span className="text-primary"><em>miwa yie manobedie lejionwa</em> </span>, ka siro mar mach motelonwa. K&apos;wariwre kanyakla achiel, k&apos;wakudho ma herani kuonde duto.<br />
                         <span className="text-primary"><em>miwa yie makelo ler</em> </span>, ni ji manie mudho kendo e tipo tho; mondo wachwak ma herani kuom ji mayomyom, wadwokie ngima mar nema, ni ji ma chunygi otho gi maricho, 
-                        mondo chunygi okwe e pinyka. Ero Maria, ka wasetieko wuodhwa e pinyka, mi wan Jolegion Maria duto, wachak wachokore kendo maonge ng'ama orwenyo kata achiel, e piny duong' gi herani. Amen.<br />
-                        Chuny Jolegion Maria duto gi chuny ji moyie duto ma Nyasaye Wuon oseomo, mondo giywe mayom nikech ng'wono Nyasaye. Amen.<br /><br />
-                        <span><span className="fw-bold">V: </span>Giywe mayom nikech ng'wono Nyasaye.</span><br />
+                        mondo chunygi okwe e pinyka. Ero Maria, ka wasetieko wuodhwa e pinyka, mi wan Jolegion Maria duto, wachak wachokore kendo maonge ng&apos;ama orwenyo kata achiel, e piny duong&apos; gi herani. Amen.<br />
+                        Chuny Jolegion Maria duto gi chuny ji moyie duto ma Nyasaye Wuon oseomo, mondo giywe mayom nikech ng&apos;wono Nyasaye. Amen.<br /><br />
+                        <span><span className="fw-bold">V: </span>Giywe mayom nikech ng&apos;wono Nyasaye.</span><br />
                         <span><span className="fw-bold">R: </span>Amen.</span><br />
 
                     </p>
@@ -1070,13 +1070,13 @@ export function LuoPresdiumPrayers() {
                         <em>Walem</em>
                     </p>
                     <p>
-                        Ruoth Jesus Kristus, aringo abiro iri ka, yiena em'okelaka. E yie anakwo, yiena ema nokwoya, jawarna kasetieko wuodha e pinyka. Aringo asudi e tiend musalapi, anwang' yie makare enyim ogandani. 
-                        Un malaika ma joritwa, urwakwa gi lewni marochere, kendo uywe wang'wa g'otamba marachar.<br /><br /> 
+                        Ruoth Jesus Kristus, aringo abiro iri ka, yiena em&apos;okelaka. E yie anakwo, yiena ema nokwoya, jawarna kasetieko wuodha e pinyka. Aringo asudi e tiend musalapi, anwang&apos; yie makare enyim ogandani. 
+                        Un malaika ma joritwa, urwakwa gi lewni marochere, kendo uywe wang&apos;wa g&apos;otamba marachar.<br /><br /> 
                         <span><span className="fw-bold">V: </span>Nyasaye yie kodwa,</span><br />
                         <span><span className="fw-bold">R: </span>A Ruoth yie kodwa.</span><br />
                         <span><span className="fw-bold">V: </span>Bikira Maria bi ikonywa,</span><br />
                         <span><span className="fw-bold">R: </span>A Ruoth bi ikonywa.</span><br /><br />
-                        <span className=""><em>Duong' obedie...</em></span><br />
+                        <span className=""><em>Duong&apos; obedie...</em></span><br />
                         <span className=""><em><a href="/prayers/literature/luo/3"><u>Litania</u></a> mar Bikira Maria Matakatifu Ahinya...</em></span><br />
                         <span className=""><em>E nying Wuon...</em></span>
 
