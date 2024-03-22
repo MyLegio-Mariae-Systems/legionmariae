@@ -135,7 +135,7 @@ function NavListMenu() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false);
   const renderItems = navListMenuItems.map(
     ({ icon, title, description, ref }, key) => (
-      <a href={ref} key={key}>
+      <a href={ref} key={key + 1}>
         <MenuItem className="flex items-center gap-3 rounded-lg text-decoration-none">
           <div className="flex items-center justify-center rounded-lg !bg-blue-gray-50 p-2 text-decoration-none">
             {" "}

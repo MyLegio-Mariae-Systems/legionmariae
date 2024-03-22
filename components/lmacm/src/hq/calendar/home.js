@@ -318,9 +318,9 @@ export default function LiturgicalCalendarHome() {
       </Typography>
       <select className="form-select col-md-6">
         {
-          Years?.map((year)=>{
+          Years?.map((year,key)=>{
               return (
-                <option value={year}>{year}</option>
+                <option key={key+1} value={year}>{year}</option>
               )
           })
         }

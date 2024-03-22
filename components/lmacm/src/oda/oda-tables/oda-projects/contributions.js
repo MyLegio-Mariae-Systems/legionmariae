@@ -272,7 +272,7 @@ export default function ODAProjectsTable({propData, parameters}) {
                         {
                           DeaconsAcolytes?.map(({oda_username,first_name,middle_names,last_name},key)=>{
 
-                            return <option value={oda_username}>{oda_username} {first_name} {middle_names} {last_name}</option>
+                            return <option key={key} value={oda_username}>{oda_username} {first_name} {middle_names} {last_name}</option>
 
                           })
                         }
@@ -463,7 +463,7 @@ export default function ODAProjectsTable({propData, parameters}) {
                       OneProject && (
                         DeaconsAcolytes?.map(({oda_username,first_name,middle_names,last_name},key)=>{
 
-                          return <option value={oda_username}>{oda_username} {first_name} {middle_names} {last_name}</option>
+                          return <option key={key} value={oda_username}>{oda_username} {first_name} {middle_names} {last_name}</option>
 
                         })
                       )

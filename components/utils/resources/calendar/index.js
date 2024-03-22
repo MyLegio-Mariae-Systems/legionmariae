@@ -60,7 +60,7 @@ export default function LiturgicalCalenderPage({pathname, session}) {
                     if (feast !=='' || saint !=='') {
                         
                         return (
-                        <tr key={date}>
+                        <tr key={index + 1}>
                             <td className={classes}>
                             <Typography variant="small" color="blue-gray" className="font-normal">
                                 {dayName}
@@ -229,11 +229,11 @@ export default function LiturgicalCalenderPage({pathname, session}) {
               <select
                     onChange={searchYear}
                     class="peer h-full w-full rounded-[7px] border border-blue-gray-200 border-t-transparent bg-transparent px-3 py-2.5 font-sans text-sm font-normal text-blue-gray-700 outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 empty:!bg-gray-900 focus:border-2 focus:border-gray-900 focus:border-t-transparent focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50">
-                    <option value={Year}>{Year}</option>
+                    <option value={Year} key={Year}>{Year}</option>
                     {
-                        Years?.map((year)=>{
+                        Years?.map((year,index)=>{
                             return (
-                                <option value={year}>{year}</option>
+                                <option key={index + 1} value={year}>{year}</option>
 
                             )
                         })
@@ -264,8 +264,8 @@ export default function LiturgicalCalenderPage({pathname, session}) {
         <table className="w-full min-w-max table-auto text-left">
             <thead>
             <tr>
-                {TABLE_HEAD?.map((head) => (
-                <th key={head} className="border bg-primary p-2">
+                {TABLE_HEAD?.map((head, index) => (
+                <th key={index + 1} className="border bg-primary p-2">
                     <Typography
                     variant="large"
                     color="white"
@@ -282,7 +282,7 @@ export default function LiturgicalCalenderPage({pathname, session}) {
                 
                 return (
                     <>
-                    <tr>
+                    <tr key={index + 1}>
                         <td colSpan={5} className={'p-1 border'}>
                             <Typography variant="large" color="black" className="font-bold text-center text-xl m-1 ms-2">
                                 {month}

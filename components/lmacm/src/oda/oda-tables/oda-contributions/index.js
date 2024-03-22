@@ -735,7 +735,7 @@ export default function ODAProjectsTable({propData,session}) {
                     const classes = isLast ? "p-4" :"p-4 border-b border-blue-gray-100 ";
     
                     return (
-                      <tr key={index}>
+                      <tr key={index + 1}>
                         <td className={classes}>
                           <div className="flex items-center gap-3">
                             {/* <Avatar src={img} alt={name} size="sm" /> */}
