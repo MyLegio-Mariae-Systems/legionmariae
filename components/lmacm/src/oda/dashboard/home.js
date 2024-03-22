@@ -24,11 +24,6 @@ import {
 } from "@heroicons/react/24/outline";
 
 import { CheckCircleIcon, ClockIcon, DocumentArrowUpIcon, DocumentDuplicateIcon, DocumentMinusIcon, DocumentPlusIcon, DocumentTextIcon, UserGroupIcon, UserPlusIcon } from "@heroicons/react/24/solid";
-import dynamic from 'next/dynamic'
-
-const AnimatedNumbers = dynamic(() => import("react-animated-numbers"), {
-    ssr: false
-})
 
 
 export function ODADashboardHome() {
@@ -62,14 +57,7 @@ export function ODADashboardHome() {
               Available Members
             </Typography>
             <Typography className="mb-0 text-start mt-3 fs-5">
-            <AnimatedNumbers
-              includeComma
-              transitions={(index) => ({
-                type: "spring",
-                duration: index + 0.3,
-              })}
-              animateToNumber={20000}
-            />
+              0
             </Typography>
             <div className="mb-0 flex justify-end mt-1 col-md-12">
             <Typography as='a' href='/lmacm/src/oda/members/available-members' className="btn btn-dark">
@@ -99,14 +87,7 @@ export function ODADashboardHome() {
               {date.getFullYear()} Registered Members
             </Typography>
             <Typography className="mb-0 text-start mt-3 fs-5">
-            <AnimatedNumbers
-              includeComma
-              transitions={(index) => ({
-                type: "spring",
-                duration: index + 0.3,
-              })}
-              animateToNumber={20000}
-            />
+              0
             </Typography>
             <div className="mb-0 flex justify-end mt-1 col-md-12">
             <Typography as='a' href='/lmacm/src/oda/members/registered-members' className="btn btn-dark">
@@ -136,14 +117,7 @@ export function ODADashboardHome() {
             {date.getFullYear()} Deacon Members
             </Typography>
             <Typography className="mb-0 text-start mt-3 fs-5">
-            <AnimatedNumbers
-              includeComma
-              transitions={(index) => ({
-                type: "spring",
-                duration: index + 0.3,
-              })}
-              animateToNumber={20000}
-            />
+              0
             </Typography>
             <div className="mb-0 flex justify-end mt-1 col-md-12">
             <Typography as='a' href='/lmacm/src/oda/members/deacon-members' className="btn btn-dark">
@@ -173,14 +147,7 @@ export function ODADashboardHome() {
             {date.getFullYear()} Acolyte Members
             </Typography>
             <Typography className="mb-0 text-start mt-3 fs-5">
-            <AnimatedNumbers
-              includeComma
-              transitions={(index) => ({
-                type: "spring",
-                duration: index + 0.3,
-              })}
-              animateToNumber={20000}
-            />
+              0
             </Typography>
             <div className="mb-0 flex justify-end mt-1 col-md-12">
             <Typography as='a' href='/lmacm/src/oda/members/acolyte-members' className="btn btn-dark">
@@ -219,14 +186,7 @@ export function ODADashboardHome() {
               Available Projects
             </Typography>
             <Typography className="mb-0 text-start mt-3 fs-5">
-            <AnimatedNumbers
-              includeComma
-              transitions={(index) => ({
-                type: "spring",
-                duration: index + 0.3,
-              })}
-              animateToNumber={20000}
-            />
+              0
             </Typography>
             <div className="mb-0 flex justify-end mt-1 col-md-12">
             <Typography as='a' href='/lmacm/src/oda/projects/available-projects' className="btn btn-dark">
@@ -256,14 +216,7 @@ export function ODADashboardHome() {
               Ongoing Projects
             </Typography>
             <Typography className="mb-0 text-start mt-3 fs-5">
-            <AnimatedNumbers
-              includeComma
-              transitions={(index) => ({
-                type: "spring",
-                duration: index + 0.3,
-              })}
-              animateToNumber={20000}
-            />
+              0
             </Typography>
             <div className="mb-0 flex justify-end mt-1 col-md-12">
             <Typography as='a' href='/lmacm/src/oda/projects/ongoing-projects' className="btn btn-dark">
@@ -293,14 +246,7 @@ export function ODADashboardHome() {
               Completed Projects
             </Typography>
             <Typography className="mb-0 text-start mt-3 fs-5">
-            <AnimatedNumbers
-              includeComma
-              transitions={(index) => ({
-                type: "spring",
-                duration: index + 0.3,
-              })}
-              animateToNumber={20000}
-            />
+              0
             </Typography>
             <div className="mb-0 flex justify-end mt-1 col-md-12">
             <Typography as='a' href='/lmacm/src/oda/projects/completed-projects' className="btn btn-dark">
@@ -330,14 +276,7 @@ export function ODADashboardHome() {
               Pending Projects
             </Typography>
             <Typography className="mb-0 text-start mt-3 fs-5">
-            <AnimatedNumbers
-              includeComma
-              transitions={(index) => ({
-                type: "spring",
-                duration: index + 0.3,
-              })}
-              animateToNumber={20000}
-            />
+              0
             </Typography>
             <div className="mb-0 flex justify-end mt-1 col-md-12">
             <Typography as='a' href='/lmacm/src/oda/projects/pending-projects' className="btn btn-dark">
@@ -367,14 +306,7 @@ export function ODADashboardHome() {
               Future Projects
             </Typography>
             <Typography className="mb-0 text-start mt-3 fs-5">
-            <AnimatedNumbers
-              includeComma
-              transitions={(index) => ({
-                type: "spring",
-                duration: index + 0.3,
-              })}
-              animateToNumber={20000}
-            />
+              0
             </Typography>
             <div className="mb-0 flex justify-end mt-1 col-md-12">
             <Typography as='a' href='/lmacm/src/oda/projects/future-projects' className="btn btn-dark">
@@ -392,17 +324,7 @@ export function ODADashboardHome() {
 
       <div className='mt-3'>
         <Typography variant="h4" className="mb-2 flex gap-2 text-start text-primary ms-4 me-1">
-        <AnimatedNumbers
-            transitions={(index) => ({
-              type: "spring",
-              duration: index + 0.3,
-            })}
-            animateToNumber={date.getFullYear()}
-            fontStyle={{
-              color: "red",
-            }}
-          />
-         Contribution Dashboard
+          {date.getFullYear()} Contribution Dashboard
         </Typography>
         <hr />
       </div>
@@ -424,14 +346,7 @@ export function ODADashboardHome() {
               Available Contributions
             </Typography>
             <Typography className="mb-0 text-start mt-3 fs-5">
-            <AnimatedNumbers
-              includeComma
-              transitions={(index) => ({
-                type: "spring",
-                duration: index + 0.3,
-              })}
-              animateToNumber={20000}
-            />
+              0
             </Typography>
             <div className="mb-0 flex justify-end mt-1 col-md-12">
             <Typography as='a' href='/lmacm/src/oda/contributions/available-contributions' className="btn btn-dark">
@@ -461,14 +376,7 @@ export function ODADashboardHome() {
               Ongoing Contributions
             </Typography>
             <Typography className="mb-0 text-start mt-3 fs-5">
-            <AnimatedNumbers
-              includeComma
-              transitions={(index) => ({
-                type: "spring",
-                duration: index + 0.3,
-              })}
-              animateToNumber={20000}
-            />
+              0
             </Typography>
             <div className="mb-0 flex justify-end mt-1 col-md-12">
             <Typography as='a' href='/lmacm/src/oda/contributions/ongoing-contributions' className="btn btn-dark">

@@ -14,8 +14,6 @@ import { PlusIcon } from "@heroicons/react/24/solid";
 import toast, { Toaster } from "react-hot-toast";
 import { Today } from "../../../utils";
 import setCalendar, { getCalendar } from "@/app/api/v14/controllers/hq/route";
-import AnimatedNumbers from "react-animated-numbers";
-
  
 export default function LiturgicalCalenderPage({pathname, session}) {
 
@@ -204,15 +202,7 @@ export default function LiturgicalCalenderPage({pathname, session}) {
                 </Typography>
             </div>
             <div className="col-md-4 flex gap-2">
-                {/* <AnimatedNumbers
-                includeComma
-                transitions={(index) => ({
-                    type: "spring",
-                    duration: index + 0.3,
-                })}
-                animateToNumber={Downloads}
-                className='text-danger fw-bold'
-                /> */}
+                
                 <Typography color="red" className="fw-bold">
                     {Downloads.toLocaleString()}
                 </Typography>
