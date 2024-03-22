@@ -159,10 +159,10 @@ export default function HomePage({session}) {
                 What is Prayer?
               </p>
               <p className="text-light font-small p-2 ms-2 me-2">
-                  <span className='fw-bold'>"Prayer is communicating with God." </span>
+                  <span className='fw-bold'>&apos;Prayer is communicating with God.&apos; </span>
                   Every Christian has a direct line of communication with God, available at all times.
                   Prayer is much more than word, it is an expression of the heart and mind towards God. It is also an experience, a relationship with God, not an activity. As a child of God, you are invited to come boldly before His throne.
-                  "Since we have a greate high priest who has gone through the heavens, Jesus the Son of God, let us...then approach the throne of grace with confidence, so that we may receive mercy and find grace to help us in our time of need," Paul writes.
+                  &apos;Since we have a greate high priest who has gone through the heavens, Jesus the Son of God, let us...then approach the throne of grace with confidence, so that we may receive mercy and find grace to help us in our time of need,&apos; Paul writes.
               </p>
             </div>
             
