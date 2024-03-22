@@ -188,7 +188,7 @@ export default function ODANewProjectHome() {
           New Project
         </Typography>
         <Typography color="gray" className="mt-1 font-normal">
-          Enter project's details to register.
+          Enter project&apos;s details to register.
         </Typography>
 
         {

@@ -188,7 +188,7 @@ export default function ODANewContributionHome() {
           New Contribution
         </Typography>
         <Typography color="gray" className="mt-1 font-normal">
-          Enter Contribution's details to register.
+          Enter Contribution&apos;s details to register.
         </Typography>
 
         {

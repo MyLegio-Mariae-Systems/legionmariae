@@ -225,7 +225,7 @@ export default function ODANewMemberHome({session}) {
           New Member
         </Typography>
         <Typography color="gray" className="mt-1 font-normal">
-          Enter member's details to register.
+          Enter member&apos;s details to register.
         </Typography>
 
         {
