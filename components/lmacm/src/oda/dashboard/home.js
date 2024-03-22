@@ -22,15 +22,8 @@ import {
   ArrowUpIcon,
   UserCircleIcon,
 } from "@heroicons/react/24/outline";
-import {
-  statisticsCardsData,
-  statisticsChartsData,
-  projectsTableData,
-  ordersOverviewData,
-} from "../../../../widgets/data";
+
 import { CheckCircleIcon, ClockIcon, DocumentArrowUpIcon, DocumentDuplicateIcon, DocumentMinusIcon, DocumentPlusIcon, DocumentTextIcon, UserGroupIcon, UserPlusIcon } from "@heroicons/react/24/solid";
-import StatisticsCard from "../../../../widgets/cards/statistics-card";
-import StatisticsChart from "../../../../widgets/charts/statistics-chart";
 import AnimatedNumbers from "react-animated-numbers";
 
 export function ODADashboardHome() {
