@@ -9,7 +9,7 @@ export default function ODAAvailableMembersPage({session}) {
     return (
         <>
         <NavbarAfterLogin session={session}/>
-        <ODAAvailableMembersHome />
+        <ODAAvailableMembersHome session={session}/>
         <Footer />
         </>
     )

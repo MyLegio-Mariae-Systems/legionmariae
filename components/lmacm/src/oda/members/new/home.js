@@ -21,7 +21,7 @@ export default function ODANewMemberHome({session}) {
 
   const [missionRegistered, setmissionRegistered]=React.useState(true)
   const [isDeacon, setisDeacon]=React.useState(false)
-  const [FormData, setFormData] = React.useState({middle_names:'', mission:session?.user.level_code, session:session?.user.id});
+  const [FormData, setFormData] = React.useState({contact:'',email:'',middle_names:'', mission:session?.user.level_code, session:session?.user.id});
   const [ArchDioces, setArchDioces] = React.useState([]);
   const [Dioces, setDioces] = React.useState([]);
   const [Mission, setMission] = React.useState([]);

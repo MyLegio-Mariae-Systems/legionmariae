@@ -133,13 +133,12 @@ export async function newMissionODAValidation (data){
     const schema = Joi.object({
         first_name: Joi.string().trim().min(3).max(30).required(),
         last_name: Joi.string().trim().min(3).max(30).required(),
-        contact: Joi.number().integer().allow('').optional(),
+        contact: Joi.number().allow(null).optional(),
         middle_names: Joi.string().min(3).max(30).allow('').optional(),
         mission: Joi.string().trim().min(7).max(10).required(),
         session: Joi.string().trim().min(6).max(8).required(),
         email: Joi.string().trim().email({ minDomainSegments: 2, tlds: { allow: ['com', 'net'] } }).allow('').optional(),
         category: Joi.string().trim().required(),
-        username: Joi.string().allow('').optional(),
     });
 
     return schema.validate(data);
@@ -148,8 +147,9 @@ export async function newMissionODAValidation (data){
 export async function newProjectValidation (data){
     const schema = Joi.object({
         name: Joi.string().trim().min(3).required(),
-        description: Joi.string().min(8).trim(),
-        mission: Joi.string().trim(),
+        session: Joi.string().trim().min(6).max(8).required(),
+        description: Joi.string().trim().min(8).required(),
+        mission: Joi.string().trim().required(),
     });
 
     return schema.validate(data);

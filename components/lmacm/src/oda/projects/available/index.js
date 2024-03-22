@@ -9,7 +9,7 @@ export default function ODAAvailableProjectsPage({session}) {
     return (
         <>
         <NavbarAfterLogin session={session}/>
-        <ODAAllProjectsHome />
+        <ODAAllProjectsHome session={session}/>
         <Footer />
         </>
     )

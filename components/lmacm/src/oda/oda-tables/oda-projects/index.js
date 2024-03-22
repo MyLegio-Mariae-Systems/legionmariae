@@ -1,6 +1,6 @@
 'use client'
 
-import { editODAMissionProject, getODAMembers, getODAMissionProjects, getODAMissionProjectsContributionsDetails, getODAOfficialMembers } from "@/app/api/v14/controllers/oda/route";
+import { deleteODAMissionProject, editODAMissionProject, getODAMembers, getODAMissionProjects, getODAMissionProjectsContributionsDetails, getODAOfficialMembers } from "@/app/api/v14/controllers/oda/route";
 import {
   MagnifyingGlassIcon,
 } from "@heroicons/react/24/outline";
@@ -27,6 +27,7 @@ import {
   DialogHeader,
   DialogBody,
   DialogFooter,
+  Textarea,
 } from "@material-tailwind/react";
 import { useRouter } from "next/navigation";
 import toast, { ToastBar, Toaster} from 'react-hot-toast'
@@ -51,16 +52,19 @@ export default function ODAProjectsTable({propData, session}) {
   const pageLimit1=React.useRef(5)
 
   const [TABLE_ROWS, setTABLE_ROWS] = React.useState([]);
-  const [Data, setData] = React.useState({searchParams:'',status:'All',mission:'All',page:'',pageLimit:'',me:'211009'});
+  const [Data, setData] = React.useState({searchParams:'',status:'All',mission:'All',page:'',pageLimit:'',me:session?.user?.id});
   const [PageCount,setPageCount]=React.useState(0)
   const [ProjectsFound,setProjectsFound]=React.useState(0)
   const [MyContribution, setMyContribution] = React.useState([]);
-  const [Data1, setData1] = React.useState({searchParams:'211009',project:'',page:'',pageLimit:pageLimit1.current});
+  const [Data1, setData1] = React.useState({searchParams:session?.user?.id,project:'',page:'',pageLimit:pageLimit1.current});
   const [OneContribution, setOneContribution] = React.useState();
   const [ContributionsFound,setContributionsFound]=React.useState('0')
   const [Dialog_TABLE_ROWS, setDialog_TABLE_ROWS] = React.useState([]);
   const [PageCount1,setPageCount1]=React.useState(0)
+  const [Edit,setEdit]=React.useState(false)
 
+  const [open2, setOpen2] = React.useState(false);
+  const handleOpen2 = () => setOpen2((cur) => !cur);
   const [open1, setOpen1] = React.useState(false);
   const handleOpen1 = () => setOpen1((cur) => !cur);
 
@@ -235,6 +239,88 @@ export default function ODAProjectsTable({propData, session}) {
     setDialog_TABLE_ROWS(response.data)
   }
 
+  const editData=async(e)=> {
+    e.preventDefault()
+
+    if (!OneContribution.name || !OneContribution.description) {
+      toast.error('All fields are required')
+      return
+    }
+
+    let FormData={
+      code:OneContribution?.code,
+      name:OneContribution?.name,
+      description:OneContribution?.description,
+      mission:OneContribution?.mission?.code,
+      session:session?.user.id
+    }
+
+    try {
+
+      toastId=toast.loading('Loading. Please wait...',{id:toastId})
+
+      let response=await editODAMissionProject(FormData)
+
+      toast.dismiss(toastId)
+
+      if (response.success) {
+
+        toast.success('Successful!')
+        getODAProjects()
+        handleOpen2()
+      } else {
+        toast.error(response.message)
+      }
+      
+    } catch (error) {
+      toast.error('Unknown Error occured')
+      console.log(error);
+    }
+    
+  }
+
+  const deleteData=async(code,name)=> {
+
+    let FormData={
+      code
+    }
+
+    const answer=confirm(`Are you sure you want to delete this projet: ${code} ${name}`)
+
+    if (!answer) {
+      return
+    }
+
+    try {
+
+      toastId=toast.loading('Loading. Please wait...',{id:toastId})
+
+      let response=await deleteODAMissionProject(FormData)
+
+      toast.dismiss(toastId)
+
+      if (response.success) {
+
+        toast.success('Successful!')
+        getODAProjects()
+      } else {
+        toast.error(response.message)
+      }
+      
+    } catch (error) {
+      toast.error('Unknown Error occured')
+      console.log(error);
+    }
+    
+  }
+
+  const handleInputEdit=(e)=> {
+
+    const {name,value}= e.target
+    setOneContribution({...OneContribution,[name]:value})
+
+  }
+
     return (
         <>
         <Toaster 
@@ -257,7 +343,7 @@ export default function ODAProjectsTable({propData, session}) {
           >
         </Toaster>
         <Card className="h-full w-full">
-          <Dialog open={open1} handler={handleOpen1} className="shadow-none h-screen flex-col overflow-scroll" size="xm">
+            <Dialog open={open1} handler={handleOpen1} className="shadow-none h-screen flex-col overflow-scroll" size="xm">
               <Toaster 
                     toastOptions={{
                         success:{
@@ -392,6 +478,210 @@ export default function ODAProjectsTable({propData, session}) {
                   Close
               </Button>
               </DialogFooter>
+            </Dialog>
+
+            <Dialog open={open2} handler={handleOpen2} className="shadow-none h-screen flex-col overflow-scroll" size="xm">
+              
+              <Toaster 
+                    toastOptions={{
+                        success:{
+                            style:{
+                                background:'green',
+                                color:'white'
+                            }
+                        },
+                        error:{
+                            style:{
+                                background:'red',
+                                color:'white'
+                            }
+                        },
+                        
+                    }}
+
+                    >
+              </Toaster>
+
+              <form onSubmit={editData}>
+
+              <DialogHeader className="grid w-full gap-2">
+              <Typography variant="h4" color="blue-gray" className="text-center">
+                {Edit ? 'Edit':'All'} Project Details
+              </Typography>
+              <div className="flex w-full justify-between fw-bold flex-wrap">
+                <Typography color={'red'} className="fw-bold">
+                  {OneContribution?.code}
+                </Typography>
+                <Typography color={'green'} className="fw-bold">
+                  {OneContribution?.name}
+                </Typography>
+              </div>
+              </DialogHeader>
+              <DialogBody divider >
+              
+              <CardBody className="flex-col w-full px-0">
+
+
+                  <div className="flex flex-wrap w-full justify-between">
+                    <div className="col-md-4">
+                    <Typography variant="small" color="black" className="fw-bold">
+                      Code
+                    </Typography>
+                    </div>
+                    <div className="col-md-7">
+                    <Typography variant="small" color="black" className="font-normal">
+                      {OneContribution?.code}
+                    </Typography>
+                    </div>
+                  </div>
+
+                  <div className="flex flex-wrap w-full justify-between">
+                    <div className="col-md-4">
+                      <Typography variant="small" color="black" className="fw-bold">
+                        Name
+                      </Typography>
+                    </div>
+                    <div className="col-md-7">
+                    <Typography variant="small" color="black" className="font-normal">
+                      {Edit ? (
+                        <Input className="form-control" name="name" required value={OneContribution?.name || ''} onChange={handleInputEdit}/>
+                      ):(
+                        <Typography variant="small" color="black" className="fw-normal">
+                          {OneContribution?.name}
+                        </Typography>
+                      )}
+                      
+                    </Typography>
+                    </div>
+                  </div>
+
+                  <div className="flex flex-wrap w-full justify-between">
+                    <div className="col-md-4">
+                    <Typography variant="small" color="black" className="fw-bold">
+                      Description
+                    </Typography>
+                    </div>
+                    <div className="col-md-7">
+                      {Edit ? (
+                        <Textarea className="form-control" name="description" required value={OneContribution?.description || ''} onChange={handleInputEdit}/>
+                      ):(
+                        <Typography variant="small" color="black" className="fw-normal">
+                          {OneContribution?.description}
+                        </Typography>
+                      )}
+                    </div>
+                  </div>
+
+                  <div className="flex flex-wrap w-full justify-between mt-1">
+                    <div className="col-md-4">
+                    <Typography variant="small" color="black" className="fw-bold">
+                      Total Amount
+                    </Typography>
+                    </div>
+                    <div className="col-md-7">
+                    <Typography variant="small" color="black" className="font-normal">
+                      {OneContribution?.amount.toLocaleString()}
+                    </Typography>
+                    </div>
+                  </div>
+
+                  <div className="flex flex-wrap w-full justify-between">
+                    <div className="col-md-4">
+                    <Typography variant="small" color="black" className="fw-bold">
+                      Mission
+                    </Typography>
+                    </div>
+                    <div className="col-md-7">
+                    <Typography variant="small" color="black" className="font-normal">
+                      {OneContribution?.mission?.code}, {OneContribution?.mission?.name}
+                    </Typography>
+                    </div>
+                  </div>
+
+                  <div className="flex flex-wrap w-full justify-between">
+                    <div className="col-md-4">
+                    <Typography variant="small" color="black" className="fw-bold">
+                      Status
+                    </Typography>
+                    </div>
+                    <div className="col-md-7">
+                      <Chip
+                        variant="ghost"
+                        size="md"
+                        value={OneContribution?.status===1 ? "Future" : OneContribution?.status===2 ? "Ongoing" : OneContribution?.status===3 ? "Completed" : OneContribution?.status===4 ? "Pending" : "Unknown"}
+                        color={OneContribution?.status===1 ? "purple" : OneContribution?.status===2 ? "green" : OneContribution?.status===3 ? "red" : OneContribution?.status===3 ? "black" : "grey"}
+                      />
+                    </div>
+                  </div>
+
+                  <div className="flex flex-wrap w-full justify-between">
+                    <div className="col-md-4">
+                    <Typography variant="small" color="black" className="fw-bold">
+                      Registered Date
+                    </Typography>
+                    </div>
+                    <div className="col-md-7">
+                    <Typography variant="small" color="black" className="font-normal">
+                      {DateOnly(OneContribution?.createdAt)}
+                    </Typography>
+                    </div>
+                  </div>
+
+                  <div className="flex flex-wrap w-full justify-between">
+                    <div className="col-md-4">
+                    <Typography variant="small" color="black" className="fw-bold">
+                      Registerd By
+                    </Typography>
+                    </div>
+                    <div className="col-md-7">
+                    <Typography variant="small" color="black" className="font-normal">
+                      {OneContribution?.addedBy?.oda_username}, {OneContribution?.addedBy?.first_name} {OneContribution?.addedBy?.middle_names} {OneContribution?.addedBy?.last_name}
+                    </Typography>
+                    </div>
+                  </div>
+
+                  <div className="flex flex-wrap w-full justify-between">
+                    <div className="col-md-4">
+                    <Typography variant="small" color="black" className="fw-bold">
+                      Last Updated Date
+                    </Typography>
+                    </div>
+                    <div className="col-md-7">
+                    <Typography variant="small" color="black" className="font-normal">
+                      {DateOnly(OneContribution?.updatedAt)}
+                    </Typography>
+                    </div>
+                  </div>
+
+                  <div className="flex flex-wrap w-full justify-between">
+                    <div className="col-md-4">
+                    <Typography variant="small" color="black" className="fw-bold">
+                      Last Updated By
+                    </Typography>
+                    </div>
+                    <div className="col-md-7">
+                    <Typography variant="small" color="black" className="font-normal">
+                      {OneContribution?.updatedBy?.oda_username}, {OneContribution?.updatedBy?.first_name} {OneContribution?.updatedBy?.middle_names} {OneContribution?.updatedBy?.last_name}
+                    </Typography>
+                    </div>
+                  </div>
+              </CardBody>
+              
+              </DialogBody>
+              <DialogFooter className="flex gap-4 space-x-2">
+              <Button variant="text" color="black" onClick={handleOpen2}>
+                  Close
+              </Button>
+              {Edit && (
+                <Button type="submit" className="btn btn-primary fw-bold">
+                  Save
+                </Button>
+              )}
+              
+              </DialogFooter>
+
+              </form>
+
             </Dialog>
           <CardHeader floated={false} shadow={false} className="rounded-none">
             <div className="mb-8 flex flex-wrap items-center justify-between gap-8">
@@ -568,8 +858,13 @@ export default function ODAProjectsTable({propData, session}) {
                           </div>
                         </td>
                         <td className={`${classes} flex gap-1`}>
-                          <Tooltip content="View More">
-                            <IconButton variant="text" color="blue">
+                          <Tooltip content="View More" >
+                            <IconButton variant="text" color="blue" onClick={()=>{
+                              setEdit(false)
+                              Data1.project=documents?.code
+                              setOneContribution(documents);
+                              handleOpen2()
+                            }}>
                               <EyeIcon className="h-5 w-5" />
                             </IconButton>
                           </Tooltip>
@@ -577,7 +872,12 @@ export default function ODAProjectsTable({propData, session}) {
                           {
                             documents?.status === 1 && (
                               <Tooltip content="Edit Project">
-                                <IconButton variant="text" color="purple">
+                                <IconButton variant="text" color="purple" onClick={()=>{
+                                  setEdit(true)
+                                  Data1.project=documents?.code
+                                  setOneContribution(documents);
+                                  handleOpen2()
+                                }}>
                                   <PencilIcon className="h-5 w-5" />
                                 </IconButton>
                               </Tooltip>
@@ -601,7 +901,9 @@ export default function ODAProjectsTable({propData, session}) {
                           {
                             !documents?.amount > 0 && (
                               <Tooltip content="Delete Contribution">
-                                <IconButton variant="text" color="red">
+                                <IconButton variant="text" color="red" onClick={()=>{
+                                  deleteData(documents?.code,documents?.name)
+                                }}>
                                   <TrashIcon className="h-5 w-5" />
                                 </IconButton>
                               </Tooltip>

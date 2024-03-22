@@ -22,7 +22,7 @@ import React from 'react'
   const TABLE_HEAD = ["Member", "Contact", "Mission", ""];
 
    
-export default function ODAAvailableMembersHome() {
+export default function ODAAvailableMembersHome({session}) {
 
   const TITLE='Available Members'
 
@@ -57,7 +57,7 @@ export default function ODAAvailableMembersHome() {
     <>
     {
       TABLE_ROWS && (
-        <ODAMembersTable propData={data} category={'All'}/>
+        <ODAMembersTable propData={data} category={'All'} session={session}/>
 
       )
     }

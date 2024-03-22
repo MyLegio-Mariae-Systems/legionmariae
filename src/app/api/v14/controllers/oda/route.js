@@ -82,9 +82,9 @@ export default async function NewMissionODAMember(value) {
           contact,
           email,
           category,
-          username,
           session
         }=validate.value
+
   
       let promises=[
         generateUniqueUsername(),
@@ -125,7 +125,6 @@ export default async function NewMissionODAMember(value) {
             first_name,
             last_name,
             middle_names,
-            username:null,
             mission1: mission,
             mission2: null,
             category,
@@ -189,14 +188,12 @@ export default async function NewMissionODAMember(value) {
     } catch (error) {
         console.log(error);
 
-        responseData.message=error.message || 'Please try again later, an unknown error occurred'
+        responseData.message='Please try again later, an unknown error occurred'
         responseData.success=false
         return responseData
   
     }
 }
-
-
 
 export async function getODAMembers (Params){
 
@@ -235,7 +232,7 @@ export async function getODAMembers (Params){
 
       let pipeline=[
         {
-          $match:{...matchQuery, ...matchQueryCategory, isDeleted:1}
+          $match:{...matchQuery, ...matchQueryCategory}
         },
         {
           $lookup: {
@@ -258,6 +255,28 @@ export async function getODAMembers (Params){
         },
         {
           $unwind: { path: '$secondaryMission', preserveNullAndEmptyArrays: true },
+        },
+        {
+          $lookup: {
+            from: 'misxionadomemdas',
+            localField: 'addedBy',
+            foreignField: 'oda_username',
+            as: 'addedBy',
+          },
+        },
+        {
+          $unwind: { path: '$addedBy', preserveNullAndEmptyArrays: true },
+        },
+        {
+          $lookup: {
+            from: 'misxionadomemdas',
+            localField: 'updatedBy',
+            foreignField: 'oda_username',
+            as: 'updatedBy',
+          },
+        },
+        {
+          $unwind: { path: '$updatedBy', preserveNullAndEmptyArrays: true },
         },
         {
           $sort: {
@@ -294,11 +313,26 @@ export async function getODAMembers (Params){
                 email:1,
                 middle_names:1,
                 category:1,
+                createdAt:1,
+                updatedAt:1,
+                isDeleted:1,
                 primaryMission:{
                   code:1,name:1
                 },
                 secondaryMission:{
                   code:1,name:1
+                },
+                addedBy:{
+                  oda_username:1,
+                  first_name:1,
+                  middle_names:1,
+                  last_name:1,
+                },
+                updatedBy:{
+                  oda_username:1,
+                  first_name:1,
+                  middle_names:1,
+                  last_name:1,
                 },
               },
               pageCount: 1,
@@ -319,11 +353,126 @@ export async function getODAMembers (Params){
     } catch (error) {
         console.log(error);
 
-        responseData.message=error.message || 'Please try again later, an unknown error occurred'
+        responseData.message='Please try again later, an unknown error occurred'
         responseData.success=false
         return responseData
     }
 
+
+}
+
+export const editODAMembers=async(value)=>{
+
+  let responseData={
+    message:'',
+    success:false
+  }
+
+  let oda_username=value.oda_username
+  let validate
+
+  let toBeValidatedData={
+    first_name:value.first_name,
+    last_name:value.last_name,
+    middle_names:value.middle_names,
+    mission:value.mission,
+    session:value.session,
+    contact:value.contact,
+    category:value.category,
+    email:value.email,
+  }
+
+
+  validate=await newMissionODAValidation(toBeValidatedData)
+
+  if (validate.error) {
+    console.log(validate.error);
+    responseData.message=validate?.error?.message     
+    return responseData
+  }
+
+  try {
+
+    let filter={oda_username}
+    let update
+
+    update = {
+      first_name:validate?.value.first_name,
+      middle_names:validate?.value.middle_names,
+      contact:validate?.value.contact,
+      email:validate?.value.email,
+      updatedBy:validate?.value.session,
+      category:validate?.value.category,
+    };
+    
+
+    const updated=await ODA.findOneAndUpdate(filter, update, {
+      upsert: false, // Creates a new document when no document matches the query criteria
+      new: true, // Returns the updated document
+      runValidators: true // Applies Mongoose validators to the update operation
+    })
+    
+    if (!updated) {
+      responseData.message='Invalid data'
+      responseData.success=false
+      return responseData
+    } 
+
+    responseData.success=true
+    return responseData
+  } catch (error) {
+    console.log(error);
+    responseData.message='Please try again later, an unknown error occurred'
+    responseData.success=false
+    return responseData
+  }
+
+}
+
+export const deleteODAMembers=async(value,suspend)=>{
+
+  let responseData={
+    message:'',
+    success:false
+  }
+
+  let oda_username=value.oda_username
+  let mission=value.mission
+  let sessionId=value.session
+
+  try {
+
+    let filter={oda_username}
+
+    const member=await ODA.findOne(filter)
+    
+    if (!member) {
+      responseData.message='Unknown error occured'
+      responseData.success=false
+      return responseData
+    }
+
+    if (!suspend) {
+      if (member?.mission1 === mission) {
+        member.mission1=null
+      } else if (member?.mission2 === mission) {
+        member.mission2=null
+      }
+    } else {
+      member.isDeleted=2
+    }
+    member.updatedBy=sessionId
+    
+    await member.save()
+
+    responseData.success=true
+    return responseData
+  } catch (error) {
+    console.log(error);
+    responseData.message='Please try again later, an unknown error occurred'
+    responseData.success=false
+    return responseData
+  }
 
 }
 
@@ -414,7 +563,7 @@ export async function getODADeaconsAcolyteMembers (mission){
   } catch (error) {
       console.log(error);
 
-      responseData.message=error.message || 'Please try again later, an unknown error occurred'
+      responseData.message='Please try again later, an unknown error occurred'
       responseData.success=false
       return responseData
   }
@@ -546,7 +695,7 @@ export async function getODAOfficialMembers (Params){
   } catch (error) {
       console.log(error);
 
-      responseData.message=error.message || 'Please try again later, an unknown error occurred'
+      responseData.message='Please try again later, an unknown error occurred'
       responseData.success=false
       return responseData
   }
@@ -677,7 +826,7 @@ export async function NewMissionODAOfficialMember(value) {
   } catch (error) {
       console.log(error);
 
-      responseData.message=error.message || 'Please try again later, an unknown error occurred'
+      responseData.message='Please try again later, an unknown error occurred'
       responseData.success=false
       return responseData
 
@@ -849,13 +998,12 @@ export const newODAMissionProject=async(value)=>{
     responseData.success=true
     return responseData
   } catch (error) {
-    responseData.message=error.message || 'Please try again later, an unknown error occurred'
+    responseData.message='Please try again later, an unknown error occurred'
     responseData.success=false
     return responseData
   }
 
 }
-
 
 export const editODAMissionProject=async(value,status=false)=>{
 
@@ -872,6 +1020,7 @@ export const editODAMissionProject=async(value,status=false)=>{
         name:value.name,
         description:value.description,
         mission:value.mission,
+        session:value.session,
       }
   
       validate=await newProjectValidation(toBeValidatedData)
@@ -879,7 +1028,6 @@ export const editODAMissionProject=async(value,status=false)=>{
       if (validate.error) {
         console.log(validate.error);
         responseData.message=validate?.error?.message     
-  
         return responseData
       }
   
@@ -887,10 +1035,12 @@ export const editODAMissionProject=async(value,status=false)=>{
 
     let name
     let description
+    let sessionId
 
     if (!status) {
       name=validate?.value.name
       description=validate?.value.description
+      sessionId=validate?.value.session
     }
     
     try {
@@ -899,13 +1049,25 @@ export const editODAMissionProject=async(value,status=false)=>{
       let update
 
       if (!status) {
+
+        // const nameExist=await ODAMissionProjects.findOne({name:{ $regex: name, $options: 'i' },mission:value.mission})
+        // console.log(nameExist);
+        // if (nameExist) {
+        //   responseData.message='Project name exist'
+        //   responseData.success=false
+        //   return responseData
+        // }
+
         update = {
           name,
           description,
+          updatedBy:sessionId,
         };
       } else {
+
         update = {
-          status:value.status
+          status:value.status,
+          updatedBy:value.session
         };
       }
 
@@ -924,10 +1086,41 @@ export const editODAMissionProject=async(value,status=false)=>{
       responseData.success=true
       return responseData
     } catch (error) {
-      responseData.message=error.message || 'Please try again later, an unknown error occurred'
+      responseData.message='Please try again later, an unknown error occurred'
       responseData.success=false
       return responseData
     }
+
+}
+
+export const deleteODAMissionProject=async(value)=>{
+
+  let responseData={
+    message:'',
+    success:false
+  }
+
+  let code=value.code
+  
+  try {
+
+    let filter={code}
+
+    const deleted=await ODAMissionProjects.deleteOne(filter)
+    
+    if (!deleted) {
+      responseData.message='Unknown error occured'
+      responseData.success=false
+      return responseData
+    } 
+
+    responseData.success=true
+    return responseData
+  } catch (error) {
+    responseData.message='Please try again later, an unknown error occurred'
+    responseData.success=false
+    return responseData
+  }
 
 }
 
@@ -999,7 +1192,7 @@ export const newODAMissionProjectContribution=async(value)=>{
     responseData.success=true
     return responseData
   } catch (error) {
-    responseData.message=error.message || 'Please try again later, an unknown error occurred'
+    responseData.message='Please try again later, an unknown error occurred'
     responseData.success=false
     return responseData
   }
@@ -1064,6 +1257,28 @@ export async function getODAMissionProjects (Params){
         $unwind: { path: '$mission', preserveNullAndEmptyArrays: true },
       },
       {
+        $lookup: {
+          from: 'misxionadomemdas',
+          localField: 'addedBy',
+          foreignField: 'oda_username',
+          as: 'addedBy',
+        },
+      },
+      {
+        $unwind: { path: '$addedBy', preserveNullAndEmptyArrays: true },
+      },
+      {
+        $lookup: {
+          from: 'misxionadomemdas',
+          localField: 'updatedBy',
+          foreignField: 'oda_username',
+          as: 'updatedBy',
+        },
+      },
+      {
+        $unwind: { path: '$updatedBy', preserveNullAndEmptyArrays: true },
+      },
+      {
         $sort: {
           createdAt: -1,
         },
@@ -1096,8 +1311,22 @@ export async function getODAMissionProjects (Params){
               name:1,
               amount:1,
               code:1,
+              createdAt:1,
+              updatedAt:1,
               mission:{
                 code:1,name:1
+              },
+              addedBy:{
+                oda_username:1,
+                first_name:1,
+                middle_names:1,
+                last_name:1,
+              },
+              updatedBy:{
+                oda_username:1,
+                first_name:1,
+                middle_names:1,
+                last_name:1,
               },
               
             },
@@ -1136,7 +1365,7 @@ export async function getODAMissionProjects (Params){
   } catch (error) {
       console.log(error);
 
-      responseData.message=error.message || 'Please try again later, an unknown error occurred'
+      responseData.message='Please try again later, an unknown error occurred'
       responseData.success=false
       return responseData
   }
@@ -1187,7 +1416,7 @@ export async function getOneODAMissionProjects (value){
   } catch (error) {
       console.log(error);
 
-      responseData.message=error.message || 'Please try again later, an unknown error occurred'
+      responseData.message='Please try again later, an unknown error occurred'
       responseData.success=false
       return responseData
   }
@@ -1288,7 +1517,7 @@ export async function getODAMissionProjectsContributions (Params){
   } catch (error) {
       console.log(error);
 
-      responseData.message=error.message || 'Please try again later, an unknown error occurred'
+      responseData.message='Please try again later, an unknown error occurred'
       responseData.success=false
       return responseData
   }
@@ -1384,7 +1613,7 @@ export async function getODAMissionProjectsContributionsDetails (Params){
   } catch (error) {
       console.log(error);
 
-      responseData.message=error.message || 'Please try again later, an unknown error occurred'
+      responseData.message='Please try again later, an unknown error occurred'
       responseData.success=false
       return responseData
   }
@@ -1461,7 +1690,7 @@ export const newODAMissionContributionName=async(value)=>{
     responseData.success=true
     return responseData
   } catch (error) {
-    responseData.message=error.message || 'Please try again later, an unknown error occurred'
+    responseData.message='Please try again later, an unknown error occurred'
     responseData.success=false
     return responseData
   }
@@ -1527,21 +1756,6 @@ export const newODAMissionContribution=async(value)=>{
 
     let promise=await Promise.allSettled(promises)
 
-    // let projectContribution=await ODAMissionProjectsContribution.findOne({project: { $regex: code, $options: 'i' }, oda_username: { $regex: oda_username, $options: 'i' }})
-
-    // if (projectContribution) {
-    //   projectContribution.amount = projectContribution.amount + parseInt(amount) || projectContribution.amount
-    //   projectContribution=await projectContribution.save()
-    // } else {
-    //   projectContribution=await ODAMissionProjectsContribution.create({
-    //     project:code,
-    //     oda_username,
-    //     amount:parseInt(amount),
-    //     updatedBy:sessionId,
-    //     isDeleted:1
-    //   })
-    // }
-
     if (!promise) {
       responseData.message='Invalid data'
       responseData.success=false
@@ -1551,7 +1765,7 @@ export const newODAMissionContribution=async(value)=>{
     responseData.success=true
     return responseData
   } catch (error) {
-    responseData.message=error.message || 'Please try again later, an unknown error occurred'
+    responseData.message='Please try again later, an unknown error occurred'
     responseData.success=false
     return responseData
   }
@@ -1576,8 +1790,6 @@ export async function getODAMissionContributionNames (Params){
   try {
 
     // await ODAMissionProjects.deleteMany()
-
-    console.log(me);
 
     const matchQuery =
     searchParams === ''
@@ -1617,17 +1829,28 @@ export async function getODAMissionContributionNames (Params){
       {
         $unwind: { path: '$mission', preserveNullAndEmptyArrays: true },
       },
-      // {
-      //   $lookup: {
-      //     from: 'doamixionprojektkontribiusions',
-      //     localField: 'code',
-      //     foreignField: 'project',
-      //     as: 'contributions',
-      //   },
-      // },
-      // {
-      //   $unwind: { path: '$contributions', preserveNullAndEmptyArrays: true },
-      // },
+      {
+        $lookup: {
+          from: 'misxionadomemdas',
+          localField: 'addedBy',
+          foreignField: 'oda_username',
+          as: 'addedBy',
+        },
+      },
+      {
+        $unwind: { path: '$addedBy', preserveNullAndEmptyArrays: true },
+      },
+      {
+        $lookup: {
+          from: 'misxionadomemdas',
+          localField: 'updatedBy',
+          foreignField: 'oda_username',
+          as: 'updatedBy',
+        },
+      },
+      {
+        $unwind: { path: '$updatedBy', preserveNullAndEmptyArrays: true },
+      },
       {
         $sort: {
           createdAt: -1,
@@ -1651,7 +1874,6 @@ export async function getODAMissionContributionNames (Params){
       {
         $limit:limit
       },
-      
       {
           $project:{
             _id: 0,
@@ -1661,8 +1883,22 @@ export async function getODAMissionContributionNames (Params){
               name:1,
               amount:1,
               code:1,
+              createdAt:1,
+              updatedAt:1,
               mission:{
                 code:1,name:1
+              },
+              addedBy:{
+                oda_username:1,
+                first_name:1,
+                middle_names:1,
+                last_name:1,
+              },
+              updatedBy:{
+                oda_username:1,
+                first_name:1,
+                middle_names:1,
+                last_name:1,
               },
               
             },
@@ -1701,7 +1937,7 @@ export async function getODAMissionContributionNames (Params){
   } catch (error) {
       console.log(error);
 
-      responseData.message=error.message || 'Please try again later, an unknown error occurred'
+      responseData.message='Please try again later, an unknown error occurred'
       responseData.success=false
       return responseData
   }
@@ -1752,7 +1988,7 @@ export async function getOneODAMissionContributionName (value){
   } catch (error) {
       console.log(error);
 
-      responseData.message=error.message || 'Please try again later, an unknown error occurred'
+      responseData.message='Please try again later, an unknown error occurred'
       responseData.success=false
       return responseData
   }
@@ -1775,6 +2011,7 @@ export const editODAMissionContributionName=async(value,status=false)=>{
         name:value.name,
         description:value.description,
         mission:value.mission,
+        session:value.session,
       }
   
       validate=await newProjectValidation(toBeValidatedData)
@@ -1782,7 +2019,6 @@ export const editODAMissionContributionName=async(value,status=false)=>{
       if (validate.error) {
         console.log(validate.error);
         responseData.message=validate?.error?.message     
-  
         return responseData
       }
   
@@ -1790,10 +2026,12 @@ export const editODAMissionContributionName=async(value,status=false)=>{
 
     let name
     let description
+    let sessionId
 
     if (!status) {
       name=validate?.value.name
       description=validate?.value.description
+      sessionId=validate?.value.session
     }
     
     try {
@@ -1802,14 +2040,25 @@ export const editODAMissionContributionName=async(value,status=false)=>{
       let update
 
       if (!status) {
+
+        // const nameExist=await ODAMissionContributionName.findOne({name:{ $regex: name, $options: 'i' },mission:value.mission})
+
+        // if (!nameExist) {
+        //   responseData.message='Contribution name exist'
+        //   responseData.success=false
+        //   return responseData
+        // } 
+
         update = {
           name,
           description,
+          updatedBy:sessionId,
         };
       } else {
 
         update = {
-          status:value.status
+          status:value.status,
+          updatedBy:value.session,
         };
       }
 
@@ -1828,10 +2077,41 @@ export const editODAMissionContributionName=async(value,status=false)=>{
       responseData.success=true
       return responseData
     } catch (error) {
-      responseData.message=error.message || 'Please try again later, an unknown error occurred'
+      responseData.message='Please try again later, an unknown error occurred'
       responseData.success=false
       return responseData
     }
+
+}
+
+export const deleteODAMissionContributionName=async(value)=>{
+
+  let responseData={
+    message:'',
+    success:false
+  }
+
+  let code=value.code
+  
+  try {
+
+    let filter={code}
+
+    const deleted=await ODAMissionContributionName.deleteOne(filter)
+    
+    if (!deleted) {
+      responseData.message='Unknown error occured'
+      responseData.success=false
+      return responseData
+    } 
+
+    responseData.success=true
+    return responseData
+  } catch (error) {
+    responseData.message='Please try again later, an unknown error occurred'
+    responseData.success=false
+    return responseData
+  }
 
 }
 
@@ -1928,7 +2208,7 @@ export async function getODAMissionContributions (Params){
   } catch (error) {
       console.log(error);
 
-      responseData.message=error.message || 'Please try again later, an unknown error occurred'
+      responseData.message='Please try again later, an unknown error occurred'
       responseData.success=false
       return responseData
   }
@@ -2022,7 +2302,7 @@ export async function getODAMissionContributionsDetails (Params){
   } catch (error) {
       console.log(error);
 
-      responseData.message=error.message || 'Please try again later, an unknown error occurred'
+      responseData.message='Please try again later, an unknown error occurred'
       responseData.success=false
       return responseData
   }

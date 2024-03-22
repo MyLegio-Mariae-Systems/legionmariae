@@ -43,9 +43,9 @@ import {
   RocketLaunchIcon,
   Bars2Icon,
 } from "@heroicons/react/24/solid";
-import { useRouter } from "next/navigation";
 import {signIn, signOut} from 'next-auth/react'
 import toast, { ToastBar, Toaster} from 'react-hot-toast'
+import { useRouter } from "next/navigation";
 
 
 const navListMenuItems = [
@@ -238,7 +238,8 @@ function NavList() {
 }
  
 export default function NavbarB4Login({session}) {
-  const router=useRouter()
+  const router= useRouter()
+
   const [openNav, setOpenNav] = React.useState(false);
 
   let toastId
@@ -347,6 +348,7 @@ export default function NavbarB4Login({session}) {
 
         >
       </Toaster>
+      <form onSubmit={login}>
         <Card className="mx-auto w-full max-w-[24rem] overflow-auto">
           <CardBody className="flex flex-col  gap-4 overflow-auto">
             <Typography variant="h2" color="blue-gray" className='text-center flex justify-center gap-3'>
@@ -367,17 +369,15 @@ export default function NavbarB4Login({session}) {
             <Typography className="-mb-2" variant="h6">
               Your Username
             </Typography>
-            <Input label="Username" size="lg" name='username' onChange={handleInputChange}/>
+            <Input label="Username" required size="lg" name='username' onChange={handleInputChange}/>
             <Typography className="-mb-2" variant="h6">
               Your Password
             </Typography>
-            <Input label="Password" size="lg" type='password' name='password' onChange={handleInputChange}/>
-            {/* <div className="-ml-2.5 -mt-3">
-              <Checkbox label="Remember Me" />
-            </div> */}
+            <Input label="Password" required size="lg" type='password' name='password' onChange={handleInputChange}/>
+           
           </CardBody>
           <CardFooter className="pt-0">
-            <Button variant="gradient" onClick={login} fullWidth>
+            <Button type="submit" variant="gradient" fullWidth>
               Sign In
             </Button>
             <Typography variant="small" className="mt-4 flex justify-center">
@@ -394,6 +394,8 @@ export default function NavbarB4Login({session}) {
             </Typography>
           </CardFooter>
         </Card>
+      </form>
+
       </Dialog>
       <div className="flex items-center justify-between text-blue-gray-900 font-sans hover:font-serif ">
         <Typography

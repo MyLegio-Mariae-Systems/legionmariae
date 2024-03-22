@@ -63,7 +63,7 @@ export default function fixedDates(year) {
                 {
                     date:`${year}-01-09`,
                     feast:``,
-                    saint:`St. Julian. St. Adrian`,
+                    saint:`St. Julian. St. Adrian.`,
                     color:`White`,
                 },
                 {
@@ -948,7 +948,7 @@ export default function fixedDates(year) {
                 {
                     date:`${year}-06-01`,
                     feast:``,
-                    saint:`St. Angela Me****`,
+                    saint:`St. Angela Menci`,
                     color:`White`,
                 },
                 {

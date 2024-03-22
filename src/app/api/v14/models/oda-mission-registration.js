@@ -1,14 +1,11 @@
 import bcrypt from 'bcryptjs'
-import mongoose, { Schema, model, models } from 'mongoose'
+import { Schema, model, models } from 'mongoose'
 
 const ODAMissionRegistrationSchema=new Schema({
 
     oda_username:{
         type: String,
         required:true,
-    },
-    username:{
-        type: String,
     },
     first_name:{
         type: String,
@@ -34,7 +31,6 @@ const ODAMissionRegistrationSchema=new Schema({
     },
     mission1:{
         type:String,
-        required:true,
     },
     mission2:{
         type:String,
