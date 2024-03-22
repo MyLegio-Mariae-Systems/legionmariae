@@ -5,6 +5,8 @@ import '@fortawesome/fontawesome-svg-core/styles.css'
 import '@fortawesome/fontawesome-free/css/all.min.css'
 import {config} from '@fortawesome/fontawesome-svg-core'
 import Script from 'next/script'
+import { NextAuthProvider } from '../../components/utils/middlewareAuths/nextAuthProvider'
+import {Analytics} from '@vercel/analytics/react'
 
 config.autoAddCss=false
 
@@ -31,11 +33,17 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
+
     <html lang="en">
       <Script src="https://unpkg.com/@material-tailwind/html@latest/scripts/collapse.js" />
       <Script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/datepicker.min.js" />
       <Script src="https://cdn.jsdelivr.net/npm/apexcharts" />
-      <body className={inter.className}>{children}</body>
+    <body >
+    <NextAuthProvider>
+      {children}
+      <Analytics className={inter.className}/>
+    </NextAuthProvider>
+    </body>
     </html>
   );
 }
